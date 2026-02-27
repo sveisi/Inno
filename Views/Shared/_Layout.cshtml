@@ -1,0 +1,347 @@
+﻿@inject SignInManager<User> SignInManager
+
+<!DOCTYPE html>
+<html dir="rtl" class="h-100">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @{
+        var title = "";
+        if (ViewData["Title"] != null) title = ViewData["Title"] + " - ";
+        title += Res.WebsiteTitle;
+        ViewBag.LoginUrl = Url.Action("Login", "Account");
+    }
+    <title>@title</title>
+    @* به دلیل ظاهر بهتر و یک امکان مهم بنام فرم-اوت لاین از ام‌دی‌بی استفاده کردم
+        ولی متاسفانه در مودال عمل نمیکند در سلکت هم باید از نسخه تجاری استفاده کرد تا عمل کند
+        از طرفی برخی ویژیگی ها کار نمیکند مانند تغییر پس زیمنه در مودال چندتایی و ...*@
+    <link rel="stylesheet" href="~/lib/bootstrap-5.2.0/css/bootstrap.rtl.min.css" />
+    @*https://fontawesome.com/how-to-use/on-the-web/setup/upgrading-from-version-4*@
+    @* For footable font add font face fontAwesome to css file*@
+    <link rel="stylesheet" href="~/lib/fontAwesome-5.15/css/all.min.css" />
+    @*<link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css" />*@
+    <link rel="stylesheet" href="~/lib/dataTables-1.12.1/datatables.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 d-none d-lg-block p-0">
+                <div class="shadow h-100 p-3">
+                    <a href="#" class="d-flex gap-2 align-items-center text-decoration-none link-body-emphasis">
+                        <img src="~/images/logo.jpg" width="70" alt="">
+                        <span class="fs-4 fw-bold">Inno Design</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills d-block">
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Home")' class="nav-link d-flex gap-2 active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-house-door" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z">
+                                    </path>
+                                </svg>
+                                <span>خانه</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link d-flex gap-2 link-body-emphasis ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-speedometer2" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z">
+                                    </path>
+                                    <path fill-rule="evenodd"
+                                          d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3">
+                                    </path>
+                                </svg>
+                                <span>داشبورد</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index","Product")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-bag" viewBox="0 0 16 16">
+                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z">
+                                    </path>
+                                </svg>
+                                @Res.Products
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Category")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                @Res.ProductCategory
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Color")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                @Res.Colors
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Region")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                @Res.Cities
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href='@Url.Action("Index", "Storage")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                @Res.Storages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Location")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                @Res.Locations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href='@Url.Action("Index", "Customer")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"></path>
+                                </svg>
+                                <span>@Res.Customers</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-10 p-2"> @RenderBody()</div>
+        </div>
+    </div>
+
+    @*From Bootstrap 5, jQuery is removed. However, there might be people still using jQuery unobtrusive validations in ASP.NET Core*@
+    <script src="~/lib/jquery-3.3.1/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation-1.17/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive-3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-5.2.0/js/bootstrap.bundle.min.js"></script>
+    @* Use in datatables *@
+    <script src="~/lib/moment.js-2.29.1/moment.min.js"></script>
+    @* datatable use Bootstrap standard, for avoid error in mdb correct line 18121 *@
+    <script src="~/lib/dataTables-1.12.1/datatables.min.js"></script>
+    <script src="~/js/site-plugins.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <script type="text/javascript">
+        //change jquery validation class with bootstrap 5 class
+        var settings = {
+            validClass: "is-valid",
+            errorClass: "is-invalid"
+        };
+        $.validator.setDefaults(settings);
+        $.validator.unobtrusive.options = settings;
+
+        //for dropdown not working
+        $(document).ready(function () {
+            $(".dropdown-toggle").dropdown();
+
+            initDateTimePicker();
+            initDropDown();
+
+            //show active nav link
+            //$('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+
+            $(".shadow").hover(
+                function () {
+                    $(this).addClass('shadow-lg').css('cursor', 'pointer');
+                }, function () {
+                    $(this).removeClass('shadow-lg');
+                }
+            );
+        });
+
+        //$(document).on('show.bs.modal', '.modal', function () {
+        //    const zIndex = 1040 + 10 * $('.modal:visible').length;
+        //    $(this).css('z-index', zIndex);
+        //    setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
+        //});
+
+        function createItem(data, dialogId, url = '@ViewBag.CreateUrl', dataTableName = '#myTable') {
+            var btn = $('.btnCreate');
+            var spin = btn.find('span.spinner-border:first');
+            $.bootstrapModalAjaxForm({
+                postUrl: url,//ذخیره اطلاعات
+                renderModalPartialViewUrl: url,//خواندن ویو
+                renderModalPartialViewData: data,
+                loginUrl: '@ViewBag.LoginUrl',
+                dialogContainerId: dialogId,
+                beforeSendGetPartialRequest: function () {
+                    $('.btnCreate').addClass('disabled');
+                    if (spin) spin.show();
+                },
+                completeHandler: function () {
+                    if (dataTableName)
+                        $(dataTableName).DataTable().draw();
+                },
+                afterLoadModalHandler: function () {
+                    initDateTimePicker();
+                    initDropDown();
+                    $('.btnCreate').removeClass('disabled');
+                    if (spin) spin.hide();
+                },
+                errorHandler: function () {
+                    alert('error');
+                }
+            });
+        }
+
+        function editItem(id, dialogId, url = '@ViewBag.EditUrl', dataTableName = '#myTable') {
+            var processing = $('.dataTables_processing', $(dataTableName).closest('.dataTables_wrapper'));
+            $.bootstrapModalAjaxForm({
+                postUrl: url,
+                renderModalPartialViewUrl: url,
+                renderModalPartialViewData: { id },//JSON.stringify({ id: 1 }),
+                loginUrl: '@ViewBag.LoginUrl',
+                dialogContainerId: dialogId,
+                beforeSendGetPartialRequest: function () {
+                    if (processing) processing.show();
+                },
+                completeHandler: function () {
+                    if (dataTableName)
+                        $(dataTableName).DataTable().draw();
+                },
+                afterLoadModalHandler: function () {
+                    initDateTimePicker();
+                    initDropDown();
+                    if (processing) processing.hide();
+                },
+                errorHandler: function () {
+                    if (processing) processing.hide();
+                    alert('error');
+                }
+            });
+        }
+
+        function deleteItem(id, deleteUrl = '@ViewBag.DeleteUrl', afterDel, dataTableName = '#myTable') {
+            $.bootstrapModalConfirm({
+                caption: '@Res.Confirm',
+                body: '@Res.DeleteConfirmMsg',
+                confirmText: '@Res.Yes',
+                closeText: '@Res.No',
+                onConfirm: function () {
+                    var token = $('input:hidden[name="__RequestVerificationToken"]').val();
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "Post",
+                        dataType: "JSON",
+                        data: { id: id },
+                        headers: { RequestVerificationToken: token },
+                        success: function (e) {
+                            if (e.success) {
+                                if (dataTableName)
+                                    $(dataTableName).DataTable().draw();
+
+                                if (afterDel) afterDel();
+                            }
+                            else if (e.error) {
+                                alert(e.error);
+                            }
+                        },
+                        error: function (e) {
+                            alert(e.error);
+                        }
+                    });
+                }
+            });
+        }
+
+        function getContact(contactTypeSelectId, contactIdInput, contactIdValueOnPageLoad) {
+            contactTypeSelectId = '#' + contactTypeSelectId;
+            contactIdInput = '#' + contactIdInput;
+
+            var contactType = $(contactTypeSelectId).val();
+            if (contactType) {
+                $.ajax({
+                    url: '@Url.Action("GetContact", "Contact")',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: { contactTypeId: contactType },
+                    beforeSend: function () {
+                        $(contactIdInput).html("");
+                    },
+                    success: function (contacts) {
+                        $(contactIdInput).append('<option value="">@Res.DoSelect</option>');
+                        $.each(contacts, function (i, t) {
+                            $(contactIdInput).append(
+                                $('<option></option>').val(t.ContactId).html(t.ContactName));
+                        });
+                        if (contactIdValueOnPageLoad) {
+                            $(contactIdInput).val(contactIdValueOnPageLoad);
+                        }
+                    }
+                });
+            }
+            else {
+                $(contactIdInput).html('');
+            }
+        }
+
+        function uploadFiles(multiple = true) {
+            let count = $('#uploadZone .col').length;
+            for (var i = 0; i < $("#file")[0].files.length; i++) {
+                //create show image box and progress bar
+                let boxId = "box" + (count + i + 1);
+                let progId = "fileProgress" + (count + i + 1);
+                let imgId = "uploadedImage" + (count + i + 1);
+                let linkId = "imageLink" + (count + i + 1);
+                let delLinkId = "delLink" + (count + i + 1);
+                let boxHtml = `
+                    <div class="col-lg-3 col mt-2" id="` + boxId + `" >
+                        <input type="hidden" name="attachId"/>
+                        <input type="hidden" name="fileUrl"/>
+                        <progress id="` + progId + `" style="display:none; width:100px"></progress>
+                        <div class="position-relative">
+                            <div class="position-absolute top-0 start-0 translate-middle mt-2 ms-2">
+                                <a href="#" id="` + delLinkId + `" class="link-danger" title="@Res.Delete"><i class="fa fa-times"></i></a>
+                            </div>
+                            <a href="#" id="` + linkId + `" target="_blank">
+                            <img id ="` + imgId + `"  style="display:none; width:100px; height:100px;"/>
+                            </a>
+                    </div>`;
+                $("#uploadZone").append(boxHtml);
+
+                var formData = new FormData();
+                formData.append("file", $("#file")[0].files[i]);
+
+                $.ajax({
+                    url: '@Url.Action("Upload", "Attachment")',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        $("#" + progId).hide();
+                        $("#" + imgId).attr('src', result.FileUrl);
+                        $("#" + linkId).attr('href', result.FileUrl);
+                        boxId = "#" + boxId;
+                        let afterDelFunc = "function() { $('" + boxId + "').remove();";
+                        if (!multiple) afterDelFunc += "$('#btnUploadFile').parent().show();"
+                        afterDelFunc += "}";
+                        $("#" + delLinkId).attr('href', "javascript:deleteItem('" + result.AttachmentId + "', '/Attachment/Delete'," + afterDelFunc + ", null)");
+                        $("#" + imgId).show();
+
+                        $(boxId + '>input[name = "attachId"]').val(result.AttachmentId);
+                        $(boxId + '>input[name = "fileUrl"]').val(result.FileUrl);
+                    },
+                    xhr: function () {
+                        var fileXhr = $.ajaxSettings.xhr();
+                        if (fileXhr.upload) {
+                            $("#" + progId).show();
+                            if (!multiple) $("#btnUploadFile").parent().hide();
+                            fileXhr.upload.addEventListener("#" + progId, function (e) {
+                                if (e.lengthComputable) {
+                                    $("#" + progId).attr({
+                                        value: e.loaded,
+                                        max: e.total
+                                    });
+                                }
+                            }, false);
+                        }
+                        return fileXhr;
+                    }
+                });
+            }
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

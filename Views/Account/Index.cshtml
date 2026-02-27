@@ -1,0 +1,65 @@
+﻿@model IEnumerable<UserView>
+
+@{
+    ViewData["Title"] = Res.List + " " + Res.Users;
+
+    ViewBag.CreateUrl = Url.Action("Create", "Account");
+    ViewBag.EditUrl = Url.Action("Edit", "Account");
+    ViewBag.DeleteUrl = Url.Action("Delete", "Account");
+}
+
+    <div class="row">
+        <div class="row mb-3 border-bottom">
+            <div class="col-auto">
+                <h3>@ViewData["Title"]</h3>
+            </div>
+            <div class="col-auto">
+                <a asp-action="Create" class="btn btn-primary btn-sm mt-2">
+                    <i class="fa fa-plus me-1"></i>@Res.New
+                </a>
+            </div>
+        </div>
+        <form>
+            @Html.AntiForgeryToken()
+            <table class="table">
+                <thead class="bg-warning">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsActive)
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var id = "rowId" + item.Id;
+                    <tr id="@id">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i>@Res.Edit</a> |
+                            <a asp-action="ChangePassword" asp-route-userName="@item.UserName"><i class="fa fa-edit"></i>@Res.ChangePassword</a> |
+                            <a asp-action="ChangeActive" asp-route-id="@item.Id"><i class="fa fa-check"></i>@Res.ChangeActive</a> |
+                            <a href="javascript:deleteItem('@item.Id')" class="link-danger" title="@Res.Delete"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>

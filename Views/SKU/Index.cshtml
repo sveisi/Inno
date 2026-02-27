@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SKUListView>
+
+@{
+    ViewData["Title"] = Res.List + " " + Res.Rolls;
+
+    ViewBag.CreateUrl = Url.Action("Create", nameof(SKU));
+    ViewBag.EditUrl = Url.Action("Edit", nameof(SKU));
+    ViewBag.DeleteUrl = Url.Action("Delete", nameof(SKU));
+}
+
+<form asp-action="Index" method="get">
+    <div class="row mb-3 border-bottom">
+        <div class="col-auto">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="col-auto">
+            <a href="javascript:createItem()" class="btn btn-primary btn-sm mt-1 btnCreate">
+                <i class="fa fa-plus me-1"></i>@Res.New
+                <span class="spinner-border spinner-border-sm" style="display:none"></span>
+            </a>
+        </div>
+    </div>
+</form>
+<form>
+    @Html.AntiForgeryToken()
+    <table id="myTable" class="table table-striped table-hover nowrap" style="width:100%">
+        <thead class="bg-warning"></thead>
+    </table>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                info: false,
+                ajax: {
+                    url: '@Url.Action("GetData", nameof(SKU))',
+                    type: 'POST',
+                    datatype: "json",
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status == 403 || jqXHR.status == 401) {
+                            window.location = '@Url.Action("Login", "Account")';
+                        }
+                    }
+                },
+                "columns": [
+                    { data: "@nameof(SKUListView.Id)", name: "@nameof(SKUListView.Id)", title: "@Html.DisplayNameFor(model => model.Id)" },
+                    { data: "@nameof(SKUListView.ProductId)", name: "@nameof(SKUListView.ProductId)", title: "@Html.DisplayNameFor(model => model.ProductId)" },
+                    { data: "@nameof(SKUListView.LocationId)", name: "@nameof(SKUListView.LocationId)", title: "@Html.DisplayNameFor(model => model.LocationId)" },
+                    { data: "@nameof(SKUListView.InitQty)", name: "@nameof(SKUListView.InitQty)", title: "@Html.DisplayNameFor(model => model.InitQty)" },
+                    { data: "@nameof(SKUListView.CurrentQty)", name: "@nameof(SKUListView.CurrentQty)", title: "@Html.DisplayNameFor(model => model.CurrentQty)" },
+                    { data: "@nameof(SKUListView.ReservedQty)", name: "@nameof(SKUListView.ReservedQty)", title: "@Html.DisplayNameFor(model => model.ReservedQty)" },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:editItem(" + data.@nameof(SKUListView.Id) + ")' title='@Res.Edit'><i class='fa fa-edit'></i></a>";
+                        }
+                    },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:deleteItem(" + data.@nameof(SKUListView.Id) + ")' class='link-danger' title='@Res.Delete'><i class='fa fa-times'></i></a>";
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

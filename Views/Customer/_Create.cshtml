@@ -1,0 +1,106 @@
+﻿@model CustomerView
+@{
+    Layout = null;
+    var modeText = Res.Create + " " + Res.Customer;
+    //var action = "Create";
+    var editMode = Model != null && Model.Id > 0;
+    if (editMode)
+    {
+        //action = "Edit";
+        modeText = Res.Edit + " " + Res.Customer;
+    }
+}
+
+<div id='dialogDiv' class='modal fade'>
+    <form>
+        @Html.AntiForgeryToken()
+        <div id='dialogContent' class='modal-dialog'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@modeText</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" class="form-control" type="hidden" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="CityId" class="control-label"></label>
+                                <select asp-for="CityId" class="form-select"
+                                        asp-items="@(new SelectList(Model.Regions,"Id","Name"))">
+                                    <option hidden disabled selected>@Res.DoSelect</option>
+                                </select>
+                                <span asp-validation-for="CityId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="ParentCustomerId" class="control-label"></label>
+                                <select asp-for="ParentCustomerId" class="form-select"
+                                        asp-items="@(new SelectList(Model.Agents,"Id","Name"))">
+                                    <option value="" selected>این مشتری نماینده فروش(سرگروه) است</option>
+                                </select>
+                                <span asp-validation-for="ParentCustomerId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="CustomerCode" class="control-label"></label>
+                                <input asp-for="CustomerCode" class="form-control" type="text" dir="ltr" />
+                                <span asp-validation-for="CustomerCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FullName" class="control-label"></label>
+                                <input asp-for="FullName" class="form-control" />
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Phone" class="control-label"></label>
+                                <input asp-for="Phone" class="form-control" type="text" dir="ltr" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Mobile" class="control-label"></label>
+                                <input asp-for="Mobile" class="form-control" dir="ltr" />
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="DiscountPercent" class="control-label"></label>
+                                <input asp-for="DiscountPercent" class="form-control" dir="ltr" />
+                                <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label d-block">&nbsp;</label>
+                                <div class="form-check mt-2">
+                                    <input asp-for="IsActive" class="form-check-input" />
+                                    <label asp-for="IsActive" class="form-check-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">@Res.Close</button>
+                    <button class="btn btn-primary" type="submit">@Res.Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

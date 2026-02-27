@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CustomerListView>
+
+@{
+    ViewData["Title"] = Res.List + " " + Res.Customer;
+
+    ViewBag.CreateUrl = Url.Action("Create", "Customer");
+    ViewBag.EditUrl = Url.Action("Edit", "Customer");
+    ViewBag.DeleteUrl = Url.Action("Delete", "Customer");
+}
+<form asp-action="Index" method="get">
+    <div class="row mb-3 border-bottom">
+        <div class="col-auto">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="col-auto">
+            <a href="javascript:createItem()" class="btn btn-primary btn-sm mt-1 btnCreate">
+                <i class="fa fa-plus me-1"></i>@Res.New
+                <span class="spinner-border spinner-border-sm" style="display:none"></span>
+            </a>
+        </div>
+    </div>
+</form>
+<form>
+    @Html.AntiForgeryToken()
+    <table id="myTable" class="table table-striped table-hover nowrap" style="width:100%">
+        <thead class="bg-warning"></thead>
+    </table>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                info: false,
+                ajax: {
+                    url: '@Url.Action("GetData", "Customer")',
+                    type: 'POST',
+                    datatype: "json",
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status == 403 || jqXHR.status == 401) {
+                            window.location = '@Url.Action("Login", "Account")';
+                        }
+                    }
+                },
+                "columns": [
+                    { data: "@nameof(CustomerListView.CustomerCode)", name: "@nameof(CustomerListView.CustomerCode)", title: "@Html.DisplayNameFor(model => model.CustomerCode)" },
+                    { data: "@nameof(CustomerListView.FullName)", name: "@nameof(CustomerListView.FullName)", title: "@Html.DisplayNameFor(model => model.FullName)" },
+                    { data: "@nameof(CustomerListView.CityName)", name: "@nameof(CustomerListView.CityName)", title: "@Html.DisplayNameFor(model => model.CityName)" },
+                    { data: "@nameof(CustomerListView.Mobile)", name: "@nameof(CustomerListView.Mobile)", title: "@Html.DisplayNameFor(model => model.Mobile)" },
+                    { data: "@nameof(CustomerListView.DiscountPercent)", name: "@nameof(CustomerListView.DiscountPercent)", title: "@Html.DisplayNameFor(model => model.DiscountPercent)" },
+                    { data: "@nameof(CustomerListView.CreditBalance)", name: "@nameof(CustomerListView.CreditBalance)", title: "@Html.DisplayNameFor(model => model.CreditBalance)" },
+                    { data: "@nameof(CustomerListView.IsActive)", name: "@nameof(CustomerListView.IsActive)", title: "@Html.DisplayNameFor(model => model.IsActive)" },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:editItem(" + data.@nameof(CustomerListView.Id) + ")' title='@Res.Edit'><i class='fa fa-edit'></i></a>";
+                        }
+                    },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:deleteItem(" + data.@nameof(CustomerListView.Id) + ")' class='link-danger' title='@Res.Delete'><i class='fa fa-times'></i></a>";
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

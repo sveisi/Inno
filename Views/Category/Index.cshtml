@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CategoryView>
+
+@{
+    ViewData["Title"] = Res.List + " " + Res.ProductCategories;
+
+    ViewBag.CreateUrl = Url.Action("Create", nameof(Category));
+    ViewBag.EditUrl = Url.Action("Edit", nameof(Category));
+    ViewBag.DeleteUrl = Url.Action("Delete", nameof(Category));
+}
+<form asp-action="Index" method="get">
+    <div class="row mb-3 border-bottom">
+        <div class="col-auto">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="col-auto">
+            <a href="javascript:createItem()" class="btn btn-primary btn-sm mt-1 btnCreate">
+                <i class="fa fa-plus me-1"></i>@Res.New
+                <span class="spinner-border spinner-border-sm" style="display:none"></span>
+            </a>
+        </div>
+    </div>
+</form>
+<form>
+    @Html.AntiForgeryToken()
+    <table id="myTable" class="table table-striped table-hover nowrap" style="width:100%">
+        <thead class="bg-warning"></thead>
+    </table>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                info: false,
+                ajax: {
+                    url: '@Url.Action("GetData", "Category")',
+                    type: 'POST',
+                    datatype: "json",
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status == 403 || jqXHR.status == 401) {
+                            window.location = '@Url.Action("Login", "Account")';
+                        }
+                    }
+                },
+                "columns": [
+                    { data: "@nameof(CategoryView.Id)", name: "@nameof(CategoryView.Id)", title: "@Html.DisplayNameFor(model => model.Id)" },
+                    { data: "@nameof(CategoryView.Name)", name: "@nameof(CategoryView.Name)", title: "@Html.DisplayNameFor(model => model.Name)" },
+                    { data: "@nameof(CategoryView.EnName)", name: "@nameof(CategoryView.EnName)", title: "@Html.DisplayNameFor(model => model.EnName)" },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:editItem(" + data.@nameof(CategoryView.Id) + ")' title='@Res.Edit'><i class='fa fa-edit'></i></a>";
+                        }
+                    },
+                    {
+                        data: null, orderable: false, searchable: false, responsivePriority: -1,
+                        render: function (data, type, row) {
+                            return "<a href='javascript:deleteItem(" + data.@nameof(CategoryView.Id) + ")' class='link-danger' title='@Res.Delete'><i class='fa fa-times'></i></a>";
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

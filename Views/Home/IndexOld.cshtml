@@ -1,0 +1,304 @@
+﻿@inject SignInManager<User> SignInManager
+
+<div class="row h-100" data-aos="fade-up" data-aos-delay="100">
+    <div class="row">
+        @if (true)
+        {
+            <div class="col-lg-3 col-12">
+                <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="250">
+                    <div class="card-body p-0">
+                        <!-- حذف padding برای چسبیدن تصویر -->
+                        <!-- تصویر در بالا و چسبیده -->
+                        <img src="~/images/car.jpg" class="img-fluid rounded-top" style="width:100%; display: block; object-fit: cover;" />
+                        <!-- محتوای کارت با پدینگ -->
+                        <div class="p-3">
+                            <h3 class="card-title">
+                                <i class="fa fa-car" style="color:#2487ce"></i>
+                                @Res.Car
+                            </h3>
+                            <p class="card-text">Res.CarCardText</p>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a asp-controller="Product" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.Product</a>
+                                </div>
+                                <div>
+                                    <a asp-controller="Category" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.ProductCategories</a>
+                                </div>
+                                <div>
+                                    <a asp-controller="Receipt" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Receipt</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (true)
+        {
+            <div class="col-lg-3 col-12">
+                <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="card-body p-0">
+                        <img src="~/images/ship.jpg" class="img-fluid rounded-top" style="width:100%; display: block; object-fit: cover;" />
+                        <div class="p-3">
+                            <h3 class="card-title">
+                                <i class="fa fa-ship" style="color:#2487ce"></i>
+                                Res.Ship
+                            </h3>
+                            <p class="card-text">Res.ShipLoadingCardText </p>
+                            <div class="d-flex justify-content-between">
+                                @if (true)
+                                {
+                                    <div>
+                                        <a asp-controller="Shipping" asp-action="Index"><i class="fa fa-list me-1"></i>Res.ShipLoading</a>
+                                    </div>
+                                }
+                                @if (true)
+                                {
+                                    <div>
+                                        <a asp-controller="Shipping" asp-action="Index" asp-route-type="1"><i class="fa fa-list me-1"></i>@Res.Unload</a>
+                                    </div>
+                                    <div>
+                                        <a asp-controller="Shipping" asp-action="Index" asp-route-type="2"><i class="fa fa-list me-1"></i>Res.CustomsDeclaration</a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (true)
+        {
+            <div class="col-lg-3 col-12">
+                <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="card-body p-0">
+                        <img src="~/images/port.jpg" class="img-fluid rounded-top" style="width:100%; display: block; object-fit: cover;" />
+                        <div class="p-3">
+                            <h3 class="card-title">
+                                <i class="fa fa-anchor" style="color:#2487ce"></i>
+                                بندر
+                            </h3>
+                            <p class="card-text">مخارجی بندر </p>
+                            <div class="d-flex justify-content-between">
+                                 <div>
+                                     <a asp-controller="Shipping" asp-action="Index" asp-route-type="3"><i class="fa fa-list me-1"></i>مه‌خارجی به‌نده‌ر و شرکه‌ت</a>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (true)
+        {
+            <div class="col-lg-3 col-12">
+                <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="card-body p-0">
+                        <img src="~/images/trailer.jpg" class="img-fluid rounded-top" style="width:100%; display: block; object-fit: cover;" />
+                        <div class="p-3">
+                            <h3 class="card-title">
+                                <i class="fa fa-trailer" style="color:#2487ce"></i>
+                                Res.Trailer
+                            </h3>
+                            <p class="card-text">Res.TrailerLoadingCardText</p>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a asp-controller="ShippingByTrailer" asp-action="Index"><i class="fa fa-list me-1"></i>Res.TrailerLoading</a>
+                                </div>
+                                <div>
+                                    <a asp-controller="Cmr" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Cmr</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @if (true)
+    {
+    <div class="row">
+        @if (true)
+        {
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="250">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <img src="~/images/Flag_of_Iran.svg" alt="Iran Flag" width="55">
+                        سنوری ئیران
+                    </h3>
+                    <p class="card-text">Res.CarCardText</p>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a asp-controller="ShippingByTrailer" asp-action="Index" asp-route-type="4"><i class="fa fa-list me-1"></i>مخارج سنوری ئیران</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        @if (true)
+        {
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="250">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <img src="~/images/Flag_of_Iraq.svg" alt="Iraq Flag" width="50">
+                        سنوری عیراق
+                    </h3>
+                    <p class="card-text">Res.CarCardText</p>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a asp-controller="ShippingByTrailer" asp-action="Index" asp-route-type="1"><i class="fa fa-list me-1"></i>Res.EnterTrailer</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Mokhalas" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.Car</a>
+                        </div>
+                        <div>
+                            <a asp-controller="ShippingByTrailer" asp-action="Index" asp-route-type="2"><i class="fa fa-list me-1"></i>Res.ExitTrailer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        @if (true)
+        {
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="250">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <img src="~/images/Flag_of_Kurdistan.svg" alt="Kurdistan Flag" width="50">
+                        کوردستان
+                    </h3>
+                    <p class="card-text">Res.CarCardText</p>
+                    @if (true)
+                    {
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <a asp-controller="ShippingByTrailer" asp-action="Index" asp-route-type="3"><i class="fa fa-list me-1"></i>@Res.Unload</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+    @if (true)
+    {
+    <div class="row pt-4 pb-4" style="background-color: #70acdf;">
+        @if (true)
+        {
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="Contact" asp-action="Index">
+                            <i class="fa fa-address-book" style="color:#2487ce"></i>
+                            @Res.Contacts
+                        </a>
+                    </h4>
+                    <p class="card-text">@Res.ContactCardText </p>
+                </div>
+            </div>
+        </div>
+        }
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="350">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="Transaction" asp-action="Index">
+                            <i class="fa fa-money-bill-alt" style="color:#2487ce"></i>
+                            @Res.CostAndIncome
+                        </a>
+                    </h4>
+                    <p class="card-text">@Res.CostAndIncomeCardText </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="400">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="ReceivePayment" asp-action="Index">
+                            <i class="fa fa-hand-holding" style="color:#2487ce"></i>
+                            @Res.ReceivePayment
+                        </a>
+                    </h4>
+                    <p class="card-text">@Res.ReceivePaymentCardText</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    @if (true)
+    {
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="450">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="fa fa-info" style="color:#2487ce"></i>
+                        Res.CarBaseInfo
+                    </h4>
+                    <p class="card-text"> Res.CarBaseInfoCardText</p>
+                    <div class="d-flex justify-content-between flex-wrap">
+                        <div>
+                            <a asp-controller="Brand" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Brands</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Model" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Models</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Color" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Colors</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Showroom" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Showroom</a>
+                        </div>
+                        <div>
+                            <a asp-controller="HealthItem" asp-action="Index"><i class="fa fa-list me-1"></i>Res.HealthItems</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="card border-right-info shadow mt-1" data-aos="zoom-in" data-aos-delay="450">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="fa fa-info" style="color:#2487ce"></i>
+                        @Res.BaseInfo
+                    </h4>
+                    <p class="card-text"> @Res.BaseInfoCardText</p>
+                    <div class="d-flex justify-content-between flex-wrap">
+                        @if (User.IsInRole(UserRoleName.Admin))
+                        {
+                            <div>
+                                <a asp-controller="TransactionGroup" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.TransactionGroups</a>
+                            </div>
+                        }
+                        <div>
+                            <a asp-controller="Region" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.Regions</a>
+                        </div>
+                        <div>
+                            <a asp-controller="Border" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Borders</a>
+                        </div>
+                        <div>
+                            <a asp-controller="port" asp-action="Index"><i class="fa fa-list me-1"></i>Res.Ports</a>
+                        </div>
+                        @if (User.IsInRole(UserRoleName.Admin))
+                        {
+                            <div>
+                                <a asp-controller="Account" asp-action="Index"><i class="fa fa-list me-1"></i>@Res.Users</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

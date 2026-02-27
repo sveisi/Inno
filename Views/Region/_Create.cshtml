@@ -1,0 +1,66 @@
+﻿@model RegionView
+@{
+    Layout = null;
+    var modeText = Res.Create + " " + Res.Region;
+    var action = "Create";
+    var editMode = Model != null && Model.Id > 0;
+    if (editMode)
+    {
+        action = "Edit";
+        modeText = Res.Edit + " " + Res.Region;
+    }
+}
+
+<div id='dialogDiv' class='modal fade'>
+    <form>
+        @Html.AntiForgeryToken()
+        <div id='dialogContent' class='modal-dialog'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@modeText</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (editMode)
+                    {
+                        <div class="row mb-2">
+                            <div class="form-group">
+                                <label asp-for="Id" class="control-label"></label>
+                                <input asp-for="Id" readonly class="form-control" type="text" />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                    @* <div class="form-group mb-2">
+                        <label asp-for="Type" class="control-label"></label>
+                        <select asp-for="Type" class="form-select"
+                                asp-items="Html.GetEnumSelectList<RegionType>()">
+                            <option hidden disabled selected>@Res.DoSelect</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div> *@
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EnName" class="control-label"></label>
+                        <input asp-for="EnName" class="form-control" dir="ltr" />
+                        <span asp-validation-for="EnName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" dir="ltr" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">@Res.Close</button>
+                    <button class="btn btn-primary" type="submit">@Res.Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

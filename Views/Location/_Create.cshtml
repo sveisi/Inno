@@ -1,0 +1,60 @@
+﻿@model LocationView
+@{
+    Layout = null;
+    var modeText = Res.Create + " " + Res.Location;
+    //var action = "Create";
+    var editMode = Model != null && !string.IsNullOrWhiteSpace(Model.Id);
+    if (editMode)
+    {
+        //action = "Edit";
+        modeText = Res.Edit + " " + Res.Location;
+    }
+}
+
+<div id='dialogDiv' class='modal fade'>
+    <form>
+        @Html.AntiForgeryToken()
+        <div id='dialogContent' class='modal-dialog'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@modeText</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="StorageId" class="control-label"></label>
+                            <select asp-for="StorageId" class="form-select"
+                                    asp-items="@(new SelectList(@ViewBag.Storages,"Id","Name"))">
+                                <option hidden disabled selected>@Res.DoSelect</option>
+                            </select>
+                            <span asp-validation-for="StorageId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="form-group">
+                            <label asp-for="Id" class="control-label"></label>
+                            <input asp-for="Id" class="form-control" type="text" />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EnName" class="control-label"></label>
+                        <input asp-for="EnName" class="form-control" />
+                        <span asp-validation-for="EnName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">@Res.Close</button>
+                    <button class="btn btn-primary" type="submit">@Res.Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

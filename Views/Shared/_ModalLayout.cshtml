@@ -1,0 +1,25 @@
+﻿@model dynamic
+
+<div id='dialogDiv' class='modal fade'>
+    <form>
+        @Html.AntiForgeryToken()
+        <div id='dialogContent' class='modal-dialog'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@ViewBag.Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @RenderSection("Body", required: true)
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">@Res.Save</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">@Res.Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

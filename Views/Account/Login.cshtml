@@ -1,0 +1,83 @@
+﻿@model LoginView
+@{
+    var title = Res.WebsiteTitle;
+    var action = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html dir="rtl" class="h-100">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap-5.2.0/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/lib/fontAwesome-5.15/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />/>
+</head>
+<body class="h-75" style="background-color: #94989b;">
+    @*<header class="header">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="/" class="header-title mx-auto">
+                       شرکت
+                    </a>
+                </div>
+            </div>
+        </header>*@
+    <div class="container">
+        <div class="row" style="margin-top:120px;">
+            <div class="offset-md-4 col-md-4">
+                <!-- این div جدید برای ایجاد باکس دور فرم لاگین اضافه شده -->
+                <div class="border border-5 p-2" style="border-radius: 2.5rem; border-color: #2487ce;">
+                    <div class="card shadow mt-1" style="border-radius:2rem;">
+                        <div class="card-body p-0">
+                            <img src="~/images/logo.jpg" style="border-radius: 2rem; width: 100%; display: block; object-fit: cover;" />
+                            <h3 class="card-title text-center" style="height: 50px; background-color: #2487ce; color:white;">
+                                @Res.Login
+                            </h3>
+                            <form asp-action="@action" asp-route-returnUrl="@ViewData["returnUrl"]" class="row g-3 p-3">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                @if (ViewData["ErrorMessage"] != null)
+                                {
+                                    <div class="text-danger">@ViewData["Message"]</div>
+                                }
+                                <div class="form-group">
+                                    <label asp-for="UserName" class="control-label"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                        <input asp-for="UserName" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password" control-label"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                                        <input asp-for="Password" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input asp-for="RememberMe" class="form-check-input">
+                                        <label asp-for="RememberMe" class="form-check-label"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary float-end"><i class="fa fa-sign-in-alt me-1"></i>@Res.Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery-validation-1.17/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive-3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-5.2.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

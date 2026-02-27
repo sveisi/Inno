@@ -1,0 +1,214 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+@font-face {
+    font-family: "Goran";
+    src: url(../fonts/KGoran.eot);
+    src: url(../fonts/KGoran.eot?#iefix) format("embedded-opentype"), url(../fonts/KGoran.woff) format("woff"), url(../fonts/KGoran.ttf) format("truetype"), url(../fonts/KGoran.svg#BYekan) format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Rabar_021";
+    src: url(../fonts/Rabar_021.eot);
+    src: url(../fonts/Rabar_021.eot?#iefix) format("embedded-opentype"), url(../fonts/Rabar_021.woff) format("woff"), url(../fonts/Rabar_021.ttf) format("truetype"), url(../fonts/Rabar_021.svg#BYekan) format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+.header {
+    height: 100px; 
+    background-color: #2487ce;
+}
+.header-title {
+    font-size: 3rem;
+    color: white;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+    .header-title:hover {
+        color: inherit !important;
+    }
+@media screen and (max-width: 768px) {
+    .header {
+        height: 60px;
+    }
+
+    .header-title {
+        font-size: 1.4rem;
+    }
+
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
+/* حذف فضای بالانس و تنظیم عرض برابر */
+.header1 > div {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+.disabled-container {
+    pointer-events: none; /* جلوگیری از تعامل کاربر */
+}
+    .disabled-container input,
+    .disabled-container select,
+    .disabled-container button {
+        background-color: #e9ecef !important;
+        cursor: not-allowed; 
+    }
+/*  Bootstrap   */
+.form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+.form-control, .form-select, .input-group-text {
+    border-color: #9ab0d1 !important;
+}
+.control-label {
+    font-size: 1.13rem;
+}
+.modal-header {
+    background-color: lightsteelblue;
+}
+.modal-footer {
+    background-color: lightsteelblue;
+}
+.nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    background-color: #dfe7f2;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background-color: lightsteelblue;
+}
+/*:root {
+    --bs-body-font-size: .8rem;
+}
+body {
+    font-size: var(--bs-body-font-size) !important;
+}
+.form-control {
+    font-size: var(--bs-body-font-size) !important;
+}
+.form-select {
+    font-size: var(--bs-body-font-size) !important;
+}
+.input-group-text {
+    font-size: var(--bs-body-font-size) !important;
+}
+.dropdown-menu {
+    font-size: var(--bs-body-font-size) !important;
+}*/
+    /*
+.navbar .navbar-nav .nav-link:hover {
+    color: #808080;
+    border-bottom-width:1px !important;
+    border-bottom:solid;
+    border-bottom-color: #0bb3d5;
+}
+.navbar .nav-item.active {
+    color: #808080;
+    border-bottom-width: 1px !important;
+    border-bottom: solid;
+}*/
+    .carousel-caption {
+    top: 50%;
+}
+a {
+    text-decoration: none 
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 5px;
+}
+
+.table-hover tbody tr:hover td {
+    background-color: lightblue;
+}
+
+
+/*Hide Arrows From Input Number- bootstrap
+-------------------------------------------------*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.modal.fade .modal-dialog {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+    transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    font-family: Goran, Tahoma,'Segoe UI', Verdana, sans-serif !important;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.border-left-primary {
+    border-left: .35rem solid #4e73df !important;
+}
+
+.border-right-info {
+    border-right: .35rem solid #36b9cc !important;
+}
+.border-left-info {
+    border-left: .35rem solid #36b9cc !important;
+}
+/*font awesome
+ ----------------------------------------------*/
+.fa {
+    margin-left: 4px !important;
+}
+/*  my grid  */
+thead {
+    font-weight: bold;
+}
+tfoot{
+    font-weight: bold;
+}
+/*Datatable*/
+table.dataTable th, table.dataTable td{
+    text-align: center !important;
+}

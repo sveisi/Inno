@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Attachment>
+
+@{
+}
+<div class="row" id="uploadZone">
+    <div class="col mt-2">
+        <label class="btn btn-primary" id="btnUploadFile" style="width:100px;height:100px; font-size:xx-large;">
+            <i class="fa fa-plus"></i>
+            <input type="file" id="file" hidden multiple accept="image/jpeg,image/png">
+        </label>
+    </div>
+    <div class="col mt-2 position-relative">
+        <progress id="fileProgress0" style="display: none; width: 100px"></progress>
+        <div class="position-relative">
+            <div class="position-absolute top-0 start-0 translate-middle mt-2 ms-2">
+                <a href="javascript:deleteItem('id')" class="link-danger" title="@Res.Delete"><i class="fa fa-times"></i></a>
+            </div>
+            <a href="#" target="_blank">
+                <img id="uploadedImage0" width="100" height="100" />
+            </a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#uploadZone #btnUploadFile").on('change', uploadFiles);
+            //$('#uploadZone').on('change', '#btnUploadFile', uploadFiles);
+        });
+    </script>
+}
