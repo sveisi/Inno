@@ -43,10 +43,10 @@ namespace Inno.Controllers
         public async Task<IActionResult> Create(SKUView cv)
         {
             if (!ModelState.IsValid)
-                return PartialView("_Create", cv);
+                return GetModelError();
 
-            await catSrv.CreateAsync(cv);
-            return AjaxSuccess();
+            var res = await catSrv.CreateAsync(cv);
+            return res.ToActionResult();
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -57,7 +57,7 @@ namespace Inno.Controllers
         public async Task<IActionResult> Edit(SKUView cv)
         {
             if (!ModelState.IsValid)
-                return PartialView("_Create", cv);
+                return GetModelError();
 
             await catSrv.UpdateAsync(cv);
             return AjaxSuccess();

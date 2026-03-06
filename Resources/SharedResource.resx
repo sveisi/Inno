@@ -513,9 +513,6 @@
   <data name="Image" xml:space="preserve">
     <value>تصویر</value>
   </data>
-  <data name="InvoiceNo" xml:space="preserve">
-    <value>ش.اینویس</value>
-  </data>
   <data name="ExchangeFeeAmount" xml:space="preserve">
     <value>مبلغ کارمزد</value>
   </data>
@@ -594,13 +591,34 @@
   <data name="ParentCustomer" xml:space="preserve">
     <value>نماینده فروش</value>
   </data>
-  <data name="CustomerCodeIsDuplicate" xml:space="preserve">
-    <value>کد مشتری تکراری است</value>
+  <data name="DuplicateCodeMsg" xml:space="preserve">
+    <value>کد تکراری است</value>
   </data>
   <data name="Roll" xml:space="preserve">
     <value>طاقه</value>
   </data>
   <data name="Rolls" xml:space="preserve">
     <value>طاقه ها</value>
+  </data>
+  <data name="SKUView_Id" xml:space="preserve">
+    <value>شماره طاقه/سریال کالا</value>
+  </data>
+  <data name="InitQty" xml:space="preserve">
+    <value>مقدار اولیه</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>کد کالا</value>
+  </data>
+  <data name="SKUListView_Id" xml:space="preserve">
+    <value>ش. طاقه/کالا</value>
+  </data>
+  <data name="CurrentQty" xml:space="preserve">
+    <value>مقدار کنونی</value>
+  </data>
+  <data name="ReservedQty" xml:space="preserve">
+    <value>مقدار رزرو</value>
+  </data>
+  <data name="InitQtyMsg" xml:space="preserve">
+    <value>مقدار اولیه طاقه نادرست است</value>
   </data>
 </root>

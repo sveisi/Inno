@@ -1,4 +1,5 @@
 ﻿using Inno.Data;
+using Inno.Helper;
 using Inno.Helper.ConventionalMetadataProviders;
 using Inno.Map;
 using Inno.Services;

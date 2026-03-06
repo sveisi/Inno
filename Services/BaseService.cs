@@ -63,7 +63,7 @@ namespace Inno.Services
 
         protected virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            ctx.Update(entity);
+            ctx.Update(entity);//این روش کل فیلدها را به‌روز می‌کند 
             await ctx.SaveChangesAsync();
             return entity;
         }

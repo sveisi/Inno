@@ -68,7 +68,7 @@ namespace Inno.Controllers
 
                     return Ok(new { success = true });
                 }
-                ModelState.AddModelError("", Resources.SharedResource.CustomerCodeIsDuplicate);
+                ModelState.AddModelError("", Resources.SharedResource.DuplicateCodeMsg);
             }
             await FillLookups(view);
 

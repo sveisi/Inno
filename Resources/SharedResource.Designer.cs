@@ -484,6 +484,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مقدار کنونی.
+        /// </summary>
+        public static string CurrentQty {
+            get {
+                return ResourceManager.GetString("CurrentQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer.
         /// </summary>
         public static string Customer {
@@ -498,15 +507,6 @@ namespace Inno.Resources {
         public static string CustomerCardText {
             get {
                 return ResourceManager.GetString("CustomerCardText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to کد مشتری تکراری است.
-        /// </summary>
-        public static string CustomerCodeIsDuplicate {
-            get {
-                return ResourceManager.GetString("CustomerCodeIsDuplicate", resourceCulture);
             }
         }
         
@@ -615,6 +615,15 @@ namespace Inno.Resources {
         public static string DoSelect {
             get {
                 return ResourceManager.GetString("DoSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تکراری است.
+        /// </summary>
+        public static string DuplicateCodeMsg {
+            get {
+                return ResourceManager.GetString("DuplicateCodeMsg", resourceCulture);
             }
         }
         
@@ -763,11 +772,20 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ش.اینویس.
+        ///   Looks up a localized string similar to مقدار اولیه.
         /// </summary>
-        public static string InvoiceNo {
+        public static string InitQty {
             get {
-                return ResourceManager.GetString("InvoiceNo", resourceCulture);
+                return ResourceManager.GetString("InitQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مقدار اولیه طاقه نادرست است.
+        /// </summary>
+        public static string InitQtyMsg {
+            get {
+                return ResourceManager.GetString("InitQtyMsg", resourceCulture);
             }
         }
         
@@ -1006,6 +1024,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد کالا.
+        /// </summary>
+        public static string ProductCode {
+            get {
+                return ResourceManager.GetString("ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کالاها.
         /// </summary>
         public static string Products {
@@ -1168,6 +1195,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مقدار رزرو.
+        /// </summary>
+        public static string ReservedQty {
+            get {
+                return ResourceManager.GetString("ReservedQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return.
         /// </summary>
         public static string Return {
@@ -1272,6 +1308,24 @@ namespace Inno.Resources {
         public static string ShabaNo {
             get {
                 return ResourceManager.GetString("ShabaNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ش. طاقه/کالا.
+        /// </summary>
+        public static string SKUListView_Id {
+            get {
+                return ResourceManager.GetString("SKUListView_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره طاقه/سریال کالا.
+        /// </summary>
+        public static string SKUView_Id {
+            get {
+                return ResourceManager.GetString("SKUView_Id", resourceCulture);
             }
         }
         

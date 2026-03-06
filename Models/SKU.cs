@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 namespace Inno.Models
 {
-    /// <summary>نگهداری مشخصات طاقه و سریال کالا در انبار</summary>
+    /// <summary>نگهداری مشخصات طاقه و سریال کالا در انبار
+    /// طاقه ها پس از رسید به موجودی اضافه میشوند
+    /// </summary>
     public class SKU : BaseEntity<string>
     {
         ///<summary>شماره طاقه اولیه که از مشتری خریدیم بصورت اختیاری</summary>
@@ -12,7 +14,7 @@ namespace Inno.Models
         public string ProductId { get; set; }
         ///<summary>مقدار اولیه هنگام رسید خرید</summary>
         public decimal InitQty { get; set; }
-        ///<summary>مقدار پس از فروش و برش</summary>
+        ///<summary>این مقدار هنگام رسید با مقدار اولیه تنظیم میشود و نیز مقدار پس از فروش و برش</summary>
         public decimal CurrentQty { get; set; }
         ///<summary>مقدار رزو شده هنگام فاکتور فروش</summary>
         public decimal ReservedQty { get; set; }

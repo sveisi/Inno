@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Inno
+namespace Inno.Helper
 {
     [Serializable]
     internal class SysException : Exception

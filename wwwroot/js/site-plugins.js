@@ -136,14 +136,39 @@
                             $(dialogContainerId).modal('hide');
                             if (options.completeHandler)
                                 options.completeHandler();
-                        } else {
+                        } else {                           
+                            //این قسمت در صورتی که پاسخ ای‌جکس برگردانده میشود
+                            $(dialogContainerId).find('#errordiv').empty();
+
+                            let errMsg = result.error || 'Error!';
+                            // تبدیل کاراکتر خط جدید (\n) به تگ <br> برای نمایش در HTML
+                            errMsg = errMsg.replace(/\n/g, '<br>');
+                            let detailHtml = '';
+
+                            // ساخت HTML برای پیام اصلی خطا
+                            let errorHtml = `<div class="alert alert-danger" role="alert">${errMsg}</div>`;
+
+                            // 4. ساخت HTML برای جزئیات (فقط در صورت وجود)
+                            if (result.detail) {
+                                let detailMessage = JSON.stringify(result.detail, null, 2);
+                                detailHtml = `
+                                    <div class="mt-1">
+                                        <p><strong>جزئیات فنی:</strong></p>
+                                        <pre dir="ltr" style="white-space: pre-wrap; word-wrap: break-word; background: #f8f8f8; padding: 10px;">${detailMessage}</pre>
+                                    </div>`;
+                            }
+
+                            //تزریق محتوای نهایی به #errordiv
+                            $(dialogContainerId).find('#errordiv').html(errorHtml + detailHtml);
+                            /*
+                            //این قسمت در صورتی که پارشیال ویو برگردانده میشود
                             //در صورت خطا محتویات مدال جایگزین شود با پاسخ ارسالی
                             let res = $($.parseHTML(result)).children()[0].outerHTML;
                             $(dialogContainerId).html(res);
 
                             $.validator.unobtrusive.parse(dialogContainerId);
                             enablePostbackValidation();
-                            processAjaxForm(dialogContainerId);
+                            processAjaxForm(dialogContainerId);*/
 
                             if (options.postErrorHandler)
                                 options.postErrorHandler();

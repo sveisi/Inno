@@ -2,11 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using Gridify;
 using Inno.Data;
+using Inno.Helper;
 using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,18 +32,18 @@ namespace Inno.Services
             return res;
         }
 
-        public async Task<Category> CreateAsync(string name, string enName)
+        public async Task<Result<Category>> CreateAsync(string name, string enName)
         {
             var n = new Category() { Name = name, EnName = enName };
             var res = await AddAsync(n);
 
-            return res;
+            return Result<Category>.Success(res);
         }
 
         public async Task UpdateAsync(CategoryView category)
         {
             /* var entity = await entities.FirstAsync(x => x.Id == v.Id); // tracked
-             mapper.Map(v, entity); //بهتر است خوانده شود سپس مپ شود تا همه پراپرتی ها تغییر نکنند و باگ‌های خاموش نسازه.
+             mapper.Map(v, entity); //گاهی بهتر است خوانده شود سپس مپ شود تا همه پراپرتی ها تغییر نکنند و باگ‌های خاموش نسازه.
              await ctx.SaveChangesAsync();
              return entity;*/
             await entities.Where(x => x.Id == category.Id)

@@ -9,9 +9,9 @@
                     <h5 class="modal-title">@ViewBag.Title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div id="errordiv"></div>
                     @RenderSection("Body", required: true)
                 </div>
 
