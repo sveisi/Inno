@@ -7,20 +7,60 @@
 
 @section Body {
     <div class="row mb-2">
-        <div class="form-group">
+        <div class="form-group col-6">
+            <label asp-for="ProductId" class="control-label"></label>
+            <input asp-for="ProductId" class="form-control" />
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-6">
+            <label asp-for="ProductName" class="control-label"></label>
+            <input asp-for="ProductName" class="form-control" readonly />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="form-group col-6">
             <label asp-for="Id" class="control-label"></label>
             <input asp-for="Id" class="form-control" readonly="@(editMode ? "readonly" : null)" />
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>
+        <div class="form-group col-6">
+            <label asp-for="InitQty" class="control-label"></label>
+            <input asp-for="InitQty" class="form-control" />
+            <span asp-validation-for="InitQty" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="ProductId" class="control-label"></label>
-        <input asp-for="ProductId" class="form-control" />
-        <span asp-validation-for="ProductId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="InitQty" class="control-label"></label>
-        <input asp-for="InitQty" class="form-control" />
-        <span asp-validation-for="InitQty" class="text-danger"></span>
-    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#ProductId').on('blur', function() {
+                var productId = $(this).val().trim();
+
+                if (!productId) {
+                    $('#ProductName').val('');
+                    $('#ProductId').next('.text-danger').text('');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Product/GetName',
+                    type: 'GET',
+                    data: { productId: productId },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#ProductName').val(response.data);
+                            $('#ProductId').next('.text-danger').text('');
+                        } else {
+                            $('#ProductName').val('');
+                            $('#ProductId').next('.text-danger').text(response.error);
+                        }
+                    },
+                    error: function() {
+                        $('#ProductName').val('');
+                        $('#ProductName').next('.text-danger').text('Server error!');
+                    }
+                });
+            });
+        });
+    </script>
 }

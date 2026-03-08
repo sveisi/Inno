@@ -8,8 +8,8 @@ namespace Inno.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected IActionResult AjaxSuccess()
-            => Ok(new { success = true });
+        protected IActionResult AjaxSuccess(object data = null)
+            => Ok(new { success = true, data = data });
 
         protected IActionResult AjaxFail(string message)
             => Ok(new { success = false, error = message });

@@ -10,11 +10,11 @@ namespace Inno.Controllers
     [Authorize(Roles = UserRoleName.Admin)]
     public class SKUController : BaseController
     {
-        private readonly ISKUService catSrv;
+        private readonly ISKUService skuSrv;
 
-        public SKUController(ISKUService catSrv)
+        public SKUController(ISKUService skuSrv)
         {
-            this.catSrv = catSrv;
+            this.skuSrv = skuSrv;
         }
 
         public IActionResult Index() => View();
@@ -22,7 +22,7 @@ namespace Inno.Controllers
         [HttpPost]
         public IActionResult GetData(DataTablePostModel dt)
         {
-            var list = catSrv.Get(dt.Gridify());
+            var list = skuSrv.Get(dt.Gridify());
 
             var jsonData = new
             {
@@ -45,12 +45,12 @@ namespace Inno.Controllers
             if (!ModelState.IsValid)
                 return GetModelError();
 
-            var res = await catSrv.CreateAsync(cv);
+            var res = await skuSrv.CreateAsync(cv);
             return res.ToActionResult();
         }
 
         public async Task<IActionResult> Edit(string id)
-            => PartialView("_Create", await catSrv.GetSKUAsync(id));
+            => PartialView("_Create", await skuSrv.GetSKUAsync(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,7 +59,7 @@ namespace Inno.Controllers
             if (!ModelState.IsValid)
                 return GetModelError();
 
-            await catSrv.UpdateAsync(cv);
+            await skuSrv.UpdateAsync(cv);
             return AjaxSuccess();
         }
 
@@ -67,7 +67,7 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await catSrv.DeleteAsync(id);
+            await skuSrv.DeleteAsync(id);
             return AjaxSuccess();
         }
     }

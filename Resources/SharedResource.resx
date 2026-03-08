@@ -621,4 +621,10 @@
   <data name="InitQtyMsg" xml:space="preserve">
     <value>مقدار اولیه طاقه نادرست است</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>نام کالا</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>کالای مورد نظر یافت نشد</value>
+  </data>
 </root>

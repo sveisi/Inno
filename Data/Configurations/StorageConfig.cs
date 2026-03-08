@@ -9,6 +9,8 @@ namespace Inno.Models
         {
             builder.ToTable(nameof(Storage));
 
+            builder.Property(e => e.Id).ValueGeneratedNever();
+
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.EnName).HasMaxLength(50);
 

@@ -1,4 +1,5 @@
 ﻿using Inno.Helper;
+using Inno.Services;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace Inno.Controllers
 {
     [Microsoft.AspNetCore.Authorization.Authorize(Roles = UserRoleName.Admin)]
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductService prdSrv;
         private readonly ICategoryService catSrv;
@@ -175,6 +176,17 @@ namespace Inno.Controllers
             ViewBag.Categories = await catSrv.GetAsync();
             ViewBag.Colors = await colorSrv.GetAsync();
             ViewBag.Units = await unitSrv.GetAsync();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetName(string productId)
+        {
+            var product = await prdSrv.GetProductAsync(productId);
+
+            if (product == null)
+                return AjaxFail(Resources.SharedResource.ProductNotFound);
+
+            return AjaxSuccess(product.Name);
         }
     }
 }

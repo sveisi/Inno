@@ -21,7 +21,7 @@ public class SKUConfig : IEntityTypeConfiguration<SKU>
             .IsRequired();
 
         builder.Property(x => x.LocationId)
-            .IsRequired();
+            .HasMaxLength(10);
 
         builder.Property(x => x.InitQty)
             .IsRequired()

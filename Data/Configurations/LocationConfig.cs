@@ -9,6 +9,7 @@ namespace Inno.Models
         {
             builder.ToTable(nameof(Location));
 
+            builder.Property(x => x.Id).HasMaxLength(10);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.EnName).HasMaxLength(50);
         }
