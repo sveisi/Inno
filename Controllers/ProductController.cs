@@ -1,6 +1,7 @@
 ﻿using Inno.Helper;
 using Inno.Services;
 using Inno.Services.Interfaces;
+using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

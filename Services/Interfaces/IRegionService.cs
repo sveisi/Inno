@@ -1,5 +1,6 @@
 ﻿using Gridify;
 using Inno.Models;
+using Inno.Types;
 using Inno.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;

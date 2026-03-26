@@ -4,6 +4,7 @@ using Gridify;
 using Inno.Data;
 using Inno.Models;
 using Inno.Services.Interfaces;
+using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

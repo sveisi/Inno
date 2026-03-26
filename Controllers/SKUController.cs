@@ -1,5 +1,6 @@
 ﻿using Inno.Helper;
 using Inno.Services.Interfaces;
+using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

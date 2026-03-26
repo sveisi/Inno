@@ -7,7 +7,7 @@ namespace Inno.Models
         public decimal Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
-        public OrderItemStatus Status { get; set; }
+        public Types.OrderItemStatus Status { get; set; }
 
         public Order Order { get; set; }
         public Product Product { get; set; }

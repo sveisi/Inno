@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Inno.Helper;
 using Inno.Models;
+using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -294,6 +295,7 @@ namespace Inno.Controllers
                         var u = new User()
                         {
                             UserName = "Admin",
+                            FullName = "امیر سپهوند",
                             EmailConfirmed = true,
                         };
                         await userMgr.CreateAsync(u, "amir");

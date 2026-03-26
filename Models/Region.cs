@@ -4,7 +4,7 @@ namespace Inno.Models
 {
     public class Region : BaseEntity
     {
-        public RegionType Type { get; set; }
+        public Types.RegionType Type { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string EnName { get; set; }

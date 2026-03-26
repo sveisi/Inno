@@ -7,7 +7,7 @@ namespace Inno.Models
     {
         public int CustomerId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public OrderStatus Status { get; set; }
+        public Types.OrderStatus Status { get; set; }
         public decimal TotalAmount { get; set; }
 
         public Customer Customer { get; set; }

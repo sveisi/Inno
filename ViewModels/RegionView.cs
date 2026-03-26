@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Inno.Types;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Inno.ViewModels
