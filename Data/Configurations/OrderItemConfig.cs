@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class OrderItemConfig : IEntityTypeConfiguration<OrderItem>
+    public class OrderItemConfig : BaseEntityConfiguration<Models.OrderItem, int>
     {
-        public void Configure(EntityTypeBuilder<OrderItem> builder)
+        public override void Configure(EntityTypeBuilder<Models.OrderItem> builder)
         {
-            builder.ToTable(nameof(OrderItem));
+            base.Configure(builder);
 
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Quantity).HasPrecision(18, 2);
+            builder.Property(x => x.Qty).HasPrecision(18, 2);
             builder.Property(x => x.UnitPrice).HasPrecision(18, 2);
             builder.Property(x => x.TotalPrice).HasPrecision(18, 2);
         }

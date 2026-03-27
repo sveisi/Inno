@@ -1,11 +1,12 @@
 ﻿using Inno.Data;
 using Inno.Helper;
 using Inno.Helper.ConventionalMetadataProviders;
-using Inno.Map;
+using Inno.MappingProfiles;
 using Inno.Services;
 using Inno.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Inno
 {
@@ -41,14 +43,9 @@ namespace Inno
             services.AddDbContext<InnoContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("InnoContext")));
 
-            //services.AddScoped<ICategoryService, CategoryService>();
-            //services.AddScoped<IColorService, ColorService>();
-            //services.AddScoped<ICustomerService, CustomerService>();
-            //services.AddScoped<ILocationService, LocationService>();
-            //services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<IRegionService, RegionService>();
-            //services.AddScoped<IStorageService, StorageService>();
-            //services.AddScoped<IUnitService, UnitService>();
+            services.AddScoped<IUserContextService, UserContextService>();
+
+            //اضافه کردن خودکار سرویس ها
             var assembly = typeof(ICategoryService).Assembly;
             var serviceTypes = assembly.GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Service"));

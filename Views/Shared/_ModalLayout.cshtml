@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div id="errordiv"></div>
+                    <div id="errordiv" class="alert alert-danger py-1 fw-semibold fade show" role="alert" style="display:none"></div>
                     @RenderSection("Body", required: true)
                 </div>
 

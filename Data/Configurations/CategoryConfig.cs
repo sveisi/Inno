@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class CategoryConfig : IEntityTypeConfiguration<Category>
+    public class CategoryConfig : BaseEntityConfiguration<Category, int>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public override void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable(nameof(Category));
+            base.Configure(builder);
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(150);

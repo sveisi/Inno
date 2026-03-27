@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class ProductConfig : IEntityTypeConfiguration<Product>
+    public class ProductConfig : BaseEntityConfiguration<Product, string>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public override void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable(nameof(Product));
+            base.Configure(builder);
 
-            builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Price).HasPrecision(18, 2);

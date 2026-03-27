@@ -6,6 +6,7 @@ using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Inno.Services
@@ -21,6 +22,11 @@ namespace Inno.Services
             var res = entities.AsNoTracking().ProjectTo<StorageView>(mapper.ConfigurationProvider).Gridify(gridify);
 
             return res;
+        }
+
+        public async Task<List<StorageView>> GetAllStorageAsync()
+        {
+            return await entities.ProjectTo<StorageView>(mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<StorageView> GetStorageAsync(string id)

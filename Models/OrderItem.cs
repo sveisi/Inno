@@ -4,7 +4,7 @@ namespace Inno.Models
     {
         public int OrderId { get; set; }
         public string ProductId { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal Qty { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public Types.OrderItemStatus Status { get; set; }

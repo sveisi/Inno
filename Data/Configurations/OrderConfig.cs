@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class OrderConfig : IEntityTypeConfiguration<Order>
+    public class OrderConfig : BaseEntityConfiguration<Models.Order, int>
     {
-        public void Configure(EntityTypeBuilder<Order> builder)
+        public override void Configure(EntityTypeBuilder<Models.Order> builder)
         {
-            builder.ToTable(nameof(Order));
+            base.Configure(builder);
 
-            builder.HasKey(x => x.Id);
             builder.Property(x => x.TotalAmount).HasPrecision(18, 2);
             builder.Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
         }

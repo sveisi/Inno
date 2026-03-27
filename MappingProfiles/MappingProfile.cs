@@ -2,7 +2,7 @@
 using Inno.Models;
 using Inno.ViewModels;
 
-namespace Inno.Map
+namespace Inno.MappingProfiles
 {
     public class MappingProfile : Profile
     {
@@ -22,7 +22,9 @@ namespace Inno.Map
 
             CreateMap<Location, LocationView>().ReverseMap();
 
-            CreateMap<SKU, SKUView>().ReverseMap();
+            CreateMap<SKU, SKUView>()
+                .ForMember(d => d.ProductName, s => s.Ignore())
+                .ReverseMap();
             CreateMap<SKU, SKUListView>().ReverseMap();
 
             CreateMap<User, UserView>();

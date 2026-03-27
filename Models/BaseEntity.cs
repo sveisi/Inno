@@ -1,7 +1,10 @@
-public abstract class BaseEntity<TKey>
+namespace Inno.Models
 {
-    public TKey Id { get; set; }
-}
-public abstract class BaseEntity : BaseEntity<int>
-{
+    public abstract class BaseEntity<TKey>
+    {
+        public TKey Id { get; set; }
+    }
+    public abstract class BaseEntity : BaseEntity<int>
+    {
+    }
 }

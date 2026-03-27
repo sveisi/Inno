@@ -45,7 +45,7 @@ namespace Inno.Services
             n.ReservedQty = 0;
             var res = await AddAsync(n);
 
-            return Result<SKU>.Success(res);
+            return Result<SKU>.Ok(res);
         }
 
         public async Task<SKU> UpdateAsync(SKUView v)

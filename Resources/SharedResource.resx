@@ -471,12 +471,6 @@
   <data name="SourceCity" xml:space="preserve">
     <value>شهر مبدا</value>
   </data>
-  <data name="DestinationCountry" xml:space="preserve">
-    <value>کشور مقصد</value>
-  </data>
-  <data name="DestinationCity" xml:space="preserve">
-    <value>Destination City</value>
-  </data>
   <data name="EntryDate" xml:space="preserve">
     <value>EnteryDate</value>
   </data>
@@ -540,7 +534,7 @@
   <data name="Location" xml:space="preserve">
     <value>لوکیشن</value>
   </data>
-  <data name="Row" xml:space="preserve">
+  <data name="RowNo" xml:space="preserve">
     <value>ردیف</value>
   </data>
   <data name="Code" xml:space="preserve">
@@ -610,7 +604,10 @@
     <value>کد کالا</value>
   </data>
   <data name="SKUListView_Id" xml:space="preserve">
-    <value>ش. طاقه/کالا</value>
+    <value>ش. طاقه/س. کالا</value>
+  </data>
+  <data name="SKUId" xml:space="preserve">
+    <value>ش. طاقه/س. کالا</value>
   </data>
   <data name="CurrentQty" xml:space="preserve">
     <value>مقدار کنونی</value>
@@ -627,5 +624,52 @@
   <data name="_0_NotFoundMsg" xml:space="preserve">
     <value>{0} موردنظر یافت نشد.</value>
   </data>
+  <data name="DocumentId" xml:space="preserve">
+    <value>شماره سند</value>
+  </data>
+  <data name="Qty" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="PurchaseReceipt" xml:space="preserve">
+    <value>سند خرید</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>اسناد</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>نوع سند</value>
+  </data>
+  <data name="StorageName" xml:space="preserve">
+    <value>نام انبار</value>
+  </data>
+  <data name="Obverse" xml:space="preserve">
+    <value>طرف مقابل</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>تاریخ ایجاد</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>کاربر</value>
+  </data>
+  <data name="ConfirmedAt" xml:space="preserve">
+    <value>تاریخ تایید</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>عطف</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>پیش نویس</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>تایید شده</value>
+  </data>
+  <data name="RecordNotFoundMsg" xml:space="preserve">
+    <value>رکورد موردنظر یافت نشد.</value>
+  </data>
+  <data name="DocumentConfirmedMsg" xml:space="preserve">
+    <value>سند تایید شده و قابل تغییر نیست</value>
+  </data>
+  <data name="AccessDeniedMsg" xml:space="preserve">
+    <value>شما مجاز به تغییر این رکورد نمی باشید</value>
   </data>
 </root>

@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Inno.Models;
 
-namespace Inno.Models
+namespace Inno.Data.Configurations
 {
-    public class ColorConfig : IEntityTypeConfiguration<Color>
+    public class ColorConfig : BaseEntityConfiguration<Color, int>
     {
-        public void Configure(EntityTypeBuilder<Color> builder)
+        public override void Configure(EntityTypeBuilder<Color> builder)
         {
-            builder.ToTable(nameof(Color));
+            base.Configure(builder);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.EnName).IsRequired().HasMaxLength(50);

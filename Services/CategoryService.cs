@@ -37,7 +37,7 @@ namespace Inno.Services
             var n = new Category() { Name = name, EnName = enName };
             var res = await AddAsync(n);
 
-            return Result<Category>.Success(res);
+            return Result<Category>.Ok(res);
         }
 
         public async Task UpdateAsync(CategoryView category)

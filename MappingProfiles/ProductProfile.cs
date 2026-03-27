@@ -2,7 +2,7 @@
 using Inno.Models;
 using Inno.ViewModels;
 
-namespace Inno.Map
+namespace Inno.MappingProfiles
 {
     public class ProductProfile : Profile
     {

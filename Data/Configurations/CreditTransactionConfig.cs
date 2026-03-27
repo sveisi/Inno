@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class CreditTransactionConfig : IEntityTypeConfiguration<CreditTransaction>
+    public class CreditTransactionConfig : BaseEntityConfiguration<CreditTransaction, int>
     {
-        public void Configure(EntityTypeBuilder<CreditTransaction> builder)
+        public override void Configure(EntityTypeBuilder<CreditTransaction> builder)
         {
-            builder.ToTable(nameof(CreditTransaction));
+           base.Configure(builder);
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Amount).HasPrecision(18, 2);

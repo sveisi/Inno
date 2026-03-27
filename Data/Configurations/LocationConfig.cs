@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Inno.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Inno.Models
+namespace Inno.Data.Configurations
 {
-    public class LocationConfig : IEntityTypeConfiguration<Location>
+    public class LocationConfig : BaseEntityConfiguration<Location, string>
     {
-        public void Configure(EntityTypeBuilder<Location> builder)
+        public override void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.ToTable(nameof(Location));
+            base.Configure(builder);
 
             builder.Property(x => x.Id).HasMaxLength(10);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);

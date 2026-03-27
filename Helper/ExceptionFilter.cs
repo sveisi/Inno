@@ -46,10 +46,10 @@ namespace Inno.Helper
                     error = ex.Message,
                     detail = new
                     {
-                        type = ex.GetType().FullName,
                         message = ex.Message,
-                        stackTrace = ex.StackTrace,
-                        inner = ex.InnerException?.ToString()
+                        inner = ex.InnerException?.ToString(),
+                        type = ex.GetType().FullName,
+                        stackTrace = ex.StackTrace
                     }
                 })
                 { StatusCode = 200 };

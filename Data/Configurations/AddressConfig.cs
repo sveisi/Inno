@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class AddressConfig : IEntityTypeConfiguration<Address>
+    public class AddressConfig : BaseEntityConfiguration<Address, int>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public override void Configure(EntityTypeBuilder<Address> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable(nameof(Address));
 
             builder.HasKey(x => x.Id);

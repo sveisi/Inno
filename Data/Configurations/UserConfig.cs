@@ -8,6 +8,7 @@ namespace Inno.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.Property(x => x.FullName).IsRequired().HasMaxLength(256);
         }
     }
 }

@@ -1,15 +1,12 @@
-﻿using Inno.Models;
+﻿using Inno.Data.Configurations;
+using Inno.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class SKUConfig : IEntityTypeConfiguration<SKU>
+public class SKUConfig : BaseEntityConfiguration<SKU, string>
 {
-    public void Configure(EntityTypeBuilder<SKU> builder)
+    public override void Configure(EntityTypeBuilder<SKU> builder)
     {
-        builder.ToTable(nameof(SKU));
-
-        builder.HasKey(x => x.Id);
-
         builder.Property(x => x.Id)
             .IsRequired()
             .HasMaxLength(10);

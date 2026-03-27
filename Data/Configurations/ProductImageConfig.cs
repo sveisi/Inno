@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class ProductImageConfig : IEntityTypeConfiguration<ProductImage>
+    public class ProductImageConfig : BaseEntityConfiguration<ProductImage, int>
     {
-        public void Configure(EntityTypeBuilder<ProductImage> builder)
+        public override void Configure(EntityTypeBuilder<ProductImage> builder)
         {
-            builder.ToTable(nameof(ProductImage));
+            base.Configure(builder);
 
-            builder.HasKey(x => x.Id);
             builder.Property(x => x.ImageUrl).IsRequired().HasMaxLength(500);
             builder.Property(x => x.ImageType).HasMaxLength(50);
         }

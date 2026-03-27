@@ -212,3 +212,7 @@ tfoot{
 table.dataTable th, table.dataTable td{
     text-align: center !important;
 }
+.ltr-cell {
+    direction: ltr !important;
+    text-align: left !important;
+}

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Inno.Models
 {
-    public partial class DocumentDetail : BaseEntity
+    public partial class DocumentItem : BaseEntity<long>
     {
-        public int DocumentId { get; set; }
-        public int Row { get; set; }
+        public long DocumentId { get; set; }
+        public int RowNo { get; set; }
         public string SKUId { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal Qty { get; set; }
         public string LocationId { get; set; }
         public string Description { get; set; }
 

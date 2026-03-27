@@ -79,6 +79,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شما مجاز به تغییر این رکورد نمی باشید.
+        /// </summary>
+        public static string AccessDeniedMsg {
+            get {
+                return ResourceManager.GetString("AccessDeniedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account is locked..
         /// </summary>
         public static string AccountIsLockedOutMsg {
@@ -295,6 +304,24 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تایید شده.
+        /// </summary>
+        public static string Confirmed {
+            get {
+                return ResourceManager.GetString("Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاریخ تایید.
+        /// </summary>
+        public static string ConfirmedAt {
+            get {
+                return ResourceManager.GetString("ConfirmedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string ConfirmPassword {
@@ -457,6 +484,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ ایجاد.
+        /// </summary>
+        public static string CreatedAt {
+            get {
+                return ResourceManager.GetString("CreatedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created Date.
         /// </summary>
         public static string CreatedDate {
@@ -574,24 +610,6 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Destination City.
-        /// </summary>
-        public static string DestinationCity {
-            get {
-                return ResourceManager.GetString("DestinationCity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to کشور مقصد.
-        /// </summary>
-        public static string DestinationCountry {
-            get {
-                return ResourceManager.GetString("DestinationCountry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to تخفیف.
         /// </summary>
         public static string Discount {
@@ -606,6 +624,42 @@ namespace Inno.Resources {
         public static string DiscountPercent {
             get {
                 return ResourceManager.GetString("DiscountPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سند تایید شده و قابل تغییر نیست.
+        /// </summary>
+        public static string DocumentConfirmedMsg {
+            get {
+                return ResourceManager.GetString("DocumentConfirmedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره سند.
+        /// </summary>
+        public static string DocumentId {
+            get {
+                return ResourceManager.GetString("DocumentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اسناد.
+        /// </summary>
+        public static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع سند.
+        /// </summary>
+        public static string DocumentType {
+            get {
+                return ResourceManager.GetString("DocumentType", resourceCulture);
             }
         }
         
@@ -628,9 +682,14 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کد تکراری است.
+        ///   Looks up a localized string similar to پیش نویس.
         /// </summary>
-        public static string DuplicateCodeMsg {
+        public static string Draft {
+            get {
+                return ResourceManager.GetString("Draft", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} تکراری است.
         /// </summary>
@@ -938,6 +997,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to طرف مقابل.
+        /// </summary>
+        public static string Obverse {
+            get {
+                return ResourceManager.GetString("Obverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نماینده فروش.
         /// </summary>
         public static string ParentCustomer {
@@ -1055,15 +1123,6 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کالای مورد نظر یافت نشد.
-        /// </summary>
-        public static string ProductNotFound {
-            get {
-                return ResourceManager.GetString("ProductNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to کالاها.
         /// </summary>
         public static string Products {
@@ -1105,6 +1164,24 @@ namespace Inno.Resources {
         public static string Provinces {
             get {
                 return ResourceManager.GetString("Provinces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سند خرید.
+        /// </summary>
+        public static string PurchaseReceipt {
+            get {
+                return ResourceManager.GetString("PurchaseReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مقدار.
+        /// </summary>
+        public static string Qty {
+            get {
+                return ResourceManager.GetString("Qty", resourceCulture);
             }
         }
         
@@ -1159,6 +1236,24 @@ namespace Inno.Resources {
         public static string ReceivePaymentCardText {
             get {
                 return ResourceManager.GetString("ReceivePaymentCardText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رکورد موردنظر یافت نشد..
+        /// </summary>
+        public static string RecordNotFoundMsg {
+            get {
+                return ResourceManager.GetString("RecordNotFoundMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عطف.
+        /// </summary>
+        public static string Reference {
+            get {
+                return ResourceManager.GetString("Reference", resourceCulture);
             }
         }
         
@@ -1264,9 +1359,9 @@ namespace Inno.Resources {
         /// <summary>
         ///   Looks up a localized string similar to ردیف.
         /// </summary>
-        public static string Row {
+        public static string RowNo {
             get {
-                return ResourceManager.GetString("Row", resourceCulture);
+                return ResourceManager.GetString("RowNo", resourceCulture);
             }
         }
         
@@ -1343,7 +1438,16 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ش. طاقه/کالا.
+        ///   Looks up a localized string similar to ش. طاقه/س. کالا.
+        /// </summary>
+        public static string SKUId {
+            get {
+                return ResourceManager.GetString("SKUId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ش. طاقه/س. کالا.
         /// </summary>
         public static string SKUListView_Id {
             get {
@@ -1393,6 +1497,15 @@ namespace Inno.Resources {
         public static string Storage {
             get {
                 return ResourceManager.GetString("Storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام انبار.
+        /// </summary>
+        public static string StorageName {
+            get {
+                return ResourceManager.GetString("StorageName", resourceCulture);
             }
         }
         
@@ -1528,6 +1641,15 @@ namespace Inno.Resources {
         public static string USDRate {
             get {
                 return ResourceManager.GetString("USDRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربر.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         

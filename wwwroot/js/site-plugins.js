@@ -145,9 +145,6 @@
                             errMsg = errMsg.replace(/\n/g, '<br>');
                             let detailHtml = '';
 
-                            // ساخت HTML برای پیام اصلی خطا
-                            let errorHtml = `<div class="alert alert-danger" role="alert">${errMsg}</div>`;
-
                             // 4. ساخت HTML برای جزئیات (فقط در صورت وجود)
                             if (result.detail) {
                                 let detailMessage = JSON.stringify(result.detail, null, 2);
@@ -159,7 +156,7 @@
                             }
 
                             //تزریق محتوای نهایی به #errordiv
-                            $(dialogContainerId).find('#errordiv').html(errorHtml + detailHtml);
+                            $(dialogContainerId).find('#errordiv').html(errMsg + detailHtml).show();
                             /*
                             //این قسمت در صورتی که پارشیال ویو برگردانده میشود
                             //در صورت خطا محتویات مدال جایگزین شود با پاسخ ارسالی

@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class CustomerConfig : IEntityTypeConfiguration<Customer>
+    public class CustomerConfig : BaseEntityConfiguration<Customer, int>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public override void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.ToTable(nameof(Customer));
-
-            builder.HasKey(x => x.Id);
+            base.Configure(builder);
 
             builder.Property(x => x.CustomerCode).IsRequired().HasMaxLength(50);
             builder.HasIndex(x => x.CustomerCode).IsUnique();

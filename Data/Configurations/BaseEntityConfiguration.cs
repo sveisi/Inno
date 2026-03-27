@@ -1,37 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Inno.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
-public class BaseEntityConfiguration<TEntity, TKey> : IEntityTypeConfiguration<TEntity>
-    where TEntity : BaseEntity<TKey>
+namespace Inno.Data.Configurations
 {
-    public virtual void Configure(EntityTypeBuilder<TEntity> builder)
+    public class BaseEntityConfiguration<TEntity, TKey> : IEntityTypeConfiguration<TEntity>
+    where TEntity : BaseEntity<TKey>
     {
-        // تنظیم Primary Key
-        builder.HasKey(e => e.Id);
-
-        // تنظیم نام جدول (اگر می‌خوای جدول به همین اسم باشه)
-        builder.ToTable(typeof(TEntity).Name);
-
-        // تنظیم فیلدهای Auditable
-        /*if (typeof(TEntity).IsSubclassOf(typeof(AuditableEntity<TKey>)))
+        public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
-            builder.Property(e => e.CreatedAt)
-                   .HasDefaultValueSql("GETDATE()")
-                   .ValueGeneratedOnAdd();
+            builder.ToTable(typeof(TEntity).Name);
+            //Primary Key
+            builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.CreatedBy)
-                   .HasMaxLength(100)
-                   .HasDefaultValueSql("'System'");
+            if (typeof(ICreatable).IsAssignableFrom(typeof(TEntity)))
+            {
+                builder.Property<DateTime>("CreatedAt")
+                       .IsRequired()
+                       .HasColumnType("datetime");
 
-            builder.Property(e => e.LastModifiedAt)
-                   .HasDefaultValueSql("GETDATE()")
-                   .ValueGeneratedOnAddOrUpdate();
+                builder.Property<string>("CreatedBy")
+                       .HasMaxLength(100);
+            }
 
-            builder.Property(e => e.LastModifiedBy)
-                   .HasMaxLength(100)
-                   .HasDefaultValueSql("'System'");
-        }*/
+            if (typeof(IAuditable).IsAssignableFrom(typeof(TEntity)))
+            {
+                builder.Property<DateTime?>("ModifiedAt")
+                       .HasColumnType("datetime");
 
-        // می‌تونی فیلدهای دیگه رو هم به صورت عمومی کانفیگ کنی
+                builder.Property<string>("ModifiedBy")
+                       .HasMaxLength(100);
+            }
+        }
     }
 }

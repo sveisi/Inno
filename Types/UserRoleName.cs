@@ -1,4 +1,4 @@
-﻿namespace Inno
+﻿namespace Inno.Types
 {
     public static class UserRoleName
     {

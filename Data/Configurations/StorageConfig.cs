@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Inno.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Inno.Models
+namespace Inno.Data.Configurations
 {
-    public class StorageConfig : IEntityTypeConfiguration<Storage>
+    public class StorageConfig : BaseEntityConfiguration<Storage, int>
     {
-        public void Configure(EntityTypeBuilder<Storage> builder)
+        public override void Configure(EntityTypeBuilder<Storage> builder)
         {
-            builder.ToTable(nameof(Storage));
+            base.Configure(builder);
 
             builder.Property(e => e.Id).ValueGeneratedNever();
 
