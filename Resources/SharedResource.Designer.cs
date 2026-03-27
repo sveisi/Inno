@@ -61,6 +61,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} موردنظر یافت نشد..
+        /// </summary>
+        public static string _0_NotFoundMsg {
+            get {
+                return ResourceManager.GetString("_0_NotFoundMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string About {
@@ -622,8 +631,12 @@ namespace Inno.Resources {
         ///   Looks up a localized string similar to کد تکراری است.
         /// </summary>
         public static string DuplicateCodeMsg {
+        /// <summary>
+        ///   Looks up a localized string similar to {0} تکراری است.
+        /// </summary>
+        public static string Duplicate_0_Msg {
             get {
-                return ResourceManager.GetString("DuplicateCodeMsg", resourceCulture);
+                return ResourceManager.GetString("Duplicate_0_Msg", resourceCulture);
             }
         }
         

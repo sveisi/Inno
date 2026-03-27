@@ -591,8 +591,8 @@
   <data name="ParentCustomer" xml:space="preserve">
     <value>نماینده فروش</value>
   </data>
-  <data name="DuplicateCodeMsg" xml:space="preserve">
-    <value>کد تکراری است</value>
+  <data name="Duplicate_0_Msg" xml:space="preserve">
+    <value>{0} تکراری است</value>
   </data>
   <data name="Roll" xml:space="preserve">
     <value>طاقه</value>
@@ -624,7 +624,8 @@
   <data name="ProductName" xml:space="preserve">
     <value>نام کالا</value>
   </data>
-  <data name="ProductNotFound" xml:space="preserve">
-    <value>کالای مورد نظر یافت نشد</value>
+  <data name="_0_NotFoundMsg" xml:space="preserve">
+    <value>{0} موردنظر یافت نشد.</value>
+  </data>
   </data>
 </root>

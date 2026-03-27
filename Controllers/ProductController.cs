@@ -185,7 +185,7 @@ namespace Inno.Controllers
             var product = await prdSrv.GetProductAsync(productId);
 
             if (product == null)
-                return AjaxFail(Resources.SharedResource.ProductNotFound);
+                return AjaxFail(string.Format(Resources.SharedResource._0_NotFoundMsg, Resources.SharedResource.Product));
 
             return AjaxSuccess(product.Name);
         }

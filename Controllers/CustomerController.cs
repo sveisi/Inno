@@ -69,7 +69,7 @@ namespace Inno.Controllers
 
                     return Ok(new { success = true });
                 }
-                ModelState.AddModelError("", Resources.SharedResource.DuplicateCodeMsg);
+                ModelState.AddModelError("", string.Format(Resources.SharedResource.Duplicate_0_Msg, Resources.SharedResource.Code));
             }
             await FillLookups(view);
 

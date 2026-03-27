@@ -38,7 +38,7 @@ namespace Inno.Services
 
             var dup = await entities.AnyAsync(x => x.Id == v.Id);
             if (dup)
-                return Result<SKU>.Failure(Resources.SharedResource.DuplicateCodeMsg);
+                return Result<SKU>.Failure(string.Format(Resources.SharedResource.Duplicate_0_Msg, Resources.SharedResource.SKUId));
 
             var n = mapper.Map<SKU>(v);
             n.CurrentQty = 0;
