@@ -205,6 +205,22 @@
         //    setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
         //});
 
+        // --- پیکربندی دکمه‌ها ---
+        const editButtonConfig = {
+            actionName: 'editItem',
+            iconClass: 'far fa-edit',
+            title: '@Res.Edit',
+            renderer: generateButtonHtml // تابعی که HTML را تولید می‌کند
+            //function(){ return `<a href='javascript:editItem(${id})' title='@Res.Edit' class='px-2'><i class='far fa-edit'></i></a>`};
+        };
+        const deleteButtonConfig = {
+            actionName: 'deleteItem',
+            iconClass: 'fa fa-times',
+            title: '@Res.Delete',
+            extraClass: 'link-danger',
+            renderer: generateButtonHtml
+        };
+
         function createItem(data, dialogId, url = '@ViewBag.CreateUrl', dataTableName = '#myTable') {
             var btn = $('.btnCreate');
             var spin = btn.find('span.spinner-border:first');

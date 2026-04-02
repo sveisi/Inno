@@ -48,6 +48,40 @@ $.extend(true, $.fn.dataTable.defaults, {
     pageLength: 20,
     conditionalPaging: true
 });
+
+function renderActionButton(keyName, buttonConfigs = []) {
+    return {
+        data: null,
+        orderable: false,
+        searchable: false,
+        responsivePriority: -1,
+        render: function (data, type, row) {
+            var id = row[keyName];
+            //اگر شناسه رشته است آنرا در کوتیشن قرار میدهد
+            var formattedId = typeof id === 'number' ? id : '"' + id.replace(/"/g, '\\"') + '"';
+
+            let buttonsHtml = '';
+            for (const config of buttonConfigs) {
+                // فراخوانی تابع سازنده دکمه از طریق پیکربندی
+                buttonsHtml += config.renderer(formattedId, config); // تابع renderer و خود config را پاس می‌دهیم
+            }
+            return buttonsHtml;
+        }
+    }
+}
+// تابع سازنده دکمه که پیکربندی را هم دریافت می‌کنند
+function generateButtonHtml(id, config) {
+    // استفاده از کلاس‌های CSS و آیکون از پیکربندی
+    let classes = `px-2 ${config.extraClass || ''}`;
+    let iconHtml = `<i class='${config.iconClass}'></i>`;
+    let titleAttribute = config.title ? `title='${config.title}'` : '';
+
+    return `<a href='javascript:${config.actionName}(${id})' class='${classes}' ${titleAttribute}>${iconHtml}</a>`;
+}
+
+function renderCheckBox(value) {
+    return value ? '<i class="far fa-check-square"></i>' : '<i class="far fa-square"></i>';
+}
 //هنگام نمایش مجموع لازم است به اندازه تعداد ستونها در فوتر خانه ایجاد کنیم بخاطر اینکه خودکار اینکار انجام شود اینجا نوشتیم
 //لازم است فوتر قبل ایجاد جدول اضافه شود تا بشناسد
 function addTableFooter(columnCount, tableId = 'myTable') {
