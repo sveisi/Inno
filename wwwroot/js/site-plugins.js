@@ -126,7 +126,7 @@
 
                 let d = options.postData;
                 if (!d) d = $(this).serialize();
-
+                //send form data for save
                 $.ajax({
                     url: options.postUrl,
                     type: "POST",
@@ -145,7 +145,7 @@
                             errMsg = errMsg.replace(/\n/g, '<br>');
                             let detailHtml = '';
 
-                            // 4. ساخت HTML برای جزئیات (فقط در صورت وجود)
+                            //برای جزئیات فقط در صورت وجود
                             if (result.detail) {
                                 let detailMessage = JSON.stringify(result.detail, null, 2);
                                 detailHtml = `
@@ -157,15 +157,6 @@
 
                             //تزریق محتوای نهایی به #errordiv
                             $(dialogContainerId).find('#errordiv').html(errMsg + detailHtml).show();
-                            /*
-                            //این قسمت در صورتی که پارشیال ویو برگردانده میشود
-                            //در صورت خطا محتویات مدال جایگزین شود با پاسخ ارسالی
-                            let res = $($.parseHTML(result)).children()[0].outerHTML;
-                            $(dialogContainerId).html(res);
-
-                            $.validator.unobtrusive.parse(dialogContainerId);
-                            enablePostbackValidation();
-                            processAjaxForm(dialogContainerId);*/
 
                             if (options.postErrorHandler)
                                 options.postErrorHandler();
@@ -177,13 +168,9 @@
         };
 
         //enableBootstrapStyleValidation(); //اعمال نكات خاص بوت استرپ جهت اعتبارسنجي يكپارچه با آن
-        $.ajaxSetup({ cache: false });
         $.ajax({
             type: "GET",
             url: options.renderModalPartialViewUrl,
-            data: options.renderModalPartialViewData,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
             beforeSend: function (jqXHR, settings) {
                 if (options.beforeSendGetPartialRequest)
                     options.beforeSendGetPartialRequest()

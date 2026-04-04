@@ -251,10 +251,11 @@
         }
 
         function editItem(id, dialogId, url = '@ViewBag.EditUrl', dataTableName = '#myTable') {
+            var getUrl = url + '/' + id;
             var processing = $('.dataTables_processing', $(dataTableName).closest('.dataTables_wrapper'));
             $.bootstrapModalAjaxForm({
                 postUrl: url,
-                renderModalPartialViewUrl: url,
+                renderModalPartialViewUrl: getUrl,
                 renderModalPartialViewData: { id },//JSON.stringify({ id: 1 }),
                 loginUrl: '@ViewBag.LoginUrl',
                 dialogContainerId: dialogId,
