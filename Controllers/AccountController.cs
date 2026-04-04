@@ -1,43 +1,63 @@
 ﻿using AutoMapper;
 using Inno.Helper;
 using Inno.Models;
+using Inno.Services.Interfaces;
 using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Inno.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IMapper mapper;
+        private readonly IAccountService accSrv;
         private readonly UserManager<User> userMgr;
         private readonly SignInManager<User> signInMgr;
+        private readonly ICustomerService customerSrv;
         private readonly RoleManager<IdentityRole> roleMgr;
 
-        public AccountController(IMapper mapper, UserManager<User> userMgr, SignInManager<User> signInMgr, RoleManager<IdentityRole> roleMgr)
+        public AccountController(IMapper mapper, IAccountService accSrv, UserManager<User> userMgr, SignInManager<User> signInMgr,
+            ICustomerService customerSrv, RoleManager<IdentityRole> roleMgr)
         {
             this.mapper = mapper;
+            this.accSrv = accSrv;
             this.userMgr = userMgr;
             this.signInMgr = signInMgr;
+            this.customerSrv = customerSrv;
             this.roleMgr = roleMgr;
         }
 
         [Authorize(Roles = UserRoleName.Admin)]
-        public IActionResult Index()
+        public IActionResult Index() => View();
+
+        [Authorize(Roles = UserRoleName.Admin)]
+        [HttpPost]
+        public IActionResult GetData(DataTablePostModel dt)
         {
-            var users = userMgr.Users.Select(x => new UserView() { Id = x.Id, UserName = x.UserName });
-            return View(users);
+            var list = accSrv.Get(dt.Gridify());
+
+            var jsonData = new
+            {
+                draw = dt.draw,
+                recordsFiltered = list.Count,
+                recordsTotal = list.Count,
+                data = list.Data
+            };
+
+            return Ok(jsonData);
         }
 
         [Authorize(Roles = UserRoleName.Admin)]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var v = new UserView { IsActive = true };
+
+            v.Customers = await customerSrv.GetLookupAsync();
+            return View("_Create", v);
         }
 
         [Authorize(Roles = UserRoleName.Admin)]
@@ -45,56 +65,21 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserView userView)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var u = new User()
-                    {
-                        UserName = userView.UserName,
-                        EmailConfirmed = true,
-                    };
-                    
-                    var res = await userMgr.CreateAsync(u, userView.Password);
-                    if (res.Succeeded)
-                    {
-                        var roleRes = await userMgr.AddToRoleAsync(u, userView.UserRole.ToString());
-                        if (!roleRes.Succeeded)
-                        {
-                            foreach (var err in roleRes.Errors)
-                            {
-                                ModelState.AddModelError("", err.Description);
-                            }
-                        }
-                        else
-                        {
-                            return RedirectToAction(nameof(Index));
-                        }
-                    }
-                    else
-                    {
-                        foreach (var err in res.Errors)
-                        {
-                            ModelState.AddModelError("", err.Description);
-                        }
-                    }
-                }
-                catch (SysException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            return View(userView);
+            if (!ModelState.IsValid)
+                return GetModelError();
+
+            var res = await accSrv.CreateAsync(userView);
+            return res.ToActionResult();
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            if (string.IsNullOrEmpty(id)) return NotFound();
+            if (string.IsNullOrEmpty(id)) return AjaxFail(Resources.SharedResource.RecordNotFoundMsg);
 
-            var user = await userMgr.FindByIdAsync(id);
-            if (user == null) return NotFound();
+            var user = await userMgr.FindByNameAsync(id);
+            if (user == null) return AjaxFail(Resources.SharedResource.RecordNotFoundMsg);
 
-            return View(mapper.Map<UserEditView>(user));
+            return View("_Edit", mapper.Map<UserEditView>(user));
         }
 
         [Authorize(Roles = UserRoleName.Admin)]
@@ -102,107 +87,28 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserEditView userView)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var user = await userMgr.FindByIdAsync(userView.Id);
-                    user.UserName = userView.UserName;
+            if (!ModelState.IsValid)
+                return GetModelError();
 
-                    var res = await userMgr.UpdateAsync(user);
-                    if (res.Succeeded)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        foreach (var err in res.Errors)
-                        {
-                            ModelState.AddModelError("", err.Description);
-                        }
-                    }
-                }
-                catch (SysException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            return View(userView);
+            var res = await accSrv.UpdateAsync(userView);
+            return res.ToActionResult();
         }
 
-        public IActionResult ChangePassword(string userName)
+        public IActionResult ChangePassword(string id)
         {
-            var user = new ChangePasswordView() { UserName = userName };
-            return View(user);
+            var user = new ChangePasswordView() { UserName = id };
+            return View("_ChangePassword", user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordView userModel)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    //غیر از ادمین باشد فقط میتواند پسورد خودش را تغییر دهد
-                    User user = null;
-                    if (User.IsInRole(UserRoleName.Admin))
-                        user = await userMgr.FindByNameAsync(userModel.UserName);
-                    else
-                        user = await userMgr.FindByNameAsync(User.Identity.Name);
+            if (!ModelState.IsValid)
+                return GetModelError();
 
-                    if (user == null)
-                        ModelState.AddModelError("", "Not Found");
-                    else
-                    {
-                        user.PasswordHash = userMgr.PasswordHasher.HashPassword(user, userModel.Password);
-                        var res = await userMgr.UpdateAsync(user);
-                        if (res.Succeeded)
-                        {
-                            ViewData["PasswordChangedMsg"] = Resources.SharedResource.PasswordChangedMsg;
-                        }
-                        else
-                        {
-                            foreach (var err in res.Errors)
-                            {
-                                ModelState.AddModelError("", err.Description);
-                            }
-                        }
-                    }
-                }
-                catch (SysException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            return View(userModel);
-        }
-
-        [Authorize(Roles = UserRoleName.Admin)]
-        [HttpGet]
-        public async Task<IActionResult> ChangeActive(string id)
-        {
-            var res = false;
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                    return NotFound();
-
-                var user = await userMgr.FindByIdAsync(id);
-                if (user.NormalizedUserName != "ADMIN")
-                {
-                    var identityRes = await userMgr.UpdateAsync(user);
-                }
-            }
-            catch (SysException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", "Internal error!");
-            }
-            return RedirectToAction("Index");
+            var res = await accSrv.ChangePasswordAsync(User.Identity.Name, userModel.UserName, userModel.Password);
+            return res.ToActionResult();
         }
 
         [Authorize(Roles = UserRoleName.Admin)]
@@ -210,37 +116,11 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
-            var res = false;
-            try
-            {
-                if (string.IsNullOrEmpty(id))
-                    return NotFound();
+            if (!ModelState.IsValid)
+                return GetModelError();
 
-                var user = await userMgr.FindByIdAsync(id);
-                if (user.NormalizedUserName != "ADMIN")
-                {
-                    var rolesForUser = await userMgr.GetRolesAsync(user);
-                    //var logins =await  userMgr.GetLoginsAsync(user);
-
-                    if (rolesForUser.Count > 0)
-                    {
-                        await userMgr.RemoveFromRolesAsync(user, rolesForUser);
-                    }
-
-                    var identityRes = await userMgr.DeleteAsync(user);
-                    res = identityRes.Succeeded;
-                }
-            }
-            catch (SysException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", "Internal error!");
-            }
-            //return new JsonResult(new { success = res });
-            return RedirectToAction("Index");
+            var res = await accSrv.DeleteAsync(id);
+            return res.ToActionResult();
         }
 
         [AllowAnonymous]
@@ -267,7 +147,12 @@ namespace Inno.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userMgr.FindByNameAsync(model.UserName);
-               
+                if (user != null && !user.IsActive)
+                {
+                    ViewData["ErrorMessage"] = Resources.SharedResource.AccountIsLockedOutMsg;
+                    return View(model);
+                }
+
                 var result = await signInMgr.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, true);
 
                 if (result.Succeeded)
@@ -288,14 +173,14 @@ namespace Inno.Controllers
                     var admin = await userMgr.FindByNameAsync("admin");
                     if (admin == null)
                     {
-                        // سپس در متد اصلی خود اینگونه استفاده کنید:
                         await CreateRoleIfNotExists(roleMgr, UserRoleName.Admin);
+                        await CreateRoleIfNotExists(roleMgr, UserRoleName.Storekeeper);
                         await CreateRoleIfNotExists(roleMgr, UserRoleName.Customer);
 
                         var u = new User()
                         {
                             UserName = "Admin",
-                            FullName = "امیر سپهوند",
+                            FullName = "امیر",
                             EmailConfirmed = true,
                         };
                         await userMgr.CreateAsync(u, "amir");
@@ -314,7 +199,7 @@ namespace Inno.Controllers
             {
                 await roleMgr.CreateAsync(new IdentityRole(roleName));
             }
-        }       
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -323,14 +208,6 @@ namespace Inno.Controllers
         {
             await signInMgr.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> IsEmailInUse(string email)
-        {
-            var user = await userMgr.FindByEmailAsync(email);
-            if (user == null) return Json(true);
-            return Json("ایمیل وارد شده از قبل موجود است");
         }
 
         [AllowAnonymous]

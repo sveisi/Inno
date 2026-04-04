@@ -5,20 +5,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Inno.ViewModels
 {
-    public class UserEditView
+    public class UserListView
     {
-        [Required]
-        [Remote("IsUserNameInUse", "Account", AdditionalFields = nameof(OrigUserName))]
         public string UserName { get; set; }
 
-        /// <summary>برای کنترل در حالت ویرایش</summary>
-        public string OrigUserName { get; set; }
-
-        [Required]
+        //همیشه نام کاربر و مشتری سینک میشود
         [DisplayName("Name")]
         public string FullName { get; set; }
 
-        [Required]
         [DisplayName("Active")]
         public bool IsActive { get; set; }
     }

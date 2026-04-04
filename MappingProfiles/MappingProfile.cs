@@ -28,6 +28,7 @@ namespace Inno.MappingProfiles
             CreateMap<SKU, SKUListView>().ReverseMap();
 
             CreateMap<User, UserView>();
+            CreateMap<User, UserListView>();
 
             CreateMap<User, UserEditView>()
                 .ForMember(d => d.OrigUserName, s => s.MapFrom(s => s.UserName));

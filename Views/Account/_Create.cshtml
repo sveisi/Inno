@@ -1,0 +1,77 @@
+﻿@using Inno.Types
+@model UserView
+@{
+    Layout = "_ModalLayout";
+    var editMode = !(Model == null || string.IsNullOrEmpty(Model.Id));
+    ViewBag.Title = editMode ? Res.Edit + " " + Res.Users : Res.Create + " " + Res.Users;
+}
+
+@section Body {
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FullName" class="control-label"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    @if (!editMode)
+    {
+        <div class="form-group">
+            <label asp-for="UserRole" class="control-label"></label>
+            <div class="input-group ">
+                <select asp-for="UserRole" asp-items="Html.GetEnumSelectList<UserRoleType>()" class="form-select">
+                    <option hidden disabled selected>@Res.DoSelect</option>
+                </select>
+                <span asp-validation-for="UserRole" class="text-danger"></span>
+
+                <select asp-for="CustomerId" asp-items="@(new SelectList(Model.Customers,"Id","Name"))" class="form-select">
+                    <option hidden disabled selected>@Res.DoSelect</option>
+                </select>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    }
+    <div class="form-group">
+        <label class="control-label d-block">&nbsp;</label>
+        <div class="form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label"></label>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const role = document.getElementById("UserRole");
+            const customer = document.getElementById("CustomerId");
+
+            function toggleCustomerField() {
+                if (role.value === "@Inno.Types.UserRoleType.Customer.GetHashCode()") {
+                    customer.disabled = false;
+                }
+                else {
+                    customer.disabled = true;
+                    customer.value = "";
+                }
+            }
+
+            role.addEventListener("change", toggleCustomerField);
+
+            //اجرا در لود اولیه صفحه برای حالت ویرایش
+            toggleCustomerField();
+        });
+    </script>
+}

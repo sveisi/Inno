@@ -4,7 +4,8 @@ namespace Inno.Types
 {
     public enum UserRoleType
     {
-        Admin,
+        Admin = 1,
+        Storekeeper,
         Customer
     }
 
