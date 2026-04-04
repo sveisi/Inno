@@ -50,18 +50,7 @@
                     { data: "@nameof(ProductListView.UnitName)", name: "@nameof(ProductListView.UnitName)", title: "@Html.DisplayNameFor(model => model.UnitName)" },
                     { data: "@nameof(ProductListView.ColorName)", name: "@nameof(ProductListView.ColorName)", title: "@Html.DisplayNameFor(model => model.ColorName)" },
                     { data: "@nameof(ProductListView.Price)", name: "@nameof(ProductListView.Price)", title: "@Html.DisplayNameFor(model => model.Price)" },
-                    {
-                        data: null, orderable: false, searchable: false, responsivePriority: -1,
-                        render: function (data, type, row) {
-                            return "<a href='javascript:editItem(" + data.@nameof(ProductListView.Id) + ")' title='@Res.Edit'><i class='fa fa-edit'></i></a>";
-                        }
-                    },
-                    {
-                        data: null, orderable: false, searchable: false, responsivePriority: -1,
-                        render: function (data, type, row) {
-                            return "<a href='javascript:deleteItem(" + data.@nameof(ProductListView.Id) + ")' class='link-danger' title='@Res.Delete'><i class='fa fa-times'></i></a>";
-                        }
-                    }
+                    renderActionButton('@nameof(ProductListView.Id)', [editButtonConfig, deleteButtonConfig])
                 ]
             });
         });

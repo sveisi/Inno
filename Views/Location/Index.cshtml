@@ -47,18 +47,7 @@
                     { data: "@nameof(Location.Id)", name: "@nameof(Location.Id)", title: "@Html.DisplayNameFor(model => model.Id)" },
                     { data: "@nameof(Location.Name)", name: "@nameof(Location.Name)", title: "@Html.DisplayNameFor(model => model.Name)" },
                     { data: "@nameof(Location.EnName)", name: "@nameof(Location.EnName)", title: "@Html.DisplayNameFor(model => model.EnName)" },
-                    {
-                        data: null, orderable: false, searchable: false, responsivePriority: -1,
-                        render: function (data, type, row) {
-                            return "<a href='javascript:editItem(" + data.@nameof(Location.Id) + ")' title='@Res.Edit'><i class='fa fa-edit'></i></a>";
-                        }
-                    },
-                    {
-                        data: null, orderable: false, searchable: false, responsivePriority: -1,
-                        render: function (data, type, row) {
-                            return "<a href='javascript:deleteItem(" + data.@nameof(Location.Id) + ")' class='link-danger' title='@Res.Delete'><i class='fa fa-times'></i></a>";
-                        }
-                    }
+                    renderActionButton('@nameof(ProductListView.Id)', [editButtonConfig, deleteButtonConfig])
                 ]
             });
         });
