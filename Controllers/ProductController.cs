@@ -95,6 +95,7 @@ namespace Inno.Controllers
             return View(view);
         }
 
+        [HttpGet("Product/Edit/{code}")]
         public async Task<IActionResult> Edit(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
