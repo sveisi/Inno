@@ -95,7 +95,7 @@ namespace Inno.Controllers
             return View(view);
         }
 
-        [HttpGet("Product/Edit/{code}")]
+        [HttpGet("[controller]/Edit/{code}")]
         public async Task<IActionResult> Edit(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -151,7 +151,7 @@ namespace Inno.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(string code)
+        public async Task<IActionResult> Delete([FromForm(Name = "id")] string code)
         {
             var res = false;
             try
