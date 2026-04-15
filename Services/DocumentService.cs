@@ -17,10 +17,12 @@ namespace Inno.Services
     public class DocumentService : BaseService<Document>, IDocumentService
     {
         private readonly IUserContextService userContextSrv;
+        private readonly DocumentDbService docDbSrv;
 
-        public DocumentService(InnoContext ctx, IMapper mapper, IUserContextService userContextSrv) : base(ctx, mapper)
+        public DocumentService(InnoContext ctx, IMapper mapper, IUserContextService userContextSrv, DocumentDbService docDbSrv) : base(ctx, mapper)
         {
             this.userContextSrv = userContextSrv;
+            this.docDbSrv = docDbSrv;
         }
 
         public Paging<DocumentListView> Get(GridifyQuery gridify)
@@ -57,7 +59,7 @@ namespace Inno.Services
                 }).FirstOrDefaultAsync();
             if (prd == null)
                 return Result<DocumentItemView>.Failure(string.Format(Resources.SharedResource._0_NotFoundMsg, Resources.SharedResource.SKUId));
-            
+
             //لوکیشن مورد نظر وجود دارد
             var loc = await ctx.Locations.FirstOrDefaultAsync(x => x.Id.ToUpper() == newItem.LocationId.ToUpper());
             if (loc == null)
@@ -147,11 +149,26 @@ namespace Inno.Services
             if (doc.ConfirmedAt.HasValue)
                 return Result<DocumentListView>.Failure("سند قبلا تایید شده است.");
 
+            //استفاده در فرانت
             doc.ConfirmedAt = System.DateTime.Now;
-            await entities.Where(x => x.Id == id)
-                .ExecuteUpdateAsync(x => x.SetProperty(p => p.ConfirmedAt, System.DateTime.Now));
+
+            await ExecuteInTransactionAsync(async () =>
+            {
+                await MarkAsConfirmedAsync(id);
+
+                if (doc.DocumentTypeId == Types.DocumentType.PurchaseReceipt.GetHashCode())
+                {
+                    await docDbSrv.ApplyPurchaseReceiptEffectsAsync(id);
+                }
+            });
 
             return Result<DocumentListView>.Ok(doc);
+        }
+
+        private async Task<int> MarkAsConfirmedAsync(int id)
+        {
+            return await entities.Where(x => x.Id == id)
+                 .ExecuteUpdateAsync(x => x.SetProperty(p => p.ConfirmedAt, System.DateTime.Now));
         }
 
         public async Task<Result<DocumentItem>> DeleteItemAsync(int id)

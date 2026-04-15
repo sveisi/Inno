@@ -43,6 +43,7 @@ namespace Inno
             services.AddDbContext<InnoContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("InnoContext")));
 
+            services.AddScoped<DocumentDbService, DocumentDbService>();
             services.AddScoped<IUserContextService, UserContextService>();
 
             //اضافه کردن خودکار سرویس ها

@@ -7,6 +7,8 @@ public class SKUConfig : BaseEntityConfiguration<SKU, string>
 {
     public override void Configure(EntityTypeBuilder<SKU> builder)
     {
+        base.Configure(builder);
+
         builder.Property(x => x.Id)
             .IsRequired()
             .HasMaxLength(10);
