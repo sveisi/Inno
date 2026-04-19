@@ -188,7 +188,7 @@ namespace Inno.Controllers
             if (product == null)
                 return AjaxFail(string.Format(Resources.SharedResource._0_NotFoundMsg, Resources.SharedResource.Product));
 
-            return AjaxSuccess(product.Name);
+            return AjaxSuccess(product);
         }
     }
 }

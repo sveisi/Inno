@@ -43,12 +43,12 @@
                 }
 
                 $.ajax({
-                    url: '/Product/GetName',
+                    url: '@Url.Action("GetName", "Product")',
                     type: 'GET',
                     data: { productId: productId },
                     success: function(response) {
                         if (response.success) {
-                            $('#ProductName').val(response.data);
+                            $('#ProductName').val(response.data.@nameof(ProductView.Name));
                             $('#ProductId').next('.text-danger').text('');
                         } else {
                             $('#ProductName').val('');
