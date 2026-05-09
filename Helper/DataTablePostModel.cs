@@ -14,7 +14,7 @@ namespace Inno.Helper
         public int length { get; set; }
         public List<Column> columns { get; set; }
         public Search search { get; set; }
-        public List<Order> order { get; set; }
+        public List<OrderBy> order { get; set; }
 
         public GridifyQuery Gridify()
         {
@@ -52,7 +52,7 @@ namespace Inno.Helper
         public string regex { get; set; }
     }
 
-    public class Order
+    public class OrderBy
     {
         public int column { get; set; }
         public string dir { get; set; }
