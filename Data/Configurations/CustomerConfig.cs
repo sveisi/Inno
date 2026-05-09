@@ -1,6 +1,7 @@
 using Inno.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Inno.Data.Configurations
 {
@@ -18,6 +19,7 @@ namespace Inno.Data.Configurations
             builder.Property(x => x.Email).HasMaxLength(100);
             builder.Property(x => x.DiscountPercent).HasPrecision(5, 2).HasDefaultValue(0);
             builder.Property(x => x.CreditBalance).HasPrecision(18, 2).HasDefaultValue(0);
+            builder.Property(x => x.RowVersion).IsRowVersion().IsConcurrencyToken();
 
             builder.HasOne(x => x.ParentCustomer)
                    .WithMany(x => x.SubCustomers)

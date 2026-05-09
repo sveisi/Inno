@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Inno.Models
@@ -15,6 +15,8 @@ namespace Inno.Models
         public decimal CreditBalance { get; set; }
         public int CityId { get; set; }
         public bool IsActive { get; set; }
+        /// <summary>بخاطر تغییر مانده در تراکنش های مختلف نیاز به کنترل همزمانی داریم</summary>
+        public byte[] RowVersion { get; set; }
 
         public Region City { get; set; }
         public User User { get; set; }

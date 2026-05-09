@@ -169,6 +169,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سفارش خرید.
+        /// </summary>
+        public static string BuyOrder {
+            get {
+                return ResourceManager.GetString("BuyOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -529,6 +538,24 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اعتبارات.
+        /// </summary>
+        public static string Credits {
+            get {
+                return ResourceManager.GetString("Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع اعتبار.
+        /// </summary>
+        public static string CreditType {
+            get {
+                return ResourceManager.GetString("CreditType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مقدار کنونی.
         /// </summary>
         public static string CurrentQty {
@@ -579,6 +606,15 @@ namespace Inno.Resources {
         public static string Debtor {
             get {
                 return ResourceManager.GetString("Debtor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاهش.
+        /// </summary>
+        public static string Decrement {
+            get {
+                return ResourceManager.GetString("Decrement", resourceCulture);
             }
         }
         
@@ -844,6 +880,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to افزایش.
+        /// </summary>
+        public static string Increment {
+            get {
+                return ResourceManager.GetString("Increment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مقدار اولیه.
         /// </summary>
         public static string InitQty {
@@ -1002,6 +1047,24 @@ namespace Inno.Resources {
         public static string Obverse {
             get {
                 return ResourceManager.GetString("Obverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سفارش.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سفارشات.
+        /// </summary>
+        public static string Orders {
+            get {
+                return ResourceManager.GetString("Orders", resourceCulture);
             }
         }
         
@@ -1614,6 +1677,15 @@ namespace Inno.Resources {
         public static string Unit {
             get {
                 return ResourceManager.GetString("Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فی.
+        /// </summary>
+        public static string UnitPrice {
+            get {
+                return ResourceManager.GetString("UnitPrice", resourceCulture);
             }
         }
         

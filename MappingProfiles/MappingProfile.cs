@@ -15,6 +15,14 @@ namespace Inno.MappingProfiles
 
             CreateMap<Category, CategoryView>().ReverseMap();
 
+            CreateMap<CreditTransaction, CreditTransactionView>()
+                .ReverseMap()
+                .ForMember(d => d.IsIncrement, s => s.MapFrom(s => s.IsIncrement ?? false));
+
+            CreateMap<CreditTransaction, CreditTransactionListView>()
+               .ForMember(d => d.CustomerName, s => s.MapFrom(s => s.Customer.FullName))
+               .ReverseMap();
+
             CreateMap<Region, RegionView>().ReverseMap();
 
             CreateMap<Storage, StorageView>().ReverseMap();

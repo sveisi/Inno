@@ -10,9 +10,8 @@ namespace Inno.Data.Configurations
         {
            base.Configure(builder);
 
-            builder.HasKey(x => x.Id);
             builder.Property(x => x.Amount).HasPrecision(18, 2);
-            builder.Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
+            builder.Property(x => x.Description).HasMaxLength(200);
         }
     }
 }

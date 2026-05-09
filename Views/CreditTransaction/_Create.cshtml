@@ -1,0 +1,54 @@
+﻿@model CreditTransactionView
+@{
+    Layout = "_ModalLayout";
+    ViewBag.Title = Res.Create + " " + Res.Credit;
+}
+
+@section Body {
+    <div class="form-group">
+        <label asp-for="CustomerId" class="control-label"></label>
+        <select asp-for="CustomerId" asp-items="@(new SelectList(Model.Customers,"Id","Name"))" class="form-select">
+            <option hidden disabled selected>@Res.DoSelect</option>
+        </select>
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="IsIncrement" class="form-label d-block">@Res.CreditType</label>
+
+        <div class="d-flex w-100">
+            <input type="radio"
+                   class="btn-check"
+                   name="IsIncrement"
+                   id="IsIncrement_True"
+                   value="true"
+                   @(Model.IsIncrement ?? false ? "checked" : "")>
+            <label class="btn btn-outline-success flex-fill" for="IsIncrement_True">
+                @Res.Increment
+            </label>
+
+            <input type="radio"
+                   class="btn-check"
+                   name="IsIncrement"
+                   id="IsIncrement_False"
+                   value="false"
+                   @(!Model.IsIncrement ?? false ? "checked" : "")>
+            <label class="btn btn-outline-danger flex-fill" for="IsIncrement_False">
+                @Res.Decrement
+            </label>
+        </div>
+
+        <span asp-validation-for="IsIncrement" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+}

@@ -672,4 +672,28 @@
   <data name="AccessDeniedMsg" xml:space="preserve">
     <value>شما مجاز به تغییر این رکورد نمی باشید</value>
   </data>
+  <data name="BuyOrder" xml:space="preserve">
+    <value>سفارش خرید</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>سفارش</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>سفارشات</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>فی</value>
+  </data>
+  <data name="Credits" xml:space="preserve">
+    <value>اعتبارات</value>
+  </data>
+  <data name="Increment" xml:space="preserve">
+    <value>افزایش</value>
+  </data>
+  <data name="Decrement" xml:space="preserve">
+    <value>کاهش</value>
+  </data>
+  <data name="CreditType" xml:space="preserve">
+    <value>نوع اعتبار</value>
+  </data>
 </root>
