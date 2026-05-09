@@ -36,14 +36,24 @@ function addSelectToSearch(selector, paramName = selector) {
         return '';
 }
 
+function formatUSD(value) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(value);
+}
+
 //datatable
 // تنظیمات دیگر عمومی که می‌خوای برای همه‌ی جداول باشه مثلاً:
 $.extend(true, $.fn.dataTable.defaults, {
-    language: { url: 'lib/dataTables/fa.json?v2' },
+    language: { url: 'lib/dataTables-1.12.1/fa.json?v1' },
     //dom: "rtip",//https://datatables.net/reference/option/dom
     dom: "rt<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     serverSide: true,
     processing: true,
+    order: [[0, 'desc']],
     responsive: true,
     pageLength: 20,
     conditionalPaging: true
