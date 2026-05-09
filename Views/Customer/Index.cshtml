@@ -48,8 +48,14 @@
                     { data: "@nameof(CustomerListView.CityName)", name: "@nameof(CustomerListView.CityName)", title: "@Html.DisplayNameFor(model => model.CityName)" },
                     { data: "@nameof(CustomerListView.Mobile)", name: "@nameof(CustomerListView.Mobile)", title: "@Html.DisplayNameFor(model => model.Mobile)" },
                     { data: "@nameof(CustomerListView.DiscountPercent)", name: "@nameof(CustomerListView.DiscountPercent)", title: "@Html.DisplayNameFor(model => model.DiscountPercent)" },
-                    { data: "@nameof(CustomerListView.CreditBalance)", name: "@nameof(CustomerListView.CreditBalance)", title: "@Html.DisplayNameFor(model => model.CreditBalance)" },
-                    { data: "@nameof(CustomerListView.IsActive)", name: "@nameof(CustomerListView.IsActive)", title: "@Html.DisplayNameFor(model => model.IsActive)" },
+                    { data: "@nameof(CustomerListView.CreditBalance)", name: "@nameof(CustomerListView.CreditBalance)", title: "@Html.DisplayNameFor(model => model.CreditBalance)",
+                        render: function (data, type, row) { return formatUSD(data);}
+                    },
+                    { data: "@nameof(CustomerListView.IsActive)", name: "@nameof(CustomerListView.IsActive)", title: "@Html.DisplayNameFor(model => model.IsActive)" ,
+                        render: function (data, type, row) {
+                            return renderCheckBox(data);
+                        }
+                    },
                     {
                         data: null, orderable: false, searchable: false, responsivePriority: -1,
                         render: function (data, type, row) {

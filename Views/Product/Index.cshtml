@@ -49,7 +49,9 @@
                     { data: "@nameof(ProductListView.CategoryName)", name: "@nameof(ProductListView.CategoryName)", title: "@Html.DisplayNameFor(model => model.CategoryName)" },
                     { data: "@nameof(ProductListView.UnitName)", name: "@nameof(ProductListView.UnitName)", title: "@Html.DisplayNameFor(model => model.UnitName)" },
                     { data: "@nameof(ProductListView.ColorName)", name: "@nameof(ProductListView.ColorName)", title: "@Html.DisplayNameFor(model => model.ColorName)" },
-                    { data: "@nameof(ProductListView.Price)", name: "@nameof(ProductListView.Price)", title: "@Html.DisplayNameFor(model => model.Price)" },
+                    { data: "@nameof(ProductListView.Price)", name: "@nameof(ProductListView.Price)", title: "@Html.DisplayNameFor(model => model.Price)",
+                        render: function (data, type, row) { return formatUSD(data);}
+                    },
                     renderActionButton('@nameof(ProductListView.Id)', [editButtonConfig, deleteButtonConfig])
                 ]
             });
