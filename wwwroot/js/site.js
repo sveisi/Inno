@@ -48,7 +48,7 @@ function formatUSD(value) {
 //datatable
 // تنظیمات دیگر عمومی که می‌خوای برای همه‌ی جداول باشه مثلاً:
 $.extend(true, $.fn.dataTable.defaults, {
-    language: { url: 'lib/dataTables-1.12.1/fa.json?v1' },
+    language: { url: '/lib/dataTables-1.12.1/fa.json?v1' },
     //dom: "rtip",//https://datatables.net/reference/option/dom
     dom: "rt<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     serverSide: true,
@@ -73,7 +73,8 @@ function renderActionButton(keyName, buttonConfigs = []) {
             let buttonsHtml = '';
             for (const config of buttonConfigs) {
                 // فراخوانی تابع سازنده دکمه از طریق پیکربندی
-                buttonsHtml += config.renderer(formattedId, config); // تابع renderer و خود config را پاس می‌دهیم
+                const renderer = config.renderer || generateButtonHtml;
+                buttonsHtml += renderer(formattedId, config); // تابع رندرر و خود کانفیگ را پاس می‌دهیم
             }
             return buttonsHtml;
         }
