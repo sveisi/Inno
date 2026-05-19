@@ -142,24 +142,6 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Information.
-        /// </summary>
-        public static string BaseInfo {
-            get {
-                return ResourceManager.GetString("BaseInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BaseInfoCardText.
-        /// </summary>
-        public static string BaseInfoCardText {
-            get {
-                return ResourceManager.GetString("BaseInfoCardText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Both.
         /// </summary>
         public static string Both {
@@ -430,51 +412,6 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cost &amp; Income.
-        /// </summary>
-        public static string CostAndIncome {
-            get {
-                return ResourceManager.GetString("CostAndIncome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cost and Income.
-        /// </summary>
-        public static string CostAndIncomeCardText {
-            get {
-                return ResourceManager.GetString("CostAndIncomeCardText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cost Group.
-        /// </summary>
-        public static string CostGroup {
-            get {
-                return ResourceManager.GetString("CostGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Costs.
-        /// </summary>
-        public static string Costs {
-            get {
-                return ResourceManager.GetString("Costs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cost Sum.
-        /// </summary>
-        public static string CostSum {
-            get {
-                return ResourceManager.GetString("CostSum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {
@@ -642,6 +579,15 @@ namespace Inno.Resources {
         public static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جزئیات.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
             }
         }
         
@@ -1056,6 +1002,15 @@ namespace Inno.Resources {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره سفارش.
+        /// </summary>
+        public static string OrderId {
+            get {
+                return ResourceManager.GetString("OrderId", resourceCulture);
             }
         }
         
@@ -1555,6 +1510,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to وضعیت.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to انبار.
         /// </summary>
         public static string Storage {
@@ -1600,65 +1564,11 @@ namespace Inno.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Cost.
+        ///   Looks up a localized string similar to جمع مبلغ.
         /// </summary>
-        public static string TotalCost {
+        public static string TotalAmount {
             get {
-                return ResourceManager.GetString("TotalCost", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is cost.
-        /// </summary>
-        public static string TransactionGroup_IsCost {
-            get {
-                return ResourceManager.GetString("TransactionGroup_IsCost", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transaction Groups.
-        /// </summary>
-        public static string TransactionGroups {
-            get {
-                return ResourceManager.GetString("TransactionGroups", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transaction Name.
-        /// </summary>
-        public static string TransactionName {
-            get {
-                return ResourceManager.GetString("TransactionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transaction Group.
-        /// </summary>
-        public static string TransactionView_TransactionGroupId {
-            get {
-                return ResourceManager.GetString("TransactionView_TransactionGroupId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ترانزیت.
-        /// </summary>
-        public static string Transit {
-            get {
-                return ResourceManager.GetString("Transit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to هزینه حمل و نقل.
-        /// </summary>
-        public static string TransportationCost {
-            get {
-                return ResourceManager.GetString("TransportationCost", resourceCulture);
+                return ResourceManager.GetString("TotalAmount", resourceCulture);
             }
         }
         
@@ -1686,24 +1596,6 @@ namespace Inno.Resources {
         public static string UnitPrice {
             get {
                 return ResourceManager.GetString("UnitPrice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to تخلیه .
-        /// </summary>
-        public static string Unload {
-            get {
-                return ResourceManager.GetString("Unload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to تاریخ تخلیه.
-        /// </summary>
-        public static string UnloadDate {
-            get {
-                return ResourceManager.GetString("UnloadDate", resourceCulture);
             }
         }
         

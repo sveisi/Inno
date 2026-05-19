@@ -16,8 +16,8 @@ namespace Inno.Types
 
     public enum OrderStatus
     {
-        Draft,
-        Submitted,
+        Draft = 1,
+        Confirmed,
         Completed,
         Cancelled
     }
@@ -28,12 +28,6 @@ namespace Inno.Types
         Ready,
         Issued,
         Returned
-    }
-
-    public enum CreditTransactionType
-    {
-        Increment,
-        Decrement
     }
 
     public enum UnitMeasurement

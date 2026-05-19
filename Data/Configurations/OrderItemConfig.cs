@@ -10,9 +10,10 @@ namespace Inno.Data.Configurations
         {
             base.Configure(builder);
 
-            builder.Property(x => x.Qty).HasPrecision(18, 2);
-            builder.Property(x => x.UnitPrice).HasPrecision(18, 2);
-            builder.Property(x => x.TotalPrice).HasPrecision(18, 2);
+            builder.Property(x => x.ProductId).IsRequired();
+            builder.Property(x => x.Qty).IsRequired().HasPrecision(18, 2);
+            builder.Property(x => x.UnitPrice).IsRequired().HasPrecision(18, 2);
+            builder.Property(x => x.Amount).IsRequired().HasPrecision(18, 2);
         }
     }
 }

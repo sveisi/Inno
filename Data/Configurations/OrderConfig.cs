@@ -10,8 +10,15 @@ namespace Inno.Data.Configurations
         {
             base.Configure(builder);
 
+            builder.Property(x => x.DiscountAmount).HasPrecision(18, 2);
             builder.Property(x => x.TotalAmount).HasPrecision(18, 2);
+            builder.Property(x => x.PaymentAmount).HasPrecision(18, 2);
             builder.Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
+
+            builder.HasOne(x => x.CreatedByUser)
+              .WithMany()
+              .HasForeignKey(x => x.CreatedBy)
+              .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

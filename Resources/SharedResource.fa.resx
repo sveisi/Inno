@@ -129,12 +129,6 @@
   <data name="Amount" xml:space="preserve">
     <value>مبلغ</value>
   </data>
-  <data name="BaseInfo" xml:space="preserve">
-    <value>اطلاعات پایه</value>
-  </data>
-  <data name="BaseInfoCardText" xml:space="preserve">
-    <value>تعریف اطلاعات پایه مورد استفاده در برنامه</value>
-  </data>
   <data name="Company" xml:space="preserve">
     <value>شرکت</value>
   </data>
@@ -143,12 +137,6 @@
   </data>
   <data name="ContactCardText" xml:space="preserve">
     <value>تعریف مشخصات اشخاص، شرکت های همکار، بازرگانان و ...</value>
-  </data>
-  <data name="CostGroup" xml:space="preserve">
-    <value>گروه هزینه</value>
-  </data>
-  <data name="Costs" xml:space="preserve">
-    <value>هزینه ها</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>ایجاد</value>
@@ -204,9 +192,6 @@
   <data name="Save" xml:space="preserve">
     <value>ذخیره</value>
   </data>
-  <data name="TransactionGroup_IsCost" xml:space="preserve">
-    <value>نوع</value>
-  </data>
   <data name="Yes" xml:space="preserve">
     <value>بله</value>
   </data>
@@ -221,12 +206,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>نوع</value>
-  </data>
-  <data name="CostAndIncome" xml:space="preserve">
-    <value>هزینه و درآمد</value>
-  </data>
-  <data name="TransactionName" xml:space="preserve">
-    <value>نام هزینه/درآمد</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>هیچکدام</value>
@@ -258,9 +237,6 @@
   <data name="Address" xml:space="preserve">
     <value>آدرس</value>
   </data>
-  <data name="TransactionView_TransactionGroupId" xml:space="preserve">
-    <value>گروه هزینه/درآمد</value>
-  </data>
   <data name="Search" xml:space="preserve">
     <value>جستجو</value>
   </data>
@@ -269,9 +245,6 @@
   </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>تاریخ ایجاد</value>
-  </data>
-  <data name="CostAndIncomeCardText" xml:space="preserve">
-    <value>ثبت هزینه ها و درآمدها، حقوق کارمندان، اجاره و ...</value>
   </data>
   <data name="ReceivePaymentCardText" xml:space="preserve">
     <value>ثبت هر نوع دریافت یا پرداخت به اشخاص و شرکتها</value>
@@ -309,17 +282,14 @@
   <data name="ContactName" xml:space="preserve">
     <value>نام شخص/شرکت</value>
   </data>
-  <data name="TotalCost" xml:space="preserve">
-    <value>هزینه کل</value>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>جمع مبلغ</value>
   </data>
   <data name="Received" xml:space="preserve">
     <value>دریافتی</value>
   </data>
   <data name="Dolar" xml:space="preserve">
     <value>دلار</value>
-  </data>
-  <data name="CostSum" xml:space="preserve">
-    <value>جمع هزینه</value>
   </data>
   <data name="ReceivedSum" xml:space="preserve">
     <value>جمع دریافتی</value>
@@ -405,9 +375,6 @@
   <data name="Close" xml:space="preserve">
     <value>بستن</value>
   </data>
-  <data name="TransactionGroups" xml:space="preserve">
-    <value>گروههای درآمد و هزینه</value>
-  </data>
   <data name="Country" xml:space="preserve">
     <value>کشور</value>
   </data>
@@ -453,14 +420,8 @@
   <data name="Sold" xml:space="preserve">
     <value>فروش رفته</value>
   </data>
-  <data name="Unload" xml:space="preserve">
-    <value>تخلیه</value>
-  </data>
   <data name="USDRate" xml:space="preserve">
     <value>نرخ دلار</value>
-  </data>
-  <data name="UnloadDate" xml:space="preserve">
-    <value>تاریخ تخلیه</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>شهر</value>
@@ -479,9 +440,6 @@
   </data>
   <data name="CarriageForward" xml:space="preserve">
     <value>پسکرایه</value>
-  </data>
-  <data name="Transit" xml:space="preserve">
-    <value>ترانزیت</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>صادرات</value>
@@ -527,9 +485,6 @@
   </data>
   <data name="Discount" xml:space="preserve">
     <value>تخفیف</value>
-  </data>
-  <data name="TransportationCost" xml:space="preserve">
-    <value>هزینه حمل و نقل</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>لوکیشن</value>
@@ -695,5 +650,14 @@
   </data>
   <data name="CreditType" xml:space="preserve">
     <value>نوع اعتبار</value>
+  </data>
+  <data name="OrderId" xml:space="preserve">
+    <value>شماره سفارش</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>جزئیات</value>
   </data>
 </root>

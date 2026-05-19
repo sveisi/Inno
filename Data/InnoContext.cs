@@ -25,6 +25,8 @@ namespace Inno.Data
         public DbSet<DocumentItem> DocumentItems { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<SKU> SKUs { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public InnoContext(DbContextOptions<InnoContext> options, IUserContextService userContext) : base(options)
         {
