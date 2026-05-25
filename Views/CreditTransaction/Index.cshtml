@@ -50,7 +50,7 @@
                             return '<span style="color: #d50000; dir=ltr;">' + formatUSD(data) + '</span>';
                         },
                     },
-                    { data: "@nameof(CreditTransactionListView.Description)", name: "@nameof(CreditTransactionListView.Description)", title: "@Html.DisplayNameFor(model => model.Description)" },
+                    { data: "@nameof(CreditTransactionListView.Description)", name: "@nameof(CreditTransactionListView.Description)", title: "@Html.DisplayNameFor(model => model.Description)", orderable: false },
                 ]
             });
         });
