@@ -2,6 +2,7 @@
 using Inno.Helper;
 using Inno.Helper.ConventionalMetadataProviders;
 using Inno.MappingProfiles;
+using Inno.Models;
 using Inno.Services;
 using Inno.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -70,6 +71,8 @@ namespace Inno
             })
                 .AddEntityFrameworkStores<InnoContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
 
             // Configure supported cultures and localization options
             services.AddLocalization(options => options.ResourcesPath = "Resources");

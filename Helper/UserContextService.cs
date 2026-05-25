@@ -7,6 +7,7 @@ namespace Inno.Helper
     {
         string UserId { get; }
         string UserName { get; }
+        int? CustomerId { get; }
     }
 
     public class UserContextService : IUserContextService
@@ -37,5 +38,20 @@ namespace Inno.Helper
         }
 
         public string UserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+
+        public int? CustomerId
+        {
+            get
+            {
+                var claimValue = _httpContextAccessor.HttpContext?.User?.FindFirst("CustomerId")?.Value;
+
+                if (int.TryParse(claimValue, out int result))
+                {
+                    return result;
+                }
+
+                return null;
+            }
+        }
     }
 }
