@@ -20,7 +20,9 @@ namespace Inno.ViewModels
         [DisplayName("Date")]
         public DateTime OrderDate { get; set; }
 
+        public decimal DiscountAmount { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
 
         public List<OrderItemView> Items { get; set; }
     }

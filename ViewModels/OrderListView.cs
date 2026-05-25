@@ -8,6 +8,7 @@ namespace Inno.ViewModels
         [DisplayName("OrderId")]
         public int Id { get; set; }
 
+        public string CreatedBy { get; set; }
         [DisplayName("User")]
         public string CreatedByName { get; set; }
 
@@ -19,6 +20,8 @@ namespace Inno.ViewModels
         [DisplayName("Date")]
         public DateTime OrderDate => ConfirmedAt ?? CreatedAt;
 
+        public decimal DiscountAmount { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
     }
 }

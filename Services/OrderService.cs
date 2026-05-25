@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Stimulsoft.Report.StiOptions;
 
 namespace Inno.Services
 {
@@ -51,6 +50,40 @@ namespace Inno.Services
                 .FirstOrDefaultAsync();
 
             return order;
+        }
+
+        public async Task<OrderSummaryView> GetCurrentOrderSummaryAsync()
+        {
+            var cust = await ctx.Customers
+                .Where(x => x.Id == userContextSrv.CustomerId)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.DiscountPercent,
+                    x.CreditBalance,
+                    x.ParentCustomerId
+                })
+                .FirstOrDefaultAsync();
+
+            var items = await GetCurrentOrderItemsAsync();
+
+            var totalItems = items.Count;
+            var totalAmount = items.Sum(x => x.Qty * x.UnitPrice); ;
+
+            decimal discount = 0;
+            if (cust.ParentCustomerId == null)
+                discount = totalAmount * cust.DiscountPercent / 100m;
+
+            var paymentAmount = totalAmount - discount;
+
+            return new OrderSummaryView
+            {
+                ItemsCount = (int)totalItems,
+                TotalAmount = totalAmount,
+                DiscountAmount = discount,
+                PaymentAmount = paymentAmount,
+                CreditAmount = cust.CreditBalance
+            };
         }
 
         public async Task<Result<OrderItemView>> AddItemAsync(string productId, decimal qty)
@@ -129,6 +162,8 @@ namespace Inno.Services
                 ProductId = item.ProductId,
                 ProductName = prd.Name,
                 Qty = item.Qty,
+                UnitPrice = prd.Price,
+                Amount = qty * prd.Price,
             };
             return Result<OrderItemView>.Ok(res);
         }

@@ -634,7 +634,7 @@
     <value>سفارش</value>
   </data>
   <data name="Orders" xml:space="preserve">
-    <value>سفارشات</value>
+    <value>سفارش‌ها</value>
   </data>
   <data name="UnitPrice" xml:space="preserve">
     <value>فی</value>
@@ -659,5 +659,26 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>جزئیات</value>
+  </data>
+  <data name="OrderTotal" xml:space="preserve">
+    <value>جمع سفارش</value>
+  </data>
+  <data name="ItemCount" xml:space="preserve">
+    <value>تعداد اقلام</value>
+  </data>
+  <data name="PayableAmount" xml:space="preserve">
+    <value>مبلغ قابل پرداخت</value>
+  </data>
+  <data name="CheckoutOrder" xml:space="preserve">
+    <value>نهایی کردن سفارش</value>
+  </data>
+  <data name="DiscountAmount" xml:space="preserve">
+    <value>مبلغ تخفیف</value>
+  </data>
+  <data name="PaymentAmount" xml:space="preserve">
+    <value>مبلغ پرداختی</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>گذرواژه فعلی</value>
   </data>
 </root>

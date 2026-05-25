@@ -49,7 +49,12 @@
                         render: function (data, type, row) { return moment(data).format('YYYY/MM/DD HH:mm'); },
                         createdCell: function (td, cellData, rowData, row, cell) { $(td).addClass('ltr-cell'); }
                     },
-                    { data: "@nameof(OrderListView.TotalAmount)", name: "@nameof(OrderListView.TotalAmount)", title: "@Html.DisplayNameFor(model => model.TotalAmount)",
+                    { data: "@nameof(OrderListView.DiscountAmount)", name: "@nameof(OrderListView.DiscountAmount)", title: "@Html.DisplayNameFor(model => model.DiscountAmount)",
+                        render: function (data, type, row) {
+                            return '<span dir=ltr;">' + formatUSD(data) + '</span>';
+                        }
+                    },
+                    { data: "@nameof(OrderListView.PaymentAmount)", name: "@nameof(OrderListView.PaymentAmount)", title: "@Html.DisplayNameFor(model => model.PaymentAmount)",
                         render: function (data, type, row) {
                             return '<span dir=ltr;">' + formatUSD(data) + '</span>';
                         }

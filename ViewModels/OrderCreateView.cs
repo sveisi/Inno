@@ -20,10 +20,10 @@ namespace Inno.ViewModels
 
         public decimal UnitPrice { get; set; }
         public decimal Amount { get; set; }
-        
-        //public OrderItemView NewItem { get; set; }
 
         public List<OrderItemView> Items { get; set; }
+
+        public OrderSummaryView Summary { get; set; }
 
         public OrderCreateView()
         {

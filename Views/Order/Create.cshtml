@@ -2,7 +2,7 @@
 @using Newtonsoft.Json
 @model OrderCreateView
 @{
-    ViewData["Title"] = Res.Order;
+    ViewData["Title"] = Res.BuyOrder;
     ViewBag.DeleteUrl = Url.Action("DeleteItem", "Order");
 }
 
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group col-2">
             <label asp-for="Qty" class="control-label"></label>
-            <input asp-for="Qty" class="form-control form-control-sm" type="text" id="product_qty"/>
+            <input asp-for="Qty" class="form-control form-control-sm" type="text" id="product_qty" />
         </div>
         <div class="form-group col-1">
             <label asp-for="Amount" class="control-label"></label>
@@ -62,17 +62,54 @@
     <table id="myTable" class="table table-striped table-hover nowrap" style="width:100%">
         <thead class="bg-warning"></thead>
     </table>
-    <!-- اضافه کردن دکمه بعد از تگ بستن جدول یا در در انتهای Card -->
-    <div class="d-flex justify-content-between align-items-center mt-3 p-3 bg-light border rounded">
-        <div class="order-summary">
-            <span class="fw-bold me-4">تعداد کل اقلام: <span id="totalItemsCount">0</span></span>
-            <span class="fw-bold me-4">مبلغ نهایی: <span id="finalTotalPrice">0</span> $</span>
-            <span class="fw-bold">اعتبار شما : <span id="finalTotalPrice">0</span> $</span>
+    <div class="row mt-1">
+        <!-- بخش جزئیات -->
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+                        <i class="fas fa-receipt text-primary fs-4 me-2"></i>
+                        <h5 class="mb-0 fw-bold">@Res.OrderTotal</h5>
+                    </div>
+                    <div class="row g-3">
+                        <!-- آیتم‌ها -->
+                        <div class="col-6 col-md-3">
+                            <div class="p-2 border rounded bg-light">
+                                <div class="text-muted fw-bold fs-5 mb-1"><i class="fas fa-boxes me-2"></i>@Res.ItemCount</div>
+                                <span id="totalItemsCount" class="fw-bolder fs-6 text-dark">0</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-2 border rounded bg-light">
+                                <div class="text-muted fw-bold fs-5 mb-1"><i class="fas fa-dollar-sign me-2"></i>@Res.TotalAmount</div>
+                                <span id="totalAmount" class="fw-bolder fs-6 text-dark">0</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-2 border rounded bg-light">
+                                <div class="text-success fw-bold fs-5 mb-1"><i class="fas fa-percentage me-2"></i>@Res.DiscountAmount</div>
+                                <span id="discountAmount" class="fw-bolder fs-6 text-success">0</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div id="creditBox" class="p-2 border rounded bg-light">
+                                <div class="text-muted fw-bold fs-5 mb-1"><i class="fas fa-wallet me-2"></i>@Res.Credit</div>
+                                <span id="creditAmount" class="fw-bolder fs-6 text-dark">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <button type="button" id="btnSubmitOrder" class="btn btn-success btn-lg px-5">
-                <i class="bi bi-check-circle me-1"></i> ثبت و تایید نهایی سفارش
-            </button>
+        <!-- بخش مبلغ نهایی -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 bg-primary text-white h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+                    <span class="fs-6 opacity-75">@Res.PayableAmount</span>
+                    <span id="paymentAmount" class="fs-2 fw-bolder my-2">0</span>
+                    <button type="button" id="btnCheckout" class="btn btn-light text-primary w-100 mt-2 fw-bold">@Res.CheckoutOrder</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -80,8 +117,50 @@
 
 @section Scripts {
     <script type="text/javascript">
+
+         function updateOrderSummary(summary) {
+            $("#totalItemsCount").text(summary.ItemsCount);
+            $("#totalAmount").text(formatUSD(summary.TotalAmount));
+            $("#discountAmount").text(formatUSD(summary.DiscountAmount));
+            $("#paymentAmount").text(formatUSD(summary.PaymentAmount));
+            $("#creditAmount").text(formatUSD(summary.CreditAmount));
+
+            var $creditBox = $("#creditBox");
+
+            // منطق هشدار برای اعتبار
+            if (summary.PaymentAmount > summary.CreditAmount) {
+                $creditBox.addClass("bg-danger-subtle border-danger text-danger");
+                $creditBox.find(".text-muted, .text-dark").removeClass("text-muted text-dark").addClass("text-danger");
+                $creditBox.removeClass("bg-light");
+            } else {
+                $creditBox.removeClass("bg-danger-subtle border-danger text-danger");
+                $creditBox.find(".text-danger").removeClass("text-danger").addClass("text-muted");
+                $creditBox.addClass("bg-light");
+            }
+        }
+        //سفارشی سازی حذف جهت نمایش جمع فاکتور
+        deleteButtonConfig = {
+            actionName: 'customDeleteItem', //نام تابع جدید
+            iconClass: 'fa fa-times',
+            title: '@Res.Delete',
+            extraClass: 'link-danger',
+        };
+
+        function customDeleteItem(id) {
+            //استفاده از afterDel
+            deleteItem(id, '@ViewBag.DeleteUrl', function(response) {
+                if (response && response.data.summary) {
+                    updateOrderSummary(response.data.summary);
+                }
+            });
+        }
+
         $(document).ready(function () {
+
             var itemsData = @Html.Raw(JsonConvert.SerializeObject(Model.Items ?? new List<OrderItemView>()));
+            var currentSummary = @Html.Raw(Json.Serialize(Model.Summary));
+
+            updateOrderSummary(currentSummary);
 
             addTableFooter(7);
 
@@ -151,11 +230,11 @@
                     if (e.which === 13) e.preventDefault();
 
                     if (getProductIsRunning) return;
-                    
+
                     getProductIsRunning = true;
 
                     GetProduct();
-                    
+
                     // پس از مدت کوتاهی پرچم را آزاد کن تا برای دفعات بعد آماده باشد
                     setTimeout(() => { getProductIsRunning = false; }, 300);
                 }
@@ -163,9 +242,9 @@
 
             //با زدن مقدار کالا به سفارش اضافه میشود
             $(qtyId).on('keypress', function(e) {
-                if (e.which === 13) { 
+                if (e.which === 13) {
                     e.preventDefault();
-                    submitFormAjax();
+                    submitAddForm();
                 }
             });
 
@@ -229,13 +308,13 @@
                 });
             };//end of GetProduct
 
-            function submitFormAjax() {
+            function submitAddForm() {
                 hideErrorContainer();
                 if (!$('#formAddItem').valid()) {
                     return false;
                 }
                 var form_data = $('#formAddItem').serialize();
-                
+
                 toggleControls(false);
 
                 $.ajax({
@@ -244,7 +323,8 @@
                     data: form_data,
                     success: function (response) {
                         if (response.success && response.data) {
-                            table.row.add(response.data).draw(false);
+                            table.row.add(response.data.item).draw(false);
+                            updateOrderSummary(response.data.summary);
                             //پاک کردن فرم
                             $('#formAddItem')[0].reset();
                             setTimeout(() => $(prdId).focus(), 0);
@@ -271,34 +351,58 @@
                     $('#spinner').show();
                 }
             }
-
-            $('#btnSubmitOrder').on('click', function () {
+            
+            $('#btnCheckout').on('click', function () {
                 if (!table.data().any()) {
                     showError("سبد سفارش شما خالی است!");
                     return;
                 }
+
+                //هر چیزی که عدد نیست و نقطه هم نیست را حذف کن
+                var paymentAmount = parseFloat($('#paymentAmount').text().replace(/[^0-9.]/g, '')) || 0;
+                var creditAmount = parseFloat($('#creditAmount').text().replace(/[^0-9.]/g, '')) || 0;
+
+                if (paymentAmount > creditAmount) {
+                    showError("اعتبار شما کافی نیست!");
+                    return;
+                }
+
                 $.bootstrapModalConfirm({
                     caption: '@Res.Confirm',
                     body: "آیا از ثبت نهایی این سفارش اطمینان دارید؟",
                     confirmText: '@Res.Yes',
                     closeText: '@Res.No',
                     onConfirm: function () {
-                        // ساختن یک فرم POST مخفی برای صدا زدن متد Confirm
-                        var form = $('<form/>', {
-                            action: '@Url.Action("Checkout", "Order")',
-                            method: 'POST'
-                        });
+                        // غیرفعال کردن دکمه و اضافه کردن اسپنر
+                        var btn = $('#btnCheckout');
+                        var spinner = $('<span class="spinner-border spinner-border-sm me-2"></span>');
+                        btn.prop('disabled', true).prepend(spinner);
 
-                        // اضافه کردن توکن اعتبارسنجی
                         var token = $('input[name="__RequestVerificationToken"]').val();
-                        form.append('<input type="hidden" name="__RequestVerificationToken" value="' + token + '" />');
 
-                        // اضافه به صفحه و ارسال
-                        $('body').append(form);
-                        form.submit();
+                        $.ajax({
+                            url: '@Url.Action("Checkout", "Order")',
+                            type: 'POST',
+                            headers: { 'RequestVerificationToken': token }, // یا data بفرست (پایین توضیح میدم)
+                            success: function (res) {
+                                if (res && res.success) {
+                                    window.location.href = res.data.redirectUrl;
+                                }
+                                else{
+                                    showError(res.error);
+                                }
+                            },
+                            error: function (e) {
+                                showError(e.error);
+                            },
+                            complete: function () {
+                                btn.prop('disabled', false);
+                                spinner.remove();
+                            }
+                        });
                     }
                 });//end of bootstrapModalConfirm
-            });//end of btnSubmitOrder.click
+            });//end of btnCheckout.click
         });//end of document.ready
     </script>
 }

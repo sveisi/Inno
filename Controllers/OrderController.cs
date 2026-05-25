@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inno.Controllers
 {
+    [Authorize]
     public class OrderController : BaseController
     {
         private readonly IOrderService ordSrv;
@@ -40,8 +41,9 @@ namespace Inno.Controllers
         [Authorize(Roles = UserRoleName.Customer)]
         public async Task<IActionResult> Create()
         {
-            var v =  new OrderCreateView();
+            var v = new OrderCreateView();
             v.Items = await ordSrv.GetCurrentOrderItemsAsync();
+            v.Summary = await ordSrv.GetCurrentOrderSummaryAsync();
 
             return View(v);
         }
@@ -54,8 +56,13 @@ namespace Inno.Controllers
             if (!ModelState.IsValid)
                 return GetModelError();
 
-            var res = await ordSrv.AddItemAsync(productId, qty);
-            return res.ToActionResult();
+            var addItem = await ordSrv.AddItemAsync(productId, qty);
+            if (addItem.IsFailure)
+                return addItem.ToActionResult();
+
+            var summary = await ordSrv.GetCurrentOrderSummaryAsync();
+
+            return AjaxSuccess(new { item = addItem.Data, summary = summary });
         }
 
         [Authorize(Roles = UserRoleName.Customer)]
@@ -63,8 +70,13 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteItem(int id)
         {
-            var res = await ordSrv.DeleteItemAsync(id);
-            return res.ToActionResult();
+            var delItem = await ordSrv.DeleteItemAsync(id);
+            if (delItem.IsFailure)
+                return delItem.ToActionResult();
+
+            var summary = await ordSrv.GetCurrentOrderSummaryAsync();
+
+            return AjaxSuccess(new { summary = summary });
         }
 
         [Authorize(Roles = UserRoleName.Customer)]
@@ -73,17 +85,21 @@ namespace Inno.Controllers
         public async Task<IActionResult> Checkout()
         {
             var res = await ordSrv.CheckoutAsync();
+
             if (res.Success)
-                return RedirectToAction(nameof(Details), res.Data);
-            else
-                return res.ToActionResult();
+            {
+                var url = Url.Action(nameof(Details), "Profile", new { id = res.Data });
+                return AjaxSuccess(new { redirectUrl = url });
+            }
+            
+            return res.ToActionResult();
         }
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            //Todo: اگر کاربر مشتری بود سفارشات خودش را در پروفایل ببیند
+            //اگر کاربر مشتری بود سفارشات خودش را در پروفایل ببیند
             var order = await ordSrv.GetOrderAsync(id);
 
             return View(order);
