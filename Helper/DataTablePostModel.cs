@@ -22,14 +22,17 @@ namespace Inno.Helper
             gfy.Filter = search.value;
             gfy.PageSize = length <= 0 ? 1000 : length;
             gfy.Page = (length <= 0) ? 1 : (start / length + 1);
-            foreach (var ord in order)
+            if (order != null)
             {
-                var colName = columns[ord.column].name;
-                if (!string.IsNullOrEmpty(colName))
-                    gfy.OrderBy += columns[ord.column].name + " " + ord.dir + ",";
+                foreach (var ord in order)
+                {
+                    var colName = columns[ord.column].name;
+                    if (!string.IsNullOrEmpty(colName))
+                        gfy.OrderBy += columns[ord.column].name + " " + ord.dir + ",";
+                }
+                if (gfy.OrderBy != null && gfy.OrderBy.EndsWith(','))
+                    gfy.OrderBy = gfy.OrderBy.Substring(0, gfy.OrderBy.Length - 1);
             }
-            if (gfy.OrderBy != null && gfy.OrderBy.EndsWith(','))
-                gfy.OrderBy = gfy.OrderBy.Substring(0, gfy.OrderBy.Length - 1);
             if (gfy.Filter != null && gfy.Filter.EndsWith(','))
                 gfy.Filter = gfy.Filter.Substring(0, gfy.Filter.Length - 1);
 
