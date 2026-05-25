@@ -87,7 +87,11 @@ function generateButtonHtml(id, config) {
     let iconHtml = `<i class='${config.iconClass}'></i>`;
     let titleAttribute = config.title ? `title='${config.title}'` : '';
 
-    return `<a href='javascript:${config.actionName}(${id})' class='${classes}' ${titleAttribute}>${iconHtml}</a>`;
+    let link = `javascript:${config.actionName}(${id})`;
+    if (config.url) {
+        link = `${config.url}/${id}`;
+    }
+    return `<a href='${link}' class='${classes}' ${titleAttribute}>${iconHtml}</a>`;
 }
 
 function renderCheckBox(value) {

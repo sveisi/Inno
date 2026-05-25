@@ -220,14 +220,14 @@
         //});
 
         // --- پیکربندی دکمه‌ها ---
-        const editButtonConfig = {
+        var editButtonConfig = {
             actionName: 'editItem',
             iconClass: 'far fa-edit',
             title: '@Res.Edit',
             renderer: generateButtonHtml // تابعی که HTML را تولید می‌کند
             //function(){ return `<a href='javascript:editItem(${id})' title='@Res.Edit' class='px-2'><i class='far fa-edit'></i></a>`};
         };
-        const deleteButtonConfig = {
+        var deleteButtonConfig = {
             actionName: 'deleteItem',
             iconClass: 'fa fa-times',
             title: '@Res.Delete',
@@ -337,7 +337,7 @@
                                     }
                                 }
 
-                                if (afterDel) afterDel();
+                                if (afterDel) afterDel(e);
                             }
                             else if (e.error) {
                                 showError(e.error);
