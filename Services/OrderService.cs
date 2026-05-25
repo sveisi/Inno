@@ -52,6 +52,19 @@ namespace Inno.Services
             return order;
         }
 
+        ///<summary>سفارش ثبت شده برای کاربر جاری</summary>
+        public async Task<OrderView> GetCurrentUserOrderAsync(int id)
+        {
+            var order = await entities.Where(
+                x => x.Id == id &&
+                x.CreatedBy == userContextSrv.UserId &&
+                x.ConfirmedAt.HasValue)
+                .ProjectTo<OrderView>(mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+
+            return order;
+        }
+
         public async Task<OrderSummaryView> GetCurrentOrderSummaryAsync()
         {
             var cust = await ctx.Customers

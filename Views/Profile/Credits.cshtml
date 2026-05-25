@@ -1,0 +1,60 @@
+﻿@model CreditTransactionListView
+
+@{
+    ViewData["Title"] = Res.List + " " + Res.Credits;
+
+    ViewBag.CreateUrl = Url.Action("Create", "CreditTransaction");
+}
+
+<form asp-action="Index" method="get">
+    <div class="row mb-3 border-bottom">
+        <div class="col-auto">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <strong>مانده اعتبار فعلی: </strong>
+            <span id="currentBalance" class="fw-bold" dir="ltr">$@Model.Amount.ToString("N2")</span>
+        </div>
+    </div>
+</div>
+
+<form>
+    @Html.AntiForgeryToken()
+    <table id="myTable" class="table table-striped table-hover nowrap" style="width:100%">
+        <thead class="bg-warning"></thead>
+    </table>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetCredits", "Profile")',
+                    type: 'POST',
+                    datatype: "json"
+                },
+                columns: [
+                    { data: "@nameof(CreditTransactionListView.CreatedAt)", name: "@nameof(CreditTransactionListView.CreatedAt)", title: "@Html.DisplayNameFor(model => model.CreatedAt)",
+                        render: function (data, type, row) { return moment(data).format('YYYY/MM/DD HH:mm'); },
+                        createdCell: function (td, cellData, rowData, row, cell) { $(td).addClass('ltr-cell'); }
+                    },
+                    { data: "@nameof(CreditTransactionListView.Amount)", name: "@nameof(CreditTransactionListView.Amount)", title: "@Html.DisplayNameFor(model => model.Amount)",
+                        render: function (data, type, row) {
+                            if (row.@nameof(CreditTransactionListView.IsIncrement) === true) {
+                                return '<span style="color: #0fa80f; dir=ltr;">' + formatUSD(data) + '</span>';
+                            }
+                            return '<span style="color: #d50000; dir=ltr;">' + formatUSD(data) + '</span>';
+                        },
+                    },
+                    { data: "@nameof(CreditTransactionListView.Description)", name: "@nameof(CreditTransactionListView.Description)", title: "@Html.DisplayNameFor(model => model.Description)", orderable: false },
+                ],
+            });
+        });
+    </script>
+}

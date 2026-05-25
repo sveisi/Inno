@@ -3,6 +3,7 @@ using Inno.Services;
 using Inno.Services.Interfaces;
 using Inno.Types;
 using Inno.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Inno.Controllers
 {
-    [Microsoft.AspNetCore.Authorization.Authorize(Roles = UserRoleName.Admin)]
+    [Authorize]
     public class ProductController : BaseController
     {
         private readonly IProductService prdSrv;
@@ -58,6 +59,7 @@ namespace Inno.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         public async Task<IActionResult> Create()
         {
             await FillDropdownsAsync();
@@ -68,6 +70,7 @@ namespace Inno.Controllers
             return View(view);
         }
 
+        [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductView view)
@@ -95,6 +98,7 @@ namespace Inno.Controllers
             return View(view);
         }
 
+        [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpGet("[controller]/Edit/{code}")]
         public async Task<IActionResult> Edit(string code)
         {
@@ -111,6 +115,7 @@ namespace Inno.Controllers
             return View("Create", contv);
         }
 
+        [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductView view)
@@ -149,6 +154,7 @@ namespace Inno.Controllers
             return View("Create", view);
         }
 
+        [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete([FromForm(Name = "id")] string code)

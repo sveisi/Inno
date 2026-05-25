@@ -6,6 +6,8 @@ namespace Inno.ViewModels
 {
     public class CreditTransactionListView
     {
+        //برای سرچ و برای فیلتر در پروفایل لازمه
+        public int CustomerId { get; set; }
         [DisplayName("Customer")]
         public string CustomerName { get; set; }
         public decimal Amount { get; set; }

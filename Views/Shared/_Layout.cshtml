@@ -35,6 +35,8 @@
                                 <span>خانه</span>
                             </a>
                         </li>
+                        @if (User.IsInRole(Inno.Types.UserRoleName.Admin))
+                        {
                             <li class="nav-item">
                                 <a href="#" class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-tachometer-alt"></i>
@@ -114,17 +116,48 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href='@Url.Action("Index", "Order")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <span>@Res.Orders</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        @if (User.IsInRole(Inno.Types.UserRoleName.Customer))
+                        {
+                            <li class="nav-item">
                                 <a href='@Url.Action("Create", "Order")' class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-shopping-cart"></i>
                                     <span>@Res.BuyOrder</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                            <a href='@Url.Action("Index", "Order")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                <a href='@Url.Action("Orders", "Profile")' class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-clipboard-list"></i>
                                     <span>@Res.Orders</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href='@Url.Action("Credits", "Profile")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>@Res.Credits</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a href='@Url.Action("ChangePassword", "Profile")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                <i class="fas fa-key"></i>
+                                <span>@Res.ChangePassword</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="LogOut" method="post" class="m-0 p-0">
+                                <button type="submit" class="nav-link d-flex gap-2 link-body-emphasis border-0 bg-transparent w-100 text-start" style="cursor: pointer;">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <span>@Res.Logout</span>
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

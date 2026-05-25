@@ -12,6 +12,7 @@ namespace Inno.Services.Interfaces
         Task<Result> CreateAsync(UserView userView);
         Task<Result> UpdateAsync(UserEditView userView);
         Task<Result> ChangePasswordAsync(string loggedInUserName, string userName, string newPass);
+        Task<Result> ChangePasswordAsync(string currentPass, string newPass);
         Task<Result> DeleteAsync(string userName);
     }
 }

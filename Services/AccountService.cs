@@ -18,12 +18,15 @@ namespace Inno.Services
     {
         private readonly UserManager<User> userMgr;
         private readonly RoleManager<IdentityRole> roleMgr;
+        private readonly IUserContextService userContextSrv;
 
-        public AccountService(InnoContext ctx, IMapper mapper, UserManager<User> userMgr, RoleManager<IdentityRole> roleMgr)
+        public AccountService(InnoContext ctx, IMapper mapper, UserManager<User> userMgr, 
+            RoleManager<IdentityRole> roleMgr, IUserContextService userContextSrv)
             : base(ctx, mapper)
         {
             this.userMgr = userMgr;
             this.roleMgr = roleMgr;
+            this.userContextSrv = userContextSrv;
         }
 
         public Paging<UserListView> Get(GridifyQuery gridify)
@@ -119,9 +122,30 @@ namespace Inno.Services
             var user = await userMgr.FindByNameAsync(userName);
             if (user == null)
                 return Result.Failure(Resources.SharedResource.RecordNotFoundMsg);
+
             //تغییر پسورد
-            user.PasswordHash = userMgr.PasswordHasher.HashPassword(user, newPass);
-            var res = await userMgr.UpdateAsync(user);
+            var removeResult = await userMgr.RemovePasswordAsync(user);
+            if (!removeResult.Succeeded)
+                return Result.Failure(removeResult.Errors.First().Description);
+
+            var addResult = await userMgr.AddPasswordAsync(user, newPass);
+            if (!addResult.Succeeded)
+                return Result.Failure(addResult.Errors.First().Description);
+
+            return Result.Ok();
+        }
+
+        public async Task<Result> ChangePasswordAsync(string currentPass, string newPass)
+        {
+            var user = await userMgr.FindByIdAsync(userContextSrv.UserId);
+            if (user == null)
+                return Resources.SharedResource.RecordNotFoundMsg;
+
+            var isCorrect = await userMgr.CheckPasswordAsync(user, currentPass);
+            if (!isCorrect)
+                return "گذرواژه فعلی اشتباه است.";
+
+            var res = await userMgr.ChangePasswordAsync(user, currentPass, newPass);
             if (!res.Succeeded)
                 return Result.Failure(res.Errors.First().Description);
 

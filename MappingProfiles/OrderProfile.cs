@@ -12,6 +12,12 @@ namespace Inno.MappingProfiles
     {
         public OrderProfile()
         {
+            CreateMap<Order, OrderView>()
+                .ForMember(d => d.CreatedByName, s => s.MapFrom(s => s.CreatedByUser.FullName))
+                .ForMember(d => d.CustomerName, s => s.MapFrom(s => s.CreatedByUser.Customer.FullName))
+                .ForMember(d => d.OrderDate, s => s.MapFrom(s => s.ConfirmedAt ?? s.CreatedAt))
+                .ReverseMap();
+
             CreateMap<Order, OrderListView>()
                 .ForMember(d => d.CreatedByName, s => s.MapFrom(s => s.CreatedByUser.FullName))
                 .ReverseMap();

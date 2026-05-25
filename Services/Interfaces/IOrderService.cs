@@ -12,6 +12,7 @@ namespace Inno.Services.Interfaces
         Paging<OrderListView> Get(GridifyQuery gridify);
         Task<List<OrderItemView>> GetCurrentOrderItemsAsync();
         Task<Result<OrderView>> GetOrderAsync(int id);
+        Task<OrderView> GetCurrentUserOrderAsync(int id);
         Task<OrderSummaryView> GetCurrentOrderSummaryAsync();
         Task<Result<OrderItemView>> AddItemAsync(string productId, decimal qty);
         Task<Result> DeleteItemAsync(int id);
