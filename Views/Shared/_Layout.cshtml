@@ -23,24 +23,18 @@
         <div class="row">
             <div class="col-2 d-none d-lg-block">
                 <div class="shadow h-100 p-1">
-                    <a href="#" class="d-flex gap-2 align-items-center text-decoration-none link-body-emphasis">
+                    <a href='@Url.Action("Index", "Home")' title="@Res.Home" class="d-flex gap-2 align-items-center text-decoration-none link-body-emphasis">
                         <img src="~/images/logo.jpg" width="70" alt="">
                         <span class="fs-4 fw-bold">Inno Design</span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills d-block">
-                        <li class="nav-item">
-                            <a href='@Url.Action("Index", "Home")' class="nav-link d-flex gap-2 link-body-emphasis ">
-                                <i class="fas fa-home"></i>
-                                <span>خانه</span>
-                            </a>
-                        </li>
                         @if (User.IsInRole(Inno.Types.UserRoleName.Admin))
                         {
                             <li class="nav-item">
                                 <a href="#" class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-tachometer-alt"></i>
-                                    <span>داشبورد</span>
+                                    <span>@Res.Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-item">

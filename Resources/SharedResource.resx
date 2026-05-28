@@ -681,4 +681,10 @@
   <data name="CurrentPassword" xml:space="preserve">
     <value>گذرواژه فعلی</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>صفحه اصلی</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>داشبورد</value>
+  </data>
 </root>
