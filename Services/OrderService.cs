@@ -98,87 +98,144 @@ namespace Inno.Services
                 CreditAmount = cust.CreditBalance
             };
         }
-
         public async Task<Result<OrderItemView>> AddItemAsync(string productId, decimal qty)
         {
             if (qty <= 0)
                 return "مقدار صحیح نیست";
-            //بررسی وجود کالا
-            var prd = await ctx.Products.Where(x => x.Id == productId)
-                .Select(x => new
-                {
-                    x.Id,
-                    x.Name,
-                    x.EnName,
-                    x.UnitId,
-                    x.Price
-                }).FirstOrDefaultAsync();
-            if (prd == null)
-                return string.Format(Resources.SharedResource._0_NotFoundMsg, Resources.SharedResource.Product);
 
-            //بررسی موجودی
-            var skus = await ctx.SKUs
-                .Where(x => x.ProductId == productId)
-                .Select(x => new
-                {
-                    x.Id,
-                    x.ProductId,
-                    x.LocationId,
-                    x.CurrentQty,
-                    x.ReservedQty,
-                    AvailableQty = x.CurrentQty - x.ReservedQty,
-                })
-                .Where(x => x.AvailableQty >= qty)
-                .ToListAsync();
-            if (skus.Count == 0)
-                return "موجودی این کالا کافی نیست";
-            //انتخاب طاقه
-            //ابتدا همان متراژ یا بزرگترین طاقه را انتخاب میکنیم
-            var selected = skus.FirstOrDefault(x => x.AvailableQty == qty) ?? skus.OrderByDescending(x => x.AvailableQty).First();
-            var selectedSku = ctx.SKUs.Find(selected.Id);
-            //TODO: control race condition!
-            selectedSku.ReservedQty += qty;
-
-            Order ord = await ctx.Orders.CurrentOrder(userContextSrv.UserId).FirstOrDefaultAsync();
-            //ایجاد سفارش در صورت عدم وجود
-            if (ord == null)
+            using var transaction = await ctx.Database.BeginTransactionAsync();
+            try
             {
-                ord = new Order
+                var prd = await ctx.Products
+                    .Where(x => x.Id == productId)
+                    .Select(x => new
+                    {
+                        x.Id,
+                        x.Name,
+                        x.Price
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (prd == null)
+                    return "کالا یافت نشد";
+
+                var ord = await ctx.Orders.CurrentOrder(userContextSrv.UserId)
+                    .Include(x => x.Items)
+                    .FirstOrDefaultAsync(x => x.CreatedBy == userContextSrv.UserId && x.Status == OrderStatus.Draft);
+                //اگر سفارش جاری پیدا نشد یک سفارش ایجاد میشه
+                if (ord == null)
                 {
-                    CreatedBy = userContextSrv.UserId,
-                    Status = OrderStatus.Draft,
+                    ord = new Order
+                    {
+                        CreatedBy = userContextSrv.UserId,
+                        Status = OrderStatus.Draft,
+                        Items = new List<OrderItem>()
+                    };
+                    ctx.Orders.Add(ord);
+                }
+
+                ord.Items ??= new List<OrderItem>();
+
+                SKU skuEntry = null;
+                OrderItem existingItem = null;
+
+                var orderItemSkuIds = ord.Items
+                    .Where(x => x.ProductId == productId)
+                    .Select(x => x.SKUId)
+                    .Distinct()
+                    .ToList();
+
+                //چک میکنیم آیا این طاقه‌هایی که الان در سبدش هست، باز هم موجودی دارند؟اگه داشتن از همانهاانتخاب میشود
+                if (orderItemSkuIds.Count > 0)
+                {
+                    var candidateSkus = await ctx.SKUs
+                        .Where(x => orderItemSkuIds.Contains(x.Id))
+                        .ToListAsync();
+
+                    var matchedSku = candidateSkus
+                        .Where(x => (x.CurrentQty - x.ReservedQty) >= qty)
+                        .OrderBy(x => (x.CurrentQty - x.ReservedQty) == qty ? 0 : 1)
+                        .ThenByDescending(x => x.CurrentQty - x.ReservedQty)
+                        .FirstOrDefault();
+
+                    if (matchedSku != null)
+                    {
+                        skuEntry = matchedSku;
+                        existingItem = ord.Items.FirstOrDefault(x => x.SKUId == matchedSku.Id);
+                    }
+                }
+
+                //اگر طاقه‌های اقلام موجودی ندارند، کوئری یک طاقه جدید پیدا میکند که شرط متراژ را داشته باشد
+                if (skuEntry == null)
+                {
+                    var skus = await ctx.SKUs
+                        .Where(x => x.ProductId == productId)
+                        .ToListAsync();
+
+                    skuEntry = skus
+                        .Where(x => (x.CurrentQty - x.ReservedQty) >= qty)
+                        .OrderBy(x => (x.CurrentQty - x.ReservedQty) == qty ? 0 : 1)
+                        .ThenByDescending(x => x.CurrentQty - x.ReservedQty)
+                        .FirstOrDefault();
+
+                    if (skuEntry == null)
+                        return "موجودی کافی یافت نشد";
+
+                    existingItem = ord.Items.FirstOrDefault(x => x.SKUId == skuEntry.Id);
+                }
+
+                if ((skuEntry.CurrentQty - skuEntry.ReservedQty) < qty)
+                    return "موجودی در حین عملیات تغییر کرد";
+
+                if (existingItem != null)
+                {
+                    existingItem.Qty += qty;
+                    existingItem.Amount = existingItem.Qty * prd.Price;
+                }
+                else
+                {
+                    existingItem = new OrderItem
+                    {
+                        ProductId = prd.Id,
+                        SKUId = skuEntry.Id,
+                        Qty = qty,
+                        UnitPrice = prd.Price,
+                        Amount = qty * prd.Price,
+                        Status = OrderItemStatus.Pending
+                    };
+
+                    ord.Items.Add(existingItem);
+                }
+
+                skuEntry.ReservedQty += qty;
+                ord.TotalAmount = ord.Items.Sum(x => x.Amount);
+
+                await ctx.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                var res = new OrderItemView
+                {
+                    Id = existingItem.Id,
+                    SKUId = existingItem.SKUId,
+                    ProductId = existingItem.ProductId,
+                    ProductName = prd.Name,
+                    Qty = existingItem.Qty,
+                    UnitPrice = existingItem.UnitPrice,
+                    Amount = existingItem.Amount
                 };
 
-                entities.Add(ord);
+                return Result<OrderItemView>.Ok(res);
             }
-            //ایحاد قلم سفارش
-            var item = new OrderItem
+            catch (DbUpdateConcurrencyException)
             {
-                ProductId = selectedSku.ProductId,
-                SKUId = selectedSku.Id,
-                Qty = qty,
-                UnitPrice = prd.Price,
-                Amount = qty * prd.Price,
-                Status = OrderItemStatus.Pending
-            };
-            //اضافه کردن قلم به سفارش
-            ord.Items ??= new List<OrderItem>();
-            ord.Items.Add(item);
-            ord.TotalAmount += item.Amount;
-
-            await ctx.SaveChangesAsync();
-
-            var res = new OrderItemView
+                await transaction.RollbackAsync();
+                return "تداخل در عملیات، لطفا مجددا تلاش کنید.";
+            }
+            catch
             {
-                Id = item.Id,
-                SKUId = item.SKUId,
-                ProductId = item.ProductId,
-                ProductName = prd.Name,
-                Qty = item.Qty,
-                UnitPrice = prd.Price,
-                Amount = qty * prd.Price,
-            };
-            return Result<OrderItemView>.Ok(res);
+                await transaction.RollbackAsync();
+                return "خطای دیتابیس";
+            }
         }
 
         public async Task<Result<int>> DeleteAsync(int id)

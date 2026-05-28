@@ -19,6 +19,8 @@ namespace Inno.Models
         ///<summary>مقدار رزو شده هنگام فاکتور فروش</summary>
         public decimal ReservedQty { get; set; }
         public string LocationId { get; set; }
+        /// <summary>بخاطر تغییر مقدار رزرو در تراکنش های مختلف نیاز به کنترل همزمانی داریم</summary>
+        public byte[] RowVersion { get; set; }
 
         public Product Product { get; set; }
         public Location Location { get; set; }

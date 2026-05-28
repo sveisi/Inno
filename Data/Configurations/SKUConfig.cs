@@ -35,6 +35,8 @@ public class SKUConfig : BaseEntityConfiguration<SKU, string>
             .HasPrecision(18, 3)
             .HasDefaultValue(0);
 
+        builder.Property(x => x.RowVersion).IsRowVersion().IsConcurrencyToken();
+
         //Relationships
         builder.HasOne(x => x.Product)
             .WithMany(p => p.SKUs)

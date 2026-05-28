@@ -323,7 +323,16 @@
                     data: form_data,
                     success: function (response) {
                         if (response.success && response.data) {
-                            table.row.add(response.data.item).draw(false);
+                            var item = response.data.item;
+                            var rowIndex = table.rows().indexes().filter(function (value) {
+                                return table.row(value).data().Id === item.Id;
+                            });
+
+                            if (rowIndex.length > 0) {
+                                table.row(rowIndex[0]).data(item).draw(false);
+                            } else {
+                                table.row.add(item).draw(false);
+                            }
                             updateOrderSummary(response.data.summary);
                             //پاک کردن فرم
                             $('#formAddItem')[0].reset();
