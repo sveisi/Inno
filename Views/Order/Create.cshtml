@@ -125,6 +125,13 @@
             $("#paymentAmount").text(formatUSD(summary.PaymentAmount));
             $("#creditAmount").text(formatUSD(summary.CreditAmount));
 
+            // اگر زیرمجموعه است: مقدار اعتبار را نشان نده، ولی همچنان برای چک کردن استفاده کن
+            if (summary.IsSubCustomer === true) {
+                $("#creditAmount").text("—");
+            } else {
+                $("#creditAmount").text(formatUSD(summary.CreditAmount));
+            }
+
             var $creditBox = $("#creditBox");
 
             // منطق هشدار برای اعتبار
@@ -368,10 +375,9 @@
                 }
 
                 //هر چیزی که عدد نیست و نقطه هم نیست را حذف کن
-                var paymentAmount = parseFloat($('#paymentAmount').text().replace(/[^0-9.]/g, '')) || 0;
-                var creditAmount = parseFloat($('#creditAmount').text().replace(/[^0-9.]/g, '')) || 0;
+                //var paymentAmount = parseFloat($('#paymentAmount').text().replace(/[^0-9.]/g, '')) || 0;
 
-                if (paymentAmount > creditAmount) {
+                if (currentSummary && currentSummary.PaymentAmount > currentSummary.CreditAmount) {
                     showError("اعتبار شما کافی نیست!");
                     return;
                 }

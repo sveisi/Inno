@@ -67,37 +67,48 @@ namespace Inno.Services
 
         public async Task<OrderSummaryView> GetCurrentOrderSummaryAsync()
         {
-            var cust = await ctx.Customers
-                .Where(x => x.Id == userContextSrv.CustomerId)
-                .Select(x => new
-                {
-                    x.Id,
-                    x.DiscountPercent,
-                    x.CreditBalance,
-                    x.ParentCustomerId
-                })
-                .FirstOrDefaultAsync();
+            // استفاده از Left Join برای واکشی اطلاعات مشتری و والد در یک کوئری
+            var data = await (from c in ctx.Customers
+                              where c.Id == userContextSrv.CustomerId
+                              join p in ctx.Customers on c.ParentCustomerId equals p.Id into parents
+                              from parent in parents.DefaultIfEmpty()
+                              select new
+                              {
+                                  c.Id,
+                                  c.DiscountPercent,
+                                  c.CreditBalance,
+                                  c.ParentCustomerId,
+                                  ParentCredit = (decimal?)parent.CreditBalance
+                              }).FirstOrDefaultAsync();
+
+            if (data == null) return new OrderSummaryView();
+
+            bool isSubCustomer = data.ParentCustomerId != null;
+
+            // اگر زیرمجموعه بود، اعتبار والد و در غیر این صورت اعتبار خودش
+            decimal finalCredit = isSubCustomer ? (data.ParentCredit ?? 0) : data.CreditBalance;
 
             var items = await GetCurrentOrderItemsAsync();
+            var totalAmount = items.Sum(x => x.Qty * x.UnitPrice);
 
-            var totalItems = items.Count;
-            var totalAmount = items.Sum(x => x.Qty * x.UnitPrice); ;
-
+            // محاسبه تخفیف فقط برای مشتری اصلی
             decimal discount = 0;
-            if (cust.ParentCustomerId == null)
-                discount = totalAmount * cust.DiscountPercent / 100m;
+            if (!isSubCustomer)
+                discount = totalAmount * data.DiscountPercent / 100m;
 
             var paymentAmount = totalAmount - discount;
 
             return new OrderSummaryView
             {
-                ItemsCount = (int)totalItems,
+                ItemsCount = items.Count,
                 TotalAmount = totalAmount,
                 DiscountAmount = discount,
                 PaymentAmount = paymentAmount,
-                CreditAmount = cust.CreditBalance
+                CreditAmount = finalCredit,
+                IsSubCustomer = isSubCustomer
             };
         }
+
         public async Task<Result<OrderItemView>> AddItemAsync(string productId, decimal qty)
         {
             if (qty <= 0)
@@ -296,6 +307,8 @@ namespace Inno.Services
                 order.ConfirmedAt = System.DateTime.Now;
                 await ctx.SaveChangesAsync();
 
+                string desc = cust.ParentCustomer == null ? $"بابت سفارش {order.Id}" : $"بابت سفارش زیرمجموعه {cust.FullName} با شماره سفارش {order.Id}";
+                
                 //کم کردن اعتبار از نماینده
                 var creditResult = await creditSrv.CreateAsync(new CreditTransactionView
                 {
@@ -303,7 +316,7 @@ namespace Inno.Services
                     Amount = order.PaymentAmount,
                     IsIncrement = false,
                     RelatedOrderId = order.Id,
-                    Description = $"بابت سفارش {order.Id}"
+                    Description = desc
                 });
                 // چک کردن موفقیت در سرویس اعتبار
                 if (!creditResult.Success)
@@ -321,7 +334,7 @@ namespace Inno.Services
                             Amount = giftAmount,
                             IsIncrement = true,
                             RelatedOrderId = order.Id,
-                            Description = $"بابت سفارش زیرمجوعه {cust.FullName} با شماره سفارش {order.Id}"
+                            Description = desc
                         });
 
                         // چک کردن موفقیت در سرویس اعتبار

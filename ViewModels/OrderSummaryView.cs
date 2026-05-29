@@ -7,5 +7,6 @@
         public decimal DiscountAmount { get; set; }
         public decimal PaymentAmount { get; set; }
         public decimal CreditAmount { get; set; }
+        public bool IsSubCustomer { get; set; }
     }
 }
