@@ -27,6 +27,17 @@
                         <img src="~/images/logo.jpg" width="70" alt="">
                         <span class="fs-4 fw-bold">Inno Design</span>
                     </a>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="mt-3 mb-2 px-2">
+                            <div class="border rounded-3 p-2 bg-light">
+                                <span class="text-muted"> @Res.User: </span>
+                                <span class="fw-bold text-dark">
+                                   @(User.Identity.Name ?? "-")
+                                </span>
+                            </div>
+                        </div>
+                    }
                     <hr>
                     <ul class="nav nav-pills d-block">
                         @if (User.IsInRole(Inno.Types.UserRoleName.Admin))
