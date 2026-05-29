@@ -14,7 +14,6 @@ namespace Inno.ViewModels
         public string Mobile { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        [DisplayName("Discount")]
         public decimal DiscountPercent { get; set; }
         [DisplayName("Credit")]
         public decimal CreditBalance { get; set; }
