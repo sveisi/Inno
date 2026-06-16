@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Gridify;
 using Inno.Data;
+using Inno.Helper;
 using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
@@ -38,12 +39,12 @@ namespace Inno.Services
             return res;
         }
 
-        public async Task<Product> UpdateAsync(ProductView v)
+        public async Task<Result> UpdateAsync(ProductView v)
         {
             var n = mapper.Map<Product>(v);
             var res = await UpdateAsync(n);
 
-            return res;
+            return Result.Ok();
         }
     }
 }

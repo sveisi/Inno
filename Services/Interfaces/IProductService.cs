@@ -1,5 +1,6 @@
 ﻿using Gridify;
 using Inno.Models;
+using Inno.Helper;
 using Inno.ViewModels;
 using System.Threading.Tasks;
 
@@ -10,6 +11,6 @@ namespace Inno.Services.Interfaces
         Paging<ProductListView> Get(GridifyQuery gridify);
         Task<ProductView> GetProductAsync(string code);
         Task<Product> CreateAsync(ProductView v);
-        Task<Product> UpdateAsync(ProductView v);
+        Task<Result> UpdateAsync(ProductView v);
     }
 }

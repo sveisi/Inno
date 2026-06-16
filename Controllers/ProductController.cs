@@ -62,12 +62,11 @@ namespace Inno.Controllers
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         public async Task<IActionResult> Create()
         {
-            await FillDropdownsAsync();
             var view = new ProductView();
 
-            if (Request.IsAjaxRequest())
-                return PartialView("_Create", view);
-            return View(view);
+            await FillDropdownsAsync(view);
+
+            return PartialView("_Create", view);
         }
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
@@ -75,27 +74,11 @@ namespace Inno.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductView view)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await prdSrv.CreateAsync(view);
-
-                    if (Request.IsAjaxRequest())
-                        return Ok(new { success = true });
-
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (SysException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
-            await FillDropdownsAsync();
-            if (Request.IsAjaxRequest())
+            if (!ModelState.IsValid)
                 return PartialView("_Create", view);
 
-            return View(view);
+            await prdSrv.CreateAsync(view);
+            return AjaxSuccess();
         }
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
@@ -105,20 +88,18 @@ namespace Inno.Controllers
             if (string.IsNullOrWhiteSpace(code))
                 return NotFound();
 
-            var contv = await prdSrv.GetProductAsync(code);
-            if (contv == null)
+            var prd = await prdSrv.GetProductAsync(code);
+            if (prd == null)
                 return NotFound();
 
-            await FillDropdownsAsync();
-            if (Request.IsAjaxRequest())
-                return PartialView("_Create", contv);
-            return View("Create", contv);
+            await FillDropdownsAsync(prd);
+            return PartialView("_Create", prd);
         }
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ProductView view)
+        /*public async Task<IActionResult> Edit(ProductView view)
         {
             if (ModelState.IsValid)
             {
@@ -152,6 +133,15 @@ namespace Inno.Controllers
                 return PartialView("_Create", view);
 
             return View("Create", view);
+        }*/
+
+        public async Task<IActionResult> Edit(ProductView prdView)
+        {
+            if (!ModelState.IsValid)
+                return GetModelError();
+
+            var res = await prdSrv.UpdateAsync(prdView);
+            return res.ToActionResult();
         }
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
@@ -179,11 +169,11 @@ namespace Inno.Controllers
             }
         }
 
-        private async Task FillDropdownsAsync()
+        private async Task FillDropdownsAsync(ProductView view)
         {
-            ViewBag.Categories = await catSrv.GetAsync();
-            ViewBag.Colors = await colorSrv.GetAsync();
-            ViewBag.Units = await unitSrv.GetAsync();
+            view.Categories = await catSrv.GetLookupAsync();
+            view.Colors = await colorSrv.GetLookupAsync();
+            view.Units = await unitSrv.GetLookupAsync();
         }
 
         [HttpGet]

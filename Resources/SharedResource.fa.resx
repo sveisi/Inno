@@ -471,6 +471,9 @@
   <data name="Active" xml:space="preserve">
     <value>فعال</value>
   </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>فعال؟</value>
+  </data>
   <data name="ChangeActive" xml:space="preserve">
     <value>فعال/غیرفعال</value>
   </data>

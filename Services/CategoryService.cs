@@ -7,6 +7,7 @@ using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,11 @@ namespace Inno.Services
             var res = await entities.ProjectTo<CategoryView>(mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Id == id);
 
             return res;
+        }
+
+        public async Task<List<LookupView<int>>> GetLookupAsync()
+        {
+            return await entities.Select(x => new LookupView<int>(x.Id, x.Name)).ToListAsync();
         }
 
         public async Task<Result<Category>> CreateAsync(string name, string enName)
