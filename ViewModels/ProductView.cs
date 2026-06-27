@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Inno.ViewModels
 {
@@ -24,6 +25,8 @@ namespace Inno.ViewModels
         public int ColorId { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
+
+        public List<AttachmentItemView> Images { get; set; } = new();
 
         public List<LookupView<int>> Categories { get; set; }
         public List<LookupView<int>> Units { get; set; }

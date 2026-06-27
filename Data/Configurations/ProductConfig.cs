@@ -12,7 +12,13 @@ namespace Inno.Data.Configurations
 
             builder.Property(x => x.Id).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.EnName).HasMaxLength(200);
             builder.Property(x => x.Price).HasPrecision(18, 2);
+
+            builder.HasMany(x => x.Images)
+                .WithOne(x => x.Product)
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

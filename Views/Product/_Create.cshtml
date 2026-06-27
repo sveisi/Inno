@@ -79,4 +79,15 @@
             </div>
         </div>
     </div>
+    <div class="row">
+
+        <div class="col-12">
+
+            <label>
+                تصاویر
+            </label>
+            <partial name="_UploadBox" model='new UploadBoxView { InputName = "Images", Files = Model.Images, Multiple = false }' />
+        </div>
+
+    </div>
 }

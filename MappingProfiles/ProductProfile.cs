@@ -8,7 +8,9 @@ namespace Inno.MappingProfiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductView>().ReverseMap();
+            CreateMap<Product, ProductView>()
+                .ReverseMap()
+                .ForMember(d => d.Images, s => s.Ignore());
 
             CreateMap<Product, ProductListView>()
                .ForMember(d => d.CategoryName, s => s.MapFrom(s => s.Category.Name))
@@ -17,7 +19,14 @@ namespace Inno.MappingProfiles
                .ForMember(d => d.UnitEnName, s => s.MapFrom(s => s.Unit.EnName))
                .ForMember(d => d.ColorName, s => s.MapFrom(s => s.Color.Name))
                .ForMember(d => d.ColorEnName, s => s.MapFrom(s => s.Color.EnName))
-               .ReverseMap();
+               .ReverseMap()
+               .ForMember(d => d.Images, s => s.Ignore());
+
+            CreateMap<ProductImage, AttachmentItemView>()
+                .ForMember(d => d.Id, s => s.MapFrom(x => x.AttachmentId))
+                .ForMember(d => d.FileName, s => s.MapFrom(x => x.Attachment.FileName))
+                .ForMember(d => d.FileUrl, s => s.MapFrom(x => x.Attachment.FileUrl))
+                .ForMember(d => d.ThumbImageUrl, s => s.MapFrom(x => x.Attachment.ThumbImageUrl));
         }
     }
 }

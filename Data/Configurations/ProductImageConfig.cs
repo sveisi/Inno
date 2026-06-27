@@ -10,8 +10,20 @@ namespace Inno.Data.Configurations
         {
             base.Configure(builder);
 
-            builder.Property(x => x.ImageUrl).IsRequired().HasMaxLength(500);
-            builder.Property(x => x.ImageType).HasMaxLength(50);
+            builder.Property(x => x.ProductId)
+                .IsRequired();
+
+            builder.HasIndex(x => new { x.ProductId, x.AttachmentId }).IsUnique();
+
+            builder.HasOne(x => x.Product)
+                .WithMany(x => x.Images)
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.Attachment)
+                .WithMany()
+                .HasForeignKey(x => x.AttachmentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Inno.Data
         protected readonly IUserContextService _userContext;
 
         //خودکارسازی انجام شود
+        public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Color> Colors { get; set; }

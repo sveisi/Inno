@@ -171,3 +171,69 @@ function setupMultipleFooterTotal(columns) {
         });
     };
 }
+
+$(document).on("change", ".upload-input", function () {
+    var container = $(this).closest(".upload-box");
+
+    var files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+        let fd = new FormData();
+
+        fd.append("file", files[i]);
+
+        $.ajax({
+            url: "/Attachment/Upload",
+            type: "POST",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                addImage(container, r);
+            }
+        });
+    }
+    $(this).val(null);
+});
+
+function addImage(container, item) {
+    if (!container.find(".upload-input").prop("multiple")) {
+        container.find(".image-item").remove();
+        container.find(".attachment-ids").empty();
+    }
+
+    let index = container.find(".attachment-ids input").length;
+
+    container.find(".attachment-ids").append(
+        `<input type="hidden" name="Images[${index}].Id" value="${item.Id}">`);
+
+    container.find(".preview-list").append(
+        `<div class="col-3 image-item" data-id="${item.Id}"> 
+        <img src="/${item.FileUrl}" class="img-thumbnail">
+        <button type="button" class="btn btn-danger btn-sm remove-file"> × </button> </div>`);
+}
+
+$(document).on("click", ".remove-file",
+    function () {
+        let box = $(this).closest(".upload-box");
+
+        let item = $(this).closest(".image-item");
+
+        item.remove();
+
+        rebuildInputs(box);
+    });
+
+function rebuildInputs(box) {
+    let ids = box.find(".image-item").map(function () {
+        return $(this).data("id");
+    }).get();
+
+    let hidden = box.find(".attachment-ids");
+
+    hidden.empty();
+
+    ids.forEach((id, i) => {
+        hidden.append(`<input type="hidden" name="Images[${i}].Id" value="${id}">`);
+    });
+}

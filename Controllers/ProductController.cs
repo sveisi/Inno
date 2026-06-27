@@ -1,13 +1,10 @@
 ﻿using Inno.Helper;
-using Inno.Services;
 using Inno.Services.Interfaces;
 using Inno.Types;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using Stimulsoft.System.Windows.Media;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -62,7 +59,7 @@ namespace Inno.Controllers
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         public async Task<IActionResult> Create()
         {
-            var view = new ProductView();
+            var view = new ProductView { IsActive = true };
 
             await FillDropdownsAsync(view);
 
@@ -98,43 +95,7 @@ namespace Inno.Controllers
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        /*public async Task<IActionResult> Edit(ProductView view)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await prdSrv.UpdateAsync(view);
-
-                    if (Request.IsAjaxRequest())
-                        return Ok(new { success = true });
-
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (SysException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (prdSrv.GetProductAsync(view.Id) == null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-            await FillDropdownsAsync();
-            if (Request.IsAjaxRequest())
-                return PartialView("_Create", view);
-
-            return View("Create", view);
-        }*/
-
+        [ValidateAntiForgeryToken]        
         public async Task<IActionResult> Edit(ProductView prdView)
         {
             if (!ModelState.IsValid)

@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inno.Data.Configurations
 {
-    public class AttachmentConfig : IEntityTypeConfiguration<Attachment>
+    public class AttachmentConfig : BaseEntityConfiguration<Attachment, int>
     {
-        public void Configure(EntityTypeBuilder<Attachment> builder)
+        public override void Configure(EntityTypeBuilder<Attachment> builder)
         {
-            builder.ToTable(nameof(Attachment));
+            base.Configure(builder);
 
-            builder.HasKey(x => x.AttachmentId);
-            builder.Property(x => x.AttachmentId).IsRequired();
             builder.Property(x => x.FileName).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Extension).IsRequired().HasMaxLength(50);
             builder.Property(x => x.FileUrl).IsRequired().HasMaxLength(500);
+            builder.Property(x => x.IsTemporary).HasDefaultValue(true);
             builder.Property(x => x.CreatedDate).IsRequired()
                 .HasColumnType("smalldatetime")
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("getdate()");
+
         }
     }
 }

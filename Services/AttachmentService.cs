@@ -1,71 +1,78 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 using Inno.Data;
 using Inno.Models;
+using Inno.Services.Interfaces;
 using Inno.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Inno.Services.Interfaces;
 
 namespace Inno.Services
 {
     public class AttachmentService : BaseService<Attachment>, IAttachmentService
     {
-        public AttachmentService(InnoContext ctx, IMapper mapper) : base(ctx, mapper)
-        {
-        }
+        private readonly IWebHostEnvironment env;
 
-        public async Task<AttachmentView> FindAttachmentAsync(int id)
+        public AttachmentService(InnoContext ctx, IMapper mapper, IWebHostEnvironment env)
+            : base(ctx, mapper)
         {
-            var res = await entities.Where(x => x.AttachmentId == id).ProjectTo<AttachmentView>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-
-            return res;
+            this.env = env;
         }
 
         public async Task<Attachment> CreateAsync(AttachmentCreateView view)
         {
-            var n = mapper.Map<Attachment>(view);
-            var res = await AddAsync(n);
+            var entity = mapper.Map<Attachment>(view);
 
-            return res;
+            return await AddAsync(entity);
         }
 
-        /*
-         * select a.* from S2_attachment as a
-            where a.AttachmentId not in (select CarImageId from S2_CarImage where CarImageId Is Not Null)
-            and a.AttachmentId not in (select CmrImageId from S2_CmrImage where CmrImageId Is Not Null)
-            and a.AttachmentId not in (select AttachmentId from S2_ShippingByTrailerImage where AttachmentId Is Not Null)
-            and a.AttachmentId not in (select ImageId from S2_ReceivePayment where ImageId Is Not Null)
-            and a.AttachmentId not in (select ImageId from S2_Brand where ImageId Is Not Null)
-         */
-
-        public async Task<List<Attachment>> DeleteUnusedFileAsync()
+        public async Task DeleteAttachmentAsync(params int[] id)
         {
-            //پرسش شود که عکس ها تا چقد میتونن بمانن اگر میخواهند همه بعد از مدتی حذف شود دیگر نیازی به کوئری پیچیده نیست
-            // عکس برند در هر صورت بماند
-            //الان هنگامی که عکس حذف میشود رابطه آن در جدول دیگر مانند جدول عکس خودرو میماند با اینکه کسکید است، که باید حذف شود با کوئری
-            var res = await entities.ToListAsync();//.Where(x => !x.CarImages.Any() && !x.TrailerImages.Any() && !x.CmrImages.Any() && x.Brands.Any() && x.ReceivePayments.Any()).ToListAsync();
-            foreach (var item in res)
-            {
-                entities.Remove(item);
-            }
+            var files = await entities.Where(x => id.Contains(x.Id)).ToListAsync();
+
+            ctx.RemoveRange(files);
+
             await ctx.SaveChangesAsync();
 
-            return res;
+            foreach (var item in files)
+            {
+                DeleteFile(item.FileUrl);
+
+                DeleteFile(item.ThumbImageUrl);
+            }
         }
 
-        public async Task<List<Attachment>> DeleteOldFileAsync()
+        public async Task DeleteUnusedFileAsync()
         {
-            var res = await entities.Where(x => x.CreatedDate.AddMonths(6) < System.DateTime.Now).ToListAsync();
-            foreach (var item in res)
-            {
-                entities.Remove(item);
-            }
+            var files = await entities.Where(x => x.IsTemporary).ToListAsync();
+
+            ctx.RemoveRange(files);
+
             await ctx.SaveChangesAsync();
 
-            return res;
+            foreach (var item in files)
+            {
+                DeleteFile(item.FileUrl);
+
+                DeleteFile(item.ThumbImageUrl);
+            }
+        }
+
+        private void DeleteFile(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return;
+
+            try
+            {
+                var path = Path.Combine(env.WebRootPath, url);
+
+                if (File.Exists(path))
+                    File.Delete(path);
+            }
+            catch { }
         }
     }
 }

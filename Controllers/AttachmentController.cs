@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Inno.Helper;
-using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Inno.Controllers
 {
-    public class AttachmentController : Controller
+    public class AttachmentController : BaseController
     {
         private readonly IWebHostEnvironment webHostEnv;
         private readonly IAttachmentService attachSrv;
@@ -32,8 +31,6 @@ namespace Inno.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload()
         {
-            //حذف فایلهایی که برای سلامت ظاهری هستند بعد از یکماه
-
             var folderName = "Uploads";
             string path = Path.Combine(webHostEnv.WebRootPath, folderName);
 
@@ -76,25 +73,19 @@ namespace Inno.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var res = false;
             try
             {
-                var att = await attachSrv.DeleteAsync(id);
+                await attachSrv.DeleteAttachmentAsync(id);
 
-                string path = Path.Combine(webHostEnv.WebRootPath, att.FileUrl);
-                if (System.IO.File.Exists(path))
-                    System.IO.File.Delete(path);
-
-                res = true;
-                return Ok(new { success = res });
+                return AjaxSuccess();
             }
             catch (SysException ex)
             {
-                return Ok(new { success = res, error = ex.Message });
+                return AjaxFail(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), new { success = res });
+                return AjaxFail("Server Error!");
             }
         }
 

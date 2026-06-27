@@ -1,0 +1,24 @@
+﻿@model UploadBoxView
+
+<div class="upload-box">
+    <input type="file" class="upload-input" @(Model.Multiple ? "multiple" : "") />
+
+    <div class="attachment-ids">
+        @foreach (var file in Model.Files)
+        {
+            <input type="hidden" name="@Model.InputName" value="@file.Id" />
+        }
+    </div>
+
+    <div class="row preview-list">
+        @foreach (var file in Model.Files)
+        {
+            <div class="col-3 image-item" data-id="@file.Id">
+
+                <img src="/@file.FileUrl" class="img-thumbnail" />
+
+                <button type="button" class="btn btn-danger btn-sm remove-file"> × </button>
+            </div>
+        }
+    </div>
+</div>
