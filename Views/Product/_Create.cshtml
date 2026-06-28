@@ -3,91 +3,93 @@
     Layout = "_ModalLayout";
     var editMode = !string.IsNullOrEmpty(Model?.Id);
     ViewBag.Title = editMode ? Res.Edit + " " + Res.Product : Res.Create + " " + Res.Product;
+
+    ViewBag.ModalSize = "modal-lg";
 }
 
 @section Body {
     <div class="row mb-2">
-        <div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" type="text" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="col-7">
+            <div class="row mb-2">
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" type="text" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="EnName" class="control-label"></label>
-                <input asp-for="EnName" class="form-control" dir="ltr" />
-                <span asp-validation-for="EnName" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EnName" class="control-label"></label>
+                        <input asp-for="EnName" class="form-control" dir="ltr" />
+                        <span asp-validation-for="EnName" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <label asp-for="CategoryId" class="control-label"></label>
-            <select asp-for="CategoryId" class="form-select"
-                    asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
-                <option hidden disabled selected>@Res.DoSelect</option>
-            </select>
-            <span asp-validation-for="CategoryId" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="UnitId" class="control-label"></label>
-                <select asp-for="UnitId" class="form-select"
-                        asp-items="@(new SelectList(Model.Units,"Id","Name"))">
-                    <option hidden disabled selected>@Res.DoSelect</option>
-                </select>
-                <span asp-validation-for="UnitId" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    <select asp-for="CategoryId" class="form-select"
+                            asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
+                        <option hidden disabled selected>@Res.DoSelect</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="ColorId" class="control-label"></label>
-                <select asp-for="ColorId" class="form-select"
-                        asp-items="@(new SelectList(Model.Colors,"Id","Name"))">
-                    <option hidden disabled selected>@Res.DoSelect</option>
-                </select>
-                <span asp-validation-for="ColorId" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UnitId" class="control-label"></label>
+                        <select asp-for="UnitId" class="form-select"
+                                asp-items="@(new SelectList(Model.Units,"Id","Name"))">
+                            <option hidden disabled selected>@Res.DoSelect</option>
+                        </select>
+                        <span asp-validation-for="UnitId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ColorId" class="control-label"></label>
+                        <select asp-for="ColorId" class="form-select"
+                                asp-items="@(new SelectList(Model.Colors,"Id","Name"))">
+                            <option hidden disabled selected>@Res.DoSelect</option>
+                        </select>
+                        <span asp-validation-for="ColorId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" dir="ltr" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label d-block">&nbsp;</label>
-                <div class="form-check mt-2">
-                    <input asp-for="IsActive" class="form-check-input" />
-                    <label asp-for="IsActive" class="form-check-label"></label>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" dir="ltr" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label d-block">&nbsp;</label>
+                        <div class="form-check mt-2">
+                            <input asp-for="IsActive" class="form-check-input" />
+                            <label asp-for="IsActive" class="form-check-label"></label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-
-        <div class="col-12">
-
-            <label>
-                تصاویر
-            </label>
-            <partial name="_UploadBox" model='new UploadBoxView { InputName = "Images", Files = Model.Images, Multiple = false }' />
+        <div class="col-5">
+            <div class="form-group">
+                <div class="d-flex justify-content-center">
+                    <partial name="_UploadBox" model='new UploadBoxView { InputName = "Images", Files = Model.Images, Multiple = false }' />
+                </div>
+            </div>
         </div>
-
     </div>
 }
