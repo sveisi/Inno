@@ -8,6 +8,9 @@ namespace Inno.ViewModels
 
         public bool Multiple { get; set; }
 
+        public int PreviewWidth { get; set; } = 500;
+        public int PreviewHeight { get; set; } = 500;
+
         public List<AttachmentItemView> Files { get; set; } = new();
     }
 }

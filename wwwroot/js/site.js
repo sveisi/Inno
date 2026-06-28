@@ -198,14 +198,26 @@ $(document).on("change", ".upload-input", function () {
 
 function addImage(container, item) {
     if (!container.find(".upload-input").prop("multiple")) {
+
+        container.find(".attachment-ids").html(`<input type="hidden" name="Images[0].Id" value="${item.Id}">`);
+
+        container.find(".preview-list").html(
+            `<div class="image-item single" data-id="${item.Id}">
+                <img src="/${item.FileUrl}">
+                <button type="button" class="remove-file"><i class="fa fa-trash-alt"></i> </button>
+                <div class="add-icon">+</div>
+            </div>`);
+        return;
+    }
+
+    if (!container.find(".upload-input").prop("multiple")) {
         container.find(".image-item").remove();
         container.find(".attachment-ids").empty();
     }
 
     let index = container.find(".attachment-ids input").length;
 
-    container.find(".attachment-ids").append(
-        `<input type="hidden" name="Images[${index}].Id" value="${item.Id}">`);
+    container.find(".attachment-ids").append(`<input type="hidden" name="Images[${index}].Id" value="${item.Id}">`);
 
     container.find(".preview-list").append(
         `<div class="col-3 image-item" data-id="${item.Id}"> 
@@ -213,16 +225,27 @@ function addImage(container, item) {
         <button type="button" class="btn btn-danger btn-sm remove-file"> × </button> </div>`);
 }
 
-$(document).on("click", ".remove-file",
-    function () {
-        let box = $(this).closest(".upload-box");
+$(document).on("click", ".remove-file", function (e) {
 
-        let item = $(this).closest(".image-item");
+    e.stopPropagation();
 
-        item.remove();
+    let box = $(this).closest(".upload-box");
 
-        rebuildInputs(box);
-    });
+    if (!box.find(".upload-input").prop("multiple")) {
+        box.find(".attachment-ids").empty();
+        box.find(".preview-list").html(`
+                <div class="image-item single empty"> <div class="add-icon">+</div></div>`);
+        return;
+    }
+
+    $(this).closest(".image-item").remove();
+
+    rebuildInputs(box);
+});
+
+$(document).on("click", ".single-mode .image-item.empty", function () {
+    $(this).closest(".upload-box").find(".upload-input").get(0)?.click();
+});
 
 function rebuildInputs(box) {
     let ids = box.find(".image-item").map(function () {

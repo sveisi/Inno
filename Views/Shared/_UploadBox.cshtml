@@ -1,7 +1,8 @@
 ﻿@model UploadBoxView
 
-<div class="upload-box">
-    <input type="file" class="upload-input" @(Model.Multiple ? "multiple" : "") />
+<div class="upload-box @(Model.Multiple ? "" : "single-mode")">
+
+    <input type="file" class="upload-input d-none" @(Model.Multiple ? "multiple" : "") />
 
     <div class="attachment-ids">
         @foreach (var file in Model.Files)
@@ -9,15 +10,30 @@
             <input type="hidden" name="@Model.InputName" value="@file.Id" />
         }
     </div>
-
-    <div class="row preview-list">
-        @foreach (var file in Model.Files)
+    <div class="preview-list">
+        @if (!Model.Multiple)
         {
-            <div class="col-3 image-item" data-id="@file.Id">
+            var file = Model.Files.FirstOrDefault();
 
-                <img src="/@file.FileUrl" class="img-thumbnail" />
-
-                <button type="button" class="btn btn-danger btn-sm remove-file"> × </button>
+            <div class="image-item single @(file == null ? "empty" : "")" data-id="@file?.Id">
+                @if (file != null)
+                {
+                    <img src="/@file.FileUrl">
+                    <button type="button" class="remove-file"> <i class="far fa-trash-alt"></i> </button>
+                }
+                <div class="add-icon">+</div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var file in Model.Files)
+                {
+                    <div class="col-3 image-item" data-id="@file.Id">
+                        <img src="/@file.FileUrl" class="img-thumbnail">
+                        <button type="button" class="btn btn-danger btn-sm remove-file">                            ×                        </button>
+                    </div>
+                }
             </div>
         }
     </div>
