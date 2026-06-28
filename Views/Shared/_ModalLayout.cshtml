@@ -1,9 +1,12 @@
 ﻿@model dynamic
+@{
+    var modalSize = ViewBag.ModalSize ?? "";
+}
 
 <div id='dialogDiv' class='modal fade'>
     <form>
         @Html.AntiForgeryToken()
-        <div id='dialogContent' class='modal-dialog'>
+        <div id="dialogContent" class="modal-dialog @modalSize">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">@ViewBag.Title</h5>
