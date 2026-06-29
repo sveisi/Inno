@@ -22,6 +22,19 @@
         </div>
     </div>
 </form>
+<div class="row mb-3">
+    <div class="col-md-2 col-6">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text ">@Html.DisplayNameFor(model => model.Id)</span>
+            <input type="text" id="@nameof(ProductListView.Id)" class="form-control form-control-sm h-auto" />
+        </div>
+    </div>
+    <div class="col-md-2 col-5">
+        <button type="submit" class="btn btn-primary btn-sm" id="btnSearch">
+            <i class="fa fa-search m-1"></i>@Res.Search
+        </button>
+    </div>
+</div>
 <form>
     @Html.AntiForgeryToken()
     <table id="myTable" class="table border-0 dt-card">
@@ -32,7 +45,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable({
+            var table = $('#myTable').DataTable({
                 info: false,
                 ajax: {
                     url: '@Url.Action("GetData", "Product")',
@@ -63,7 +76,7 @@
                                             <div>${formatUSD(row.Price)}</div>
                                         </div>
                                     </div>
-                                     ${actionHtml}
+                                        ${actionHtml}
                                 </div>`;
                         }
                     }
@@ -72,6 +85,13 @@
                 createdRow: function (row) {
                     $('td', row).attr('colspan', 999).addClass('border-0');
                 }
+            });
+            $('#btnSearch').on('click', function () {
+                let s = '';
+                let val = $("#@nameof(ProductListView.Id)").val();
+                if (val) s += '@nameof(ProductListView.Id)=' + val + ',';
+
+                table.search(s).draw();
             });
         });
 
