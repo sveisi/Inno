@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace Inno.ViewModels
 {
@@ -25,5 +26,8 @@ namespace Inno.ViewModels
         
         public string ImageUrl { get; set; }
         public string ThumbImageUrl { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public bool IsNew { get { return (DateTime.Now - CreatedAt).Days < 15; } }
     }
 }

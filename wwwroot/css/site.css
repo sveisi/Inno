@@ -302,6 +302,7 @@ table.dataTable th, table.dataTable td{
     border-radius: 12px;
     overflow: hidden;
     height: 100%;
+    position: relative;
 }
 .card-img {
     aspect-ratio: 1;
@@ -329,3 +330,25 @@ table.dataTable th, table.dataTable td{
         width: 100%;
     }
 }
+/*badge new*/
+.badge-new {
+    position: absolute;
+    top: 12px;
+    left: -8px;
+    background: #18a957;
+    color: #fff;
+    padding: 8px 18px;
+    font-size: .8rem;
+    font-weight: 700;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 4px 12px rgba(24,169,87,.25);
+    z-index: 10;
+}
+    .badge-new::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        border-top: 8px solid #0d7a3b;
+        border-left: 8px solid transparent;
+    }
