@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Inno.Models;
 using Inno.ViewModels;
+using System.Linq;
 
 namespace Inno.MappingProfiles
 {
@@ -19,6 +20,16 @@ namespace Inno.MappingProfiles
                .ForMember(d => d.UnitEnName, s => s.MapFrom(s => s.Unit.EnName))
                .ForMember(d => d.ColorName, s => s.MapFrom(s => s.Color.Name))
                .ForMember(d => d.ColorEnName, s => s.MapFrom(s => s.Color.EnName))
+               .ForMember(d => d.ImageUrl, s => s.MapFrom(x => x.Images
+                   .Where(i => !i.Attachment.IsTemporary)
+                   .OrderBy(i => i.SortOrder)
+                   .Select(i => i.Attachment.FileUrl)
+                   .FirstOrDefault()))
+               .ForMember(d => d.ThumbImageUrl, s => s.MapFrom(x => x.Images
+                   .Where(i => !i.Attachment.IsTemporary)
+                   .OrderBy(i => i.SortOrder)
+                   .Select(i => i.Attachment.ThumbImageUrl)
+                   .FirstOrDefault()))
                .ReverseMap()
                .ForMember(d => d.Images, s => s.Ignore());
 

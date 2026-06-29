@@ -1,7 +1,4 @@
-﻿using Inno.Models;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 
 namespace Inno.ViewModels
 {
@@ -25,5 +22,8 @@ namespace Inno.ViewModels
         public string ColorEnName { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
+        
+        public string ImageUrl { get; set; }
+        public string ThumbImageUrl { get; set; }
     }
 }

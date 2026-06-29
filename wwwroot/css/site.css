@@ -277,3 +277,55 @@ table.dataTable th, table.dataTable td{
         justify-content: center;
         z-index: 5;
     }
+/*show datatable record as Card*/
+#myTable.dt-card thead {
+    display: none;
+}
+#myTable.dt-card {
+    border-collapse: separate;
+}
+    #myTable.dt-card tbody {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+        #myTable.dt-card tbody tr {
+            width: 23.5%;
+            display: block;
+        }
+        #myTable.dt-card tbody td {
+            display: block;
+            padding: 0;
+        }
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+}
+.card-img {
+    aspect-ratio: 1;
+}
+    .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+.card-body {
+    padding: 12px;
+}
+@media(max-width:992px) {
+    #myTable.dt-card tbody tr {
+        width: 33.33%;
+    }
+}
+@media(max-width:768px) {
+    #myTable.dt-card tbody tr {
+        width: 50%;
+    }
+}
+@media(max-width:576px) {
+    #myTable.dt-card tbody tr {
+        width: 100%;
+    }
+}
