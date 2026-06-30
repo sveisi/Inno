@@ -7,6 +7,7 @@ using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Inno.Services
@@ -27,6 +28,11 @@ namespace Inno.Services
         public async Task<List<StorageView>> GetAllStorageAsync()
         {
             return await entities.ProjectTo<StorageView>(mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<List<LookupView<int>>> GetLookupAsync()
+        {
+            return await entities.Select(x => new LookupView<int>(x.Id, x.Name)).ToListAsync();
         }
 
         public async Task<StorageView> GetStorageAsync(string id)

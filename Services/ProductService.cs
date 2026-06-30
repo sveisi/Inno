@@ -7,7 +7,6 @@ using Inno.Models;
 using Inno.Services.Interfaces;
 using Inno.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +28,26 @@ namespace Inno.Services
             var res = entities.AsNoTracking().ProjectTo<ProductListView>(mapper.ConfigurationProvider).Gridify(gridify);
 
             return res;
+        }
+
+        public Paging<InventoryView> GetInventory(GridifyQuery gridify, int storageId)
+        {
+            var query = entities.AsNoTracking()
+                .Select(p => new InventoryView
+                {
+                    ProductCode = p.Id,
+                    ProductName = p.Name,
+                    ProductEnName = p.EnName,
+                    UnitName = p.Unit.Name,
+
+                    StorageId = storageId,
+
+                    Qty = p.SKUs.Where(x => x.Location.StorageId == storageId)
+                        .Sum(x => (decimal?)(x.CurrentQty - x.ReservedQty)) ?? 0
+                })
+                .Where(x => x.Qty > 0);
+
+            return query.Gridify(gridify);
         }
 
         public async Task<ProductView> GetProductAsync(string code)

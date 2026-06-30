@@ -91,6 +91,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href='@Url.Action("Inventory", "Product")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                    <i class="fas fa-cubes"></i>
+                                    @Res.ProductInventory
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href='@Url.Action("Index", "Document")' class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-file-alt"></i>
                                     @Res.Documents
@@ -127,9 +133,14 @@
                                 </a>
                             </li>
                         }
-                        else
-                        @if (User.IsInRole(Inno.Types.UserRoleName.Customer))
+                        else @if (User.IsInRole(Inno.Types.UserRoleName.Customer))
                         {
+                            <li class="nav-item">
+                                <a href='@Url.Action("Index", "Product")' class="nav-link d-flex gap-2 link-body-emphasis ">
+                                    <i class="fas fa-box"></i>
+                                    @Res.Products
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href='@Url.Action("Create", "Order")' class="nav-link d-flex gap-2 link-body-emphasis ">
                                     <i class="fas fa-shopping-cart"></i>
@@ -267,7 +278,7 @@
         };
         var deleteButtonConfig = {
             actionName: 'deleteItem',
-            iconClass: 'fa fa-times',
+            iconClass: 'fa fa-trash-alt',
             title: '@Res.Delete',
             extraClass: 'link-danger',
             renderer: generateButtonHtml

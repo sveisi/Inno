@@ -18,14 +18,16 @@ namespace Inno.Controllers
         private readonly ICategoryService catSrv;
         private readonly IColorService colorSrv;
         private readonly IUnitService unitSrv;
+        private readonly IStorageService storeSrv;
 
         public ProductController(IHostEnvironment hostEnvironment, IProductService prdSrv, ICategoryService catSrv,
-            IColorService colorSrv, IUnitService unitSrv)
+            IColorService colorSrv, IUnitService unitSrv, IStorageService storeSrv)
         {
             this.prdSrv = prdSrv;
             this.catSrv = catSrv;
             this.colorSrv = colorSrv;
             this.unitSrv = unitSrv;
+            this.storeSrv = storeSrv;
         }
 
         public IActionResult Index()
@@ -39,6 +41,38 @@ namespace Inno.Controllers
             try
             {
                 var list = prdSrv.Get(dt.Gridify());
+
+                var jsonData = new
+                {
+                    draw = dt.draw,
+                    recordsFiltered = list.Count,
+                    recordsTotal = list.Count,
+                    data = list.Data
+                };
+
+                return Ok(jsonData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> Inventory()
+        {
+            ViewBag.Storages = await storeSrv.GetLookupAsync();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetInventory(DataTablePostModel dt, int? storageId)
+        {
+            try
+            {
+                if (!storageId.HasValue || storageId == 0) return BadRequest();
+
+                var list = prdSrv.GetInventory(dt.Gridify(), storageId.Value);
 
                 var jsonData = new
                 {
@@ -95,7 +129,7 @@ namespace Inno.Controllers
 
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         [HttpPost]
-        [ValidateAntiForgeryToken]        
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductView prdView)
         {
             if (!ModelState.IsValid)

@@ -1222,6 +1222,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to موجودی کالا.
+        /// </summary>
+        public static string ProductInventory {
+            get {
+                return ResourceManager.GetString("ProductInventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام کالا.
         /// </summary>
         public static string ProductName {

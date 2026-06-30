@@ -690,4 +690,7 @@
   <data name="Dashboard" xml:space="preserve">
     <value>داشبورد</value>
   </data>
+  <data name="ProductInventory" xml:space="preserve">
+    <value>موجودی کالا</value>
+  </data>
 </root>
