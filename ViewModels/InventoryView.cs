@@ -5,7 +5,8 @@ namespace Inno.ViewModels
 {
     public class InventoryView
     {
-        public string ProductCode { get; set; }
+        [DisplayName("ProductCode")]
+        public string ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductEnName { get; set; }
         [DisplayName("Unit")]

@@ -142,6 +142,15 @@ namespace Inno.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مانده.
+        /// </summary>
+        public static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Both.
         /// </summary>
         public static string Both {
@@ -1227,6 +1236,15 @@ namespace Inno.Resources {
         public static string ProductInventory {
             get {
                 return ResourceManager.GetString("ProductInventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاردکس کالا.
+        /// </summary>
+        public static string ProductKardex {
+            get {
+                return ResourceManager.GetString("ProductKardex", resourceCulture);
             }
         }
         

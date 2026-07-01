@@ -35,7 +35,7 @@ namespace Inno.Services
             var query = entities.AsNoTracking()
                 .Select(p => new InventoryView
                 {
-                    ProductCode = p.Id,
+                    ProductId = p.Id,
                     ProductName = p.Name,
                     ProductEnName = p.EnName,
                     UnitName = p.Unit.Name,

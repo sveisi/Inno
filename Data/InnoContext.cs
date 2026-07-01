@@ -29,6 +29,8 @@ namespace Inno.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<ProductKardex> ProductKardex { get; set; }
+
         public InnoContext(DbContextOptions<InnoContext> options, IUserContextService userContext) : base(options)
         {
             _userContext = userContext;

@@ -14,8 +14,8 @@
 <div class="row mb-3">
     <div class="col-md-2 col-6">
         <div class="input-group input-group-sm">
-            <span class="input-group-text ">@Html.DisplayNameFor(model => model.ProductCode)</span>
-            <input type="text" id="@nameof(InventoryView.ProductCode)" class="form-control form-control-sm h-auto" />
+            <span class="input-group-text ">@Html.DisplayNameFor(model => model.ProductId)</span>
+            <input type="text" id="@nameof(InventoryView.ProductId)" class="form-control form-control-sm h-auto" />
         </div>
     </div>
     <div class="col-md-2 col-12">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-md-2 col-5">
-        <button type="submit" class="btn btn-primary btn-sm" id="btnSearch">
+        <button type="button" class="btn btn-primary btn-sm" id="btnSearch">
             <i class="fa fa-search m-1"></i>@Res.Search
         </button>
     </div>
@@ -43,12 +43,14 @@
         $(document).ready(function () {
             var table = $('#myTable').DataTable({
                 info: false,
+                deferLoading: 0,
                 ajax: {
-                    url: '@Url.Action("GetInventory", nameof(Product))',
+                    url: '@Url.Action("GetInventory", "Inventory")',
                     type: 'POST',
                     datatype: "json",
-                     data: function (d) {
+                    data: function (d) {
                          d.storageId = $('#StorageId').val();
+                         d.ProductId = $('#ProductId').val();
                      },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if (jqXHR.status == 403 || jqXHR.status == 401) {
@@ -57,18 +59,22 @@
                     }
                 },
                 "columns": [
-                    { data: "@nameof(InventoryView.ProductCode)", name: "@nameof(InventoryView.ProductCode)", title: "@Html.DisplayNameFor(model => model.ProductCode)" },
+                    { data: "@nameof(InventoryView.ProductId)", name: "@nameof(InventoryView.ProductId)", title: "@Html.DisplayNameFor(model => model.ProductId)" },
                     { data: "@nameof(InventoryView.ProductName)", name: "@nameof(InventoryView.ProductName)", title: "@Html.DisplayNameFor(model => model.ProductName)" },
                     { data: "@nameof(InventoryView.UnitName)", name: "@nameof(InventoryView.UnitName)", title: "@Html.DisplayNameFor(model => model.UnitName)" },
                     { data: "@nameof(InventoryView.Qty)", name: "@nameof(InventoryView.Qty)", title: "@Html.DisplayNameFor(model => model.Qty)" }
                 ]
-            });
-             $('#btnSearch').on('click', function () {
-                let s = '';
-                let val = $("#@nameof(InventoryView.ProductCode)").val();
-                if (val) s += '@nameof(InventoryView.ProductCode)=' + val + ',';
+            }); 
+            $('#btnSearch').on('click', function (e) {
 
-                table.search(s).draw();
+                var storageId = $("#@nameof(ProductKardexView.StorageId)").val();
+
+                 if (!storageId || storageId.trim() === "") {
+                    showError("لطفاً انبار را انتخاب کنید.");
+                    return;
+                }
+
+                table.ajax.reload();
             });
         });
     </script>

@@ -693,4 +693,11 @@
   <data name="ProductInventory" xml:space="preserve">
     <value>موجودی کالا</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ProductKardex" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>مانده</value>
+  </data>
 </root>

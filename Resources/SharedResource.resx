@@ -693,4 +693,10 @@
   <data name="ProductInventory" xml:space="preserve">
     <value>موجودی کالا</value>
   </data>
+  <data name="ProductKardex" xml:space="preserve">
+    <value>کاردکس کالا</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>مانده</value>
+  </data>
 </root>

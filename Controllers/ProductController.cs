@@ -58,38 +58,6 @@ namespace Inno.Controllers
             }
         }
 
-        public async Task<IActionResult> Inventory()
-        {
-            ViewBag.Storages = await storeSrv.GetLookupAsync();
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult GetInventory(DataTablePostModel dt, int? storageId)
-        {
-            try
-            {
-                if (!storageId.HasValue || storageId == 0) return BadRequest();
-
-                var list = prdSrv.GetInventory(dt.Gridify(), storageId.Value);
-
-                var jsonData = new
-                {
-                    draw = dt.draw,
-                    recordsFiltered = list.Count,
-                    recordsTotal = list.Count,
-                    data = list.Data
-                };
-
-                return Ok(jsonData);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(HttpStatusCode.InternalServerError.GetHashCode(), ex.Message);
-            }
-        }
-
         [Authorize(Roles = UserRoleName.Admin_Storekeeper)]
         public async Task<IActionResult> Create()
         {
