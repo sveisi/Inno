@@ -9,6 +9,9 @@ namespace Inno.Data.Configurations
         public void Configure(EntityTypeBuilder<ProductKardex> builder)
         {
             builder.HasNoKey().ToView("ProductKardex");
+
+            builder.Property(x => x.Qty).HasPrecision(18, 2);
+            builder.Property(x => x.Balance).HasPrecision(18, 2);
         }
     }
 }

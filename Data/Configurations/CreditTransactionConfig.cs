@@ -11,6 +11,7 @@ namespace Inno.Data.Configurations
            base.Configure(builder);
 
             builder.Property(x => x.Amount).HasPrecision(18, 2);
+            builder.Property(x => x.BalanceAfter).HasPrecision(18, 2);
             builder.Property(x => x.Description).HasMaxLength(200);
         }
     }

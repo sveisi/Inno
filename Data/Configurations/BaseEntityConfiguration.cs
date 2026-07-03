@@ -21,7 +21,7 @@ namespace Inno.Data.Configurations
                        .HasColumnType("datetime");
 
                 builder.Property<string>("CreatedBy")
-                       .HasMaxLength(100);
+                       .HasMaxLength(450);
             }
 
             if (typeof(IAuditable).IsAssignableFrom(typeof(TEntity)))
@@ -30,7 +30,7 @@ namespace Inno.Data.Configurations
                        .HasColumnType("datetime");
 
                 builder.Property<string>("ModifiedBy")
-                       .HasMaxLength(100);
+                       .HasMaxLength(450);
             }
         }
     }
