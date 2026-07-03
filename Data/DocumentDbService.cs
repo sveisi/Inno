@@ -17,7 +17,7 @@ namespace Inno.Data
         public async Task ApplyPurchaseReceiptEffectsAsync(int id)
         {
             await ctx.Database.ExecuteSqlInterpolatedAsync($@"
-                UPDATE s SET s.CurrentQty = di.Qty
+                UPDATE s SET s.CurrentQty = di.Qty, s.LocationId = di.LocationId
                 FROM SKU s
                 INNER JOIN DocumentItem di ON di.SKUId = s.Id
                 WHERE di.DocumentId = {id};");
