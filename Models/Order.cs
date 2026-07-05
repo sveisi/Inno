@@ -6,7 +6,7 @@ namespace Inno.Models
     public class Order : BaseEntity, ICreatable
     {
         /// <summary>شناسه کاربری مشتری</summary>
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ConfirmedAt { get; set; }
         public Types.OrderStatus Status { get; set; }

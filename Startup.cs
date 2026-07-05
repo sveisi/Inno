@@ -60,7 +60,7 @@ namespace Inno
                     services.AddScoped(interfaceType, implementationType);
             }
 
-            services.AddIdentity<Models.User, IdentityRole>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;

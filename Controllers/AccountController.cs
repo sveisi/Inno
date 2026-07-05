@@ -18,10 +18,10 @@ namespace Inno.Controllers
         private readonly UserManager<User> userMgr;
         private readonly SignInManager<User> signInMgr;
         private readonly ICustomerService customerSrv;
-        private readonly RoleManager<IdentityRole> roleMgr;
+        private readonly RoleManager<Role> roleMgr;
 
         public AccountController(IMapper mapper, IAccountService accSrv, UserManager<User> userMgr, SignInManager<User> signInMgr,
-            ICustomerService customerSrv, RoleManager<IdentityRole> roleMgr)
+            ICustomerService customerSrv, RoleManager<Role> roleMgr)
         {
             this.mapper = mapper;
             this.accSrv = accSrv;
@@ -193,11 +193,11 @@ namespace Inno.Controllers
             return View(model);
         }
 
-        async Task CreateRoleIfNotExists(RoleManager<IdentityRole> roleMgr, string roleName)
+        async Task CreateRoleIfNotExists(RoleManager<Role> roleMgr, string roleName)
         {
             if (!await roleMgr.RoleExistsAsync(roleName))
             {
-                await roleMgr.CreateAsync(new IdentityRole(roleName));
+                await roleMgr.CreateAsync(new Role(roleName));
             }
         }
 

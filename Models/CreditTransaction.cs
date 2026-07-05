@@ -15,7 +15,7 @@ namespace Inno.Models
         public int? RelatedOrderId { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
 
         public Customer Customer { get; set; }
         public Order RelatedOrder { get; set; }

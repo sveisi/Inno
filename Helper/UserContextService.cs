@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Security.Claims;
 
 namespace Inno.Helper
 {
     public interface IUserContextService
     {
-        string UserId { get; }
+        Guid? UserId { get; }
         string UserName { get; }
         int? CustomerId { get; }
     }
@@ -19,7 +20,7 @@ namespace Inno.Helper
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string UserId
+        public Guid? UserId
         {
             get
             {
@@ -33,7 +34,7 @@ namespace Inno.Helper
                 // تلاش برای یافتن ClaimTypes.NameIdentifier
                 var userIdClaim = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                return userIdClaim;
+                return Guid.TryParse(userIdClaim, out var id) ? id : null;
             }
         }
 

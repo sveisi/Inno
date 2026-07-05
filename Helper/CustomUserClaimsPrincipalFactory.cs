@@ -4,9 +4,9 @@ using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, IdentityRole>
+public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, Role>
 {
-    public CustomUserClaimsPrincipalFactory(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> options)
+    public CustomUserClaimsPrincipalFactory(UserManager<User> userManager, RoleManager<Role> roleManager, IOptions<IdentityOptions> options)
         : base(userManager, roleManager, options)
     {
     }

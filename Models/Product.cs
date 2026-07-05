@@ -15,10 +15,10 @@ namespace Inno.Models
         public bool IsActive { get; set; }
 
         public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
 
         public DateTime? ModifiedAt { get; set; }
-        public string? ModifiedBy { get; set; }
+        public Guid? ModifiedBy  { get; set; }
 
         public Category Category { get; set; }
         public Color Color { get; set; }

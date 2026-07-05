@@ -8,7 +8,7 @@ namespace Inno.ViewModels
         [DisplayName("OrderId")]
         public int Id { get; set; }
 
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
         [DisplayName("User")]
         public string CreatedByName { get; set; }
 

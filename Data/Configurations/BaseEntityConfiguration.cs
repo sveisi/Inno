@@ -20,8 +20,7 @@ namespace Inno.Data.Configurations
                        .IsRequired()
                        .HasColumnType("datetime");
 
-                builder.Property<string>("CreatedBy")
-                       .HasMaxLength(450);
+                builder.Property<Guid>("CreatedBy");
             }
 
             if (typeof(IAuditable).IsAssignableFrom(typeof(TEntity)))
@@ -29,8 +28,7 @@ namespace Inno.Data.Configurations
                 builder.Property<DateTime?>("ModifiedAt")
                        .HasColumnType("datetime");
 
-                builder.Property<string>("ModifiedBy")
-                       .HasMaxLength(450);
+                builder.Property<Guid?>("ModifiedBy");
             }
         }
     }

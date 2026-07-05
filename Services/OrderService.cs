@@ -38,7 +38,7 @@ namespace Inno.Services
 
         public async Task<List<OrderItemView>> GetCurrentOrderItemsAsync()
         {
-            return await ctx.Orders.CurrentOrder(userContextSrv.UserId)
+            return await ctx.Orders.CurrentOrder(userContextSrv.UserId.Value)
                 .SelectMany(x => x.Items)
                 .ProjectTo<OrderItemView>(mapper.ConfigurationProvider).ToListAsync();
         }
@@ -130,7 +130,7 @@ namespace Inno.Services
                 if (prd == null)
                     return "کالا یافت نشد";
 
-                var ord = await ctx.Orders.CurrentOrder(userContextSrv.UserId)
+                var ord = await ctx.Orders.CurrentOrder(userContextSrv.UserId.Value)
                     .Include(x => x.Items)
                     .FirstOrDefaultAsync(x => x.CreatedBy == userContextSrv.UserId && x.Status == OrderStatus.Draft);
                 //اگر سفارش جاری پیدا نشد یک سفارش ایجاد میشه
@@ -138,7 +138,7 @@ namespace Inno.Services
                 {
                     ord = new Order
                     {
-                        CreatedBy = userContextSrv.UserId,
+                        CreatedBy = userContextSrv.UserId.Value,
                         Status = OrderStatus.Draft,
                         Items = new List<OrderItem>()
                     };
@@ -266,7 +266,7 @@ namespace Inno.Services
 
         public async Task<Result<int>> CheckoutAsync()
         {
-            var order = await ctx.Orders.CurrentOrder(userContextSrv.UserId)
+            var order = await ctx.Orders.CurrentOrder(userContextSrv.UserId.Value)
                 .Include(x => x.Items)
                 .Include(x => x.CreatedByUser.Customer.ParentCustomer)
                 .FirstOrDefaultAsync();
@@ -349,7 +349,7 @@ namespace Inno.Services
 
         public async Task<Result> DeleteItemAsync(int id)
         {
-            var ord = await entities.CurrentOrder(userContextSrv.UserId)
+            var ord = await entities.CurrentOrder(userContextSrv.UserId.Value)
                 .Select(x => new
                 {
                     x.Id,

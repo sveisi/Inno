@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Inno.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
     {
         public string FullName { get; set; }
         public int? CustomerId { get; set; }

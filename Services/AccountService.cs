@@ -17,11 +17,11 @@ namespace Inno.Services
     public class AccountService : BaseService<User>, IAccountService
     {
         private readonly UserManager<User> userMgr;
-        private readonly RoleManager<IdentityRole> roleMgr;
+        private readonly RoleManager<Role> roleMgr;
         private readonly IUserContextService userContextSrv;
 
         public AccountService(InnoContext ctx, IMapper mapper, UserManager<User> userMgr, 
-            RoleManager<IdentityRole> roleMgr, IUserContextService userContextSrv)
+            RoleManager<Role> roleMgr, IUserContextService userContextSrv)
             : base(ctx, mapper)
         {
             this.userMgr = userMgr;
@@ -137,7 +137,7 @@ namespace Inno.Services
 
         public async Task<Result> ChangePasswordAsync(string currentPass, string newPass)
         {
-            var user = await userMgr.FindByIdAsync(userContextSrv.UserId);
+            var user = await userMgr.FindByIdAsync(userContextSrv.UserId.Value.ToString());
             if (user == null)
                 return Resources.SharedResource.RecordNotFoundMsg;
 

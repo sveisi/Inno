@@ -27,7 +27,7 @@ namespace Inno.ViewModels
         public decimal Qty { get; set; }
 
         [BindNever]
-        public string CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
 
         [BindNever]
         public DateTime? ConfirmedAt { get; set; }

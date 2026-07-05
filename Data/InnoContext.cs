@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inno.Data
 {
-    public class InnoContext : IdentityDbContext<User>
+    public class InnoContext : IdentityDbContext<User, Role, Guid>
     {
         protected readonly IUserContextService _userContext;
 
@@ -57,7 +57,7 @@ namespace Inno.Data
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.CreatedAt = DateTime.Now;
-                    entry.Entity.CreatedBy = userId;
+                    entry.Entity.CreatedBy = userId.Value;
                 }
                 else if (entry.State == EntityState.Modified)
                 {
