@@ -1,5 +1,5 @@
 {
-    "emptyTable": "هیچ داده‌ای در جدول وجود ندارد",
+    "emptyTable": "...",
     "info": "نمایش _START_ تا _END_ از _TOTAL_ ردیف",
     "infoEmpty": "نمایش 0 تا 0 از 0 ردیف",
     "infoFiltered": "(فیلتر شده از _MAX_ ردیف)",
