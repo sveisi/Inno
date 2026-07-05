@@ -38,12 +38,14 @@ namespace Inno.Data
 
         public override int SaveChanges()
         {
+            TrimStrings();
             ApplyAuditing();
             return base.SaveChanges();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            TrimStrings();
             ApplyAuditing();
             return await base.SaveChangesAsync(cancellationToken);
         }
@@ -73,6 +75,25 @@ namespace Inno.Data
         public async System.Threading.Tasks.Task<int> ExecuteRawSqlAsync(string sql, params object[] parameters)
         {
             return await Database.ExecuteSqlRawAsync(sql, parameters);
+        }
+
+        private void TrimStrings()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (entry.State != EntityState.Added && entry.State != EntityState.Modified)
+                    continue;
+
+                foreach (var property in entry.Properties)
+                {
+                    if (property.Metadata.ClrType == typeof(string))
+                    {
+                        var value = property.CurrentValue as string;
+                        if (value != null)
+                            property.CurrentValue = value.Trim();
+                    }
+                }
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
