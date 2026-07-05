@@ -149,7 +149,7 @@ namespace Inno.Controllers
                 var user = await userMgr.FindByNameAsync(model.UserName);
                 if (user != null && !user.IsActive)
                 {
-                    ViewData["ErrorMessage"] = Resources.SharedResource.AccountIsLockedOutMsg;
+                    ModelState.AddModelError("", Resources.SharedResource.LoginFaildMsg);
                     return View(model);
                 }
 
@@ -162,34 +162,30 @@ namespace Inno.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
+                if (result.IsLockedOut)
+                    ModelState.AddModelError("", Resources.SharedResource.AccountIsLockedOutMsg);
                 else
+                    ModelState.AddModelError("", Resources.SharedResource.LoginFaildMsg);
+
+                var admin = await userMgr.FindByNameAsync("admin");
+                if (admin == null)
                 {
-                    if (result.IsLockedOut)
-                    {
-                        ViewData["ErrorMessage"] = Resources.SharedResource.AccountIsLockedOutMsg;
-                        return View(model);
-                    }
+                    await CreateRoleIfNotExists(roleMgr, UserRoleName.Admin);
+                    await CreateRoleIfNotExists(roleMgr, UserRoleName.Storekeeper);
+                    await CreateRoleIfNotExists(roleMgr, UserRoleName.Customer);
 
-                    var admin = await userMgr.FindByNameAsync("admin");
-                    if (admin == null)
+                    var u = new User()
                     {
-                        await CreateRoleIfNotExists(roleMgr, UserRoleName.Admin);
-                        await CreateRoleIfNotExists(roleMgr, UserRoleName.Storekeeper);
-                        await CreateRoleIfNotExists(roleMgr, UserRoleName.Customer);
-
-                        var u = new User()
-                        {
-                            UserName = "Admin",
-                            FullName = "امیر",
-                            EmailConfirmed = true,
-                        };
-                        await userMgr.CreateAsync(u, "amir");
-                        await userMgr.AddToRoleAsync(u, UserRoleName.Admin);
-                    }
+                        UserName = "Admin",
+                        FullName = "امیر",
+                        EmailConfirmed = true,
+                    };
+                    await userMgr.CreateAsync(u, "amir");
+                    await userMgr.AddToRoleAsync(u, UserRoleName.Admin);
                 }
-
-                ModelState.AddModelError("", Resources.SharedResource.LoginFaildMsg);
             }
+
             return View(model);
         }
 

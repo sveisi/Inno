@@ -33,6 +33,7 @@ namespace Inno.Services
         public async Task<Location> CreateAsync(LocationView v)
         {
             var n = mapper.Map<Location>(v);
+            n.Id = n.Id.ToUpper();
             var res = await AddAsync(n);
 
             return res;

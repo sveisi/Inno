@@ -57,10 +57,13 @@ namespace Inno.Services
 
         public async Task<Customer> UpdateAsync(CustomerView v)
         {
-            var n = mapper.Map<Customer>(v);
-            var res = await UpdateAsync(n);
+            var entity = await ctx.Customers.FirstOrDefaultAsync(x => x.Id == v.Id);
 
-            return res;
+            mapper.Map(v, entity);
+
+            await ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task<bool> CodeIsDuplicateAsync(string customerCode)

@@ -8,7 +8,9 @@ namespace Inno.MappingProfiles
     {
         public CustomerProfile()
         {
-            CreateMap<Customer, CustomerView>().ReverseMap();
+            CreateMap<Customer, CustomerView>()
+                .ReverseMap()
+                .ForMember(d => d.CreditBalance, s => s.Ignore());
 
             CreateMap<Customer, CustomerListView>()
                .ForMember(d => d.CityName, s => s.MapFrom(s => s.City.Name))

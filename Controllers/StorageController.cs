@@ -120,16 +120,13 @@ namespace Inno.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             var res = false;
             try
             {
-                if (!string.IsNullOrWhiteSpace(id))
-                {
-                    await storSrv.DeleteAsync(id);
-                    res = true;
-                }
+                await storSrv.DeleteAsync(id);
+                res = true;
                 return Ok(new { success = res });
             }
             catch (SysException ex)

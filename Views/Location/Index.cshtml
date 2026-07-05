@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Location>
+﻿@model IEnumerable<LocationView>
 
 @{
     ViewData["Title"] = Res.List + " " + Res.Locations;
@@ -44,9 +44,9 @@
                     }
                 },
                 "columns": [
-                    { data: "@nameof(Location.Id)", name: "@nameof(Location.Id)", title: "@Html.DisplayNameFor(model => model.Id)" },
-                    { data: "@nameof(Location.Name)", name: "@nameof(Location.Name)", title: "@Html.DisplayNameFor(model => model.Name)" },
-                    { data: "@nameof(Location.EnName)", name: "@nameof(Location.EnName)", title: "@Html.DisplayNameFor(model => model.EnName)" },
+                    { data: "@nameof(LocationView.Id)", name: "@nameof(LocationView.Id)", title: "@Html.DisplayNameFor(model => model.Id)" },
+                    { data: "@nameof(LocationView.Name)", name: "@nameof(LocationView.Name)", title: "@Html.DisplayNameFor(model => model.Name)" },
+                    { data: "@nameof(LocationView.EnName)", name: "@nameof(LocationView.EnName)", title: "@Html.DisplayNameFor(model => model.EnName)" },
                     renderActionButton('@nameof(ProductListView.Id)', [editButtonConfig, deleteButtonConfig])
                 ]
             });
